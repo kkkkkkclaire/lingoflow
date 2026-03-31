@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LingoFlow 语流 — 语言学习</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --glass-bg: rgba(255,255,255,0.35);
+  --glass-border: rgba(255,255,255,0.6);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  --blur: 20px; --radius: 16px;
+  --text-primary: #2d2d2d; --text-secondary: #999999;
+  --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+  --mint-1:#b8f0d8;--mint-2:#e0faf0;--mint-3:#f0fdf7;--mint-accent:#5bd4a0;
+  --peach-1:#fcc5b8;--peach-2:#fde8e0;--peach-3:#fff5f2;--peach-accent:#f2836b;
+  --lavender-1:#c8b8f0;--lavender-2:#e8e0fd;--lavender-3:#f5f2ff;--lavender-accent:#9b7de8;
+}
+body { font-family:'Outfit','Noto Sans SC','Noto Sans KR',sans-serif; color:var(--text-primary); min-height:100vh; overflow-x:hidden; transition:background var(--transition); }
+body.lang-en { background:linear-gradient(135deg,var(--mint-1) 0%,var(--mint-2) 40%,var(--mint-3) 100%); }
+body.lang-es { background:linear-gradient(135deg,var(--peach-1) 0%,var(--peach-2) 40%,var(--peach-3) 100%); }
+body.lang-kr { background:linear-gradient(135deg,var(--lavender-1) 0%,var(--lavender-2) 40%,var(--lavender-3) 100%); }
+.orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:0.4;pointer-events:none;z-index:0;animation:float 12s ease-in-out infinite alternate}
+.orb-1{width:400px;height:400px;top:-100px;left:-100px} .orb-2{width:350px;height:350px;bottom:-80px;right:-80px} .orb-3{width:250px;height:250px;top:40%;left:60%}
+body.lang-en .orb-1{background:var(--mint-accent)} body.lang-en .orb-2{background:#a0e8d0} body.lang-en .orb-3{background:#6ee0b8}
+body.lang-es .orb-1{background:var(--peach-accent)} body.lang-es .orb-2{background:#f0a898} body.lang-es .orb-3{background:#e89080}
+body.lang-kr .orb-1{background:var(--lavender-accent)} body.lang-kr .orb-2{background:#b8a0e8} body.lang-kr .orb-3{background:#a890d8}
+@keyframes float{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-20px) scale(1.08)}}
+.glass{background:var(--glass-bg);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border:1px solid var(--glass-border);border-radius:var(--radius);box-shadow:var(--glass-shadow)}
+header{position:sticky;top:0;z-index:100;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:rgba(255,255,255,0.5);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,0.6)}
+.logo{font-size:1.5rem;font-weight:700;letter-spacing:-0.5px} .logo span{font-weight:300;opacity:0.6;margin-left:6px;font-size:1rem}
+.lang-selector{display:flex;gap:6px}
+.lang-btn{padding:8px 20px;border:none;border-radius:40px;cursor:pointer;font-family:inherit;font-size:0.85rem;font-weight:500;background:rgba(255,255,255,0.4);color:var(--text-primary);border:1px solid rgba(255,255,255,0.5);transition:all var(--transition)}
+.lang-btn:hover{background:rgba(255,255,255,0.7);transform:translateY(-1px)}
+.lang-btn.active{background:rgba(255,255,255,0.85);box-shadow:0 2px 12px rgba(0,0,0,0.1);font-weight:600}
+body.lang-en .lang-btn.active{color:#2a9d6a} body.lang-es .lang-btn.active{color:#d4604a} body.lang-kr .lang-btn.active{color:#7b5ec8}
+.section-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab-btn{padding:8px 18px;border:none;border-radius:40px;cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:400;background:transparent;color:var(--text-secondary);transition:all var(--transition)}
+.tab-btn:hover{background:rgba(255,255,255,0.3);color:var(--text-primary)}
+.tab-btn.active{background:rgba(255,255,255,0.6);color:var(--text-primary);font-weight:600}
+main{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:32px 24px 80px}
+.section{display:none;animation:fadeIn 0.4s ease} .section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-size:1.6rem;font-weight:600;margin-bottom:24px;letter-spacing:-0.5px}
+
+/* SOUNDS */
+.sound-category{margin-bottom:32px}
+.sound-category h3{font-size:1rem;font-weight:500;margin-bottom:12px;opacity:0.7}
+.sound-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.sound-block{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border-radius:12px;transition:all var(--transition);background:rgba(255,255,255,0.35);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);font-size:1.1rem;font-weight:500}
+.sound-block .sub{font-size:0.6rem;color:var(--text-secondary);font-weight:300;margin-top:2px}
+.sound-block:hover{background:rgba(255,255,255,0.65);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+.sound-block:active{transform:scale(0.95)}
+.sound-block.playing{animation:pulse 0.3s ease}
+body.lang-en .sound-block.playing{box-shadow:0 0 0 3px var(--mint-accent)}
+body.lang-es .sound-block.playing{box-shadow:0 0 0 3px var(--peach-accent)}
+body.lang-kr .sound-block.playing{box-shadow:0 0 0 3px var(--lavender-accent)}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+
+/* VOCAB */
+.vocab-layout{display:flex;gap:20px;position:relative}
+.vocab-sidebar{width:100px;flex-shrink:0;position:sticky;top:100px;align-self:flex-start;max-height:calc(100vh - 120px);overflow-y:auto}
+.vocab-sidebar a{display:block;padding:6px 10px;font-size:0.75rem;color:var(--text-secondary);text-decoration:none;border-left:2px solid transparent;transition:all var(--transition);cursor:pointer;white-space:nowrap}
+.vocab-sidebar a:hover{color:var(--text-primary);background:rgba(255,255,255,0.2)}
+.vocab-sidebar a.active{color:var(--text-primary);font-weight:600;border-left-color:var(--text-primary);background:rgba(255,255,255,0.3)}
+.vocab-content{flex:1;min-width:0}
+.vocab-section{margin-bottom:36px;scroll-margin-top:110px}
+.vocab-section h3{font-size:1rem;font-weight:600;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.4)}
+.vocab-subgroup{margin-bottom:16px}
+.vocab-subgroup h4{font-size:0.82rem;font-weight:500;color:var(--text-secondary);margin-bottom:8px;padding-left:2px}
+.vocab-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.vocab-card{padding:8px 4px;border-radius:10px;cursor:pointer;background:rgba(255,255,255,0.35);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);transition:all var(--transition);text-align:center}
+.vocab-card:hover{background:rgba(255,255,255,0.6);transform:translateY(-1px);box-shadow:0 3px 12px rgba(0,0,0,0.06)}
+.vocab-card:active{transform:scale(0.97)}
+.vocab-word{font-size:0.85rem;font-weight:600;margin-bottom:1px}
+.vocab-trans{font-size:0.65rem;color:var(--text-secondary);font-weight:300}
+/* Wider cards for non-number categories */
+.vocab-grid.wide{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.vocab-grid.wide .vocab-card{padding:10px 8px}
+.vocab-grid.wide .vocab-word{font-size:0.9rem}
+.vocab-grid.wide .vocab-trans{font-size:0.7rem}
+
+/* GRAMMAR */
+.grammar-block{margin-bottom:36px}
+.grammar-block h3{font-size:1.05rem;font-weight:600;margin-bottom:14px}
+.grammar-cat{margin-bottom:40px}
+.grammar-cat-title{font-size:1.2rem;font-weight:600;margin-bottom:6px}
+.grammar-cat-sub{font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px}
+.grammar-table-wrap{overflow-x:auto;border-radius:14px;background:rgba(255,255,255,0.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.5)}
+.grammar-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.grammar-table th{padding:12px 16px;text-align:left;font-weight:600;font-size:0.8rem;border-bottom:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.2)}
+.grammar-table td{padding:11px 16px;border-bottom:1px solid rgba(255,255,255,0.25);cursor:pointer;transition:background 0.2s}
+.grammar-table tr:last-child td{border-bottom:none}
+.grammar-table td:hover{background:rgba(255,255,255,0.3)}
+.grammar-table td.playing-cell{background:rgba(255,255,255,0.45)}
+.sentence-row{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;margin-bottom:6px;background:rgba(255,255,255,0.3);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.4)}
+.sentence-row .text-col{flex:1}
+.sentence-row .main-text{font-size:1rem;font-weight:500}
+.sentence-row .sub-text{font-size:0.76rem;color:var(--text-secondary);margin-top:2px}
+.speaker-btn{width:32px;height:32px;border:none;border-radius:50%;cursor:pointer;background:rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;transition:all var(--transition);flex-shrink:0}
+.speaker-btn:hover{background:rgba(255,255,255,0.7)}
+.speaker-btn svg{width:14px;height:14px;opacity:0.5}
+
+/* LOOKUP */
+.lookup-wrap{max-width:600px;margin:0 auto}
+.search-box{display:flex;gap:0;border-radius:50px;overflow:hidden;background:rgba(255,255,255,0.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);box-shadow:0 4px 24px rgba(0,0,0,0.06)}
+.search-box input{flex:1;padding:14px 24px;border:none;background:transparent;font-family:inherit;font-size:1rem;color:var(--text-primary);outline:none}
+.search-box input::placeholder{color:#bbb}
+.search-box button{padding:14px 24px;border:none;cursor:pointer;background:rgba(255,255,255,0.3);font-family:inherit;font-size:0.85rem;font-weight:500;color:var(--text-primary);transition:background var(--transition)}
+.search-box button:hover{background:rgba(255,255,255,0.6)}
+.lookup-result{margin-top:20px;padding:20px 24px;border-radius:16px;background:rgba(255,255,255,0.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.5);display:none}
+.lookup-result.show{display:flex;align-items:center;gap:12px;animation:fadeIn 0.3s ease}
+.lookup-result .text-col{flex:1}
+.lookup-result .main-text{font-size:1.3rem;font-weight:600}
+.lookup-result .sub-text{font-size:0.85rem;color:var(--text-secondary);margin-top:4px}
+.lookup-loading{text-align:center;padding:20px;color:var(--text-secondary);font-size:0.9rem;display:none}
+.lookup-loading.show{display:block}
+.history-label{font-size:0.8rem;color:var(--text-secondary);margin-top:28px;margin-bottom:10px}
+.history-chips{display:flex;flex-wrap:wrap;gap:8px}
+.history-chip{padding:6px 14px;border-radius:30px;cursor:pointer;background:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.4);font-size:0.82rem;transition:all var(--transition)}
+.history-chip:hover{background:rgba(255,255,255,0.6)}
+
+@media(max-width:768px){
+  header{padding:12px 16px} .logo{font-size:1.2rem}
+  main{padding:20px 14px 60px}
+  .sound-grid{grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px}
+  .vocab-layout{flex-direction:column;gap:0}
+  .vocab-sidebar{width:100%;position:relative;top:0;display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px;max-height:none;overflow:visible}
+  .vocab-sidebar a{border-left:none;border-bottom:2px solid transparent;padding:5px 10px;font-size:0.72rem}
+  .vocab-sidebar a.active{border-left:none;border-bottom-color:var(--text-primary)}
+  .vocab-grid{grid-template-columns:repeat(5,1fr);gap:4px}
+  .vocab-grid.wide{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px}
+  .section-title{font-size:1.3rem}
+  .grammar-table{font-size:0.8rem}
+  .grammar-table th,.grammar-table td{padding:8px 10px}
+}
+@media(max-width:480px){
+  .lang-selector{gap:4px} .lang-btn{padding:6px 14px;font-size:0.78rem}
+  .tab-btn{padding:6px 12px;font-size:0.75rem}
+  .vocab-grid{grid-template-columns:repeat(4,1fr)}
+}
+footer{text-align:center;padding:32px;font-size:0.75rem;color:var(--text-secondary);position:relative;z-index:1}
+</style>
+</head>
+<body class="lang-en">
+<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+<header>
+  <div class="logo">LingoFlow<span>语流</span></div>
+  <div class="lang-selector">
+    <button class="lang-btn active" data-lang="en">🌿 English</button>
+    <button class="lang-btn" data-lang="es">🍑 Español</button>
+    <button class="lang-btn" data-lang="kr">💜 한국어</button>
+  </div>
+  <div class="section-tabs">
+    <button class="tab-btn active" data-section="sounds">发音基石</button>
+    <button class="tab-btn" data-section="vocab">核心词汇</button>
+    <button class="tab-btn" data-section="grammar">句式语法</button>
+    <button class="tab-btn" data-section="lookup">智能查询</button>
+  </div>
+</header>
+<main>
+  <div class="section active" id="sec-sounds"></div>
+  <div class="section" id="sec-vocab"></div>
+  <div class="section" id="sec-grammar"></div>
+  <div class="section" id="sec-lookup">
+    <h2 class="section-title">智能翻译查询</h2>
+    <div class="lookup-wrap">
+      <div class="search-box">
+        <input type="text" id="lookup-input" placeholder="输入单词或句子...">
+        <button onclick="doLookup()">查询</button>
+      </div>
+      <div class="lookup-loading" id="lookup-loading">正在翻译...</div>
+      <div class="lookup-result" id="lookup-result">
+        <div class="text-col">
+          <div class="main-text" id="lookup-main"></div>
+          <div class="sub-text" id="lookup-sub"></div>
+        </div>
+        <button class="speaker-btn" onclick="speakLookup()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.08"/></svg>
+        </button>
+      </div>
+      <div class="history-label" id="history-label" style="display:none">最近查询</div>
+      <div class="history-chips" id="history-chips"></div>
+    </div>
+  </div>
+</main>
+<footer>LingoFlow 语流 · 极简语言学习 · Built with ♡</footer>
+
+<script>
+// ===== NUMBER GENERATORS (Arabic digits for translation) =====
+function enNumbers(){
+  const w=['zero','one','two','three','four','five','six','seven','eight','nine','ten',
+    'eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  const tens=[,'','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+  const r=[];
+  for(let i=0;i<=100;i++){
+    let word;
+    if(i<20) word=w[i];
+    else if(i===100) word='one hundred';
+    else if(i%10===0) word=tens[Math.floor(i/10)];
+    else word=tens[Math.floor(i/10)]+'-'+w[i%10];
+    r.push({w:word,t:String(i)});
+  }
+  return r;
+}
+function esNumbers(){
+  const n=['cero','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez',
+    'once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve','veinte',
+    'veintiuno','veintidós','veintitrés','veinticuatro','veinticinco','veintiséis','veintisiete','veintiocho','veintinueve'];
+  const tens=[,,'','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
+  const r=[];
+  for(let i=0;i<=100;i++){
+    let word;
+    if(i<30) word=n[i];
+    else if(i===100) word='cien';
+    else if(i%10===0) word=tens[Math.floor(i/10)];
+    else word=tens[Math.floor(i/10)]+' y '+n[i%10];
+    r.push({w:word,t:String(i)});
+  }
+  return r;
+}
+function krNumbers(){
+  const sk=['영','일','이','삼','사','오','육','칠','팔','구','십',
+    '십일','십이','십삼','십사','십오','십육','십칠','십팔','십구'];
+  const t2=['','','이십','삼십','사십','오십','육십','칠십','팔십','구십'];
+  const r=[];
+  for(let i=0;i<=100;i++){
+    let word;
+    if(i<20) word=sk[i];
+    else if(i===100) word='백';
+    else if(i%10===0) word=t2[Math.floor(i/10)];
+    else word=t2[Math.floor(i/10)]+sk[i%10];
+    r.push({w:word,t:String(i)});
+  }
+  return r;
+}
+
+// ===== DATA =====
+const DATA = {
+en: {
+  sounds:{title:'发音基石 · The Sounds',subtitle:'点击方块即可听到发音',categories:[
+    {name:'26 Letters 字母表',items:'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z'.split(' ').map(l=>({text:l,sub:l.toLowerCase(),speak:l}))},
+    {name:'Vowels 元音',items:[
+      {text:'iː',sub:'bee',speak:'bee'},{text:'ɪ',sub:'bit',speak:'bit'},{text:'e',sub:'bed',speak:'bed'},{text:'æ',sub:'cat',speak:'cat'},
+      {text:'ɑː',sub:'car',speak:'car'},{text:'ɒ',sub:'hot',speak:'hot'},{text:'ɔː',sub:'call',speak:'call'},{text:'ʊ',sub:'put',speak:'put'},
+      {text:'uː',sub:'blue',speak:'blue'},{text:'ʌ',sub:'cup',speak:'cup'},{text:'ɜː',sub:'bird',speak:'bird'},{text:'ə',sub:'about',speak:'about'},
+      {text:'eɪ',sub:'day',speak:'day'},{text:'aɪ',sub:'my',speak:'my'},{text:'ɔɪ',sub:'boy',speak:'boy'},
+      {text:'aʊ',sub:'how',speak:'how'},{text:'əʊ',sub:'go',speak:'go'},{text:'ɪə',sub:'ear',speak:'ear'},
+      {text:'eə',sub:'air',speak:'air'},{text:'ʊə',sub:'pure',speak:'pure'}]},
+    {name:'Consonants 辅音',items:[
+      {text:'p',sub:'pen',speak:'pen'},{text:'b',sub:'bag',speak:'bag'},{text:'t',sub:'ten',speak:'ten'},{text:'d',sub:'dog',speak:'dog'},
+      {text:'k',sub:'key',speak:'key'},{text:'g',sub:'go',speak:'go'},{text:'f',sub:'fat',speak:'fat'},{text:'v',sub:'van',speak:'van'},
+      {text:'θ',sub:'thin',speak:'thin'},{text:'ð',sub:'this',speak:'this'},{text:'s',sub:'sun',speak:'sun'},{text:'z',sub:'zoo',speak:'zoo'},
+      {text:'ʃ',sub:'she',speak:'she'},{text:'ʒ',sub:'vision',speak:'vision'},{text:'h',sub:'hat',speak:'hat'},{text:'m',sub:'man',speak:'man'},
+      {text:'n',sub:'no',speak:'no'},{text:'ŋ',sub:'sing',speak:'sing'},{text:'l',sub:'leg',speak:'leg'},{text:'r',sub:'red',speak:'red'},
+      {text:'w',sub:'wet',speak:'wet'},{text:'j',sub:'yes',speak:'yes'},{text:'tʃ',sub:'chip',speak:'chip'},{text:'dʒ',sub:'jam',speak:'jam'}]}
+  ]},
+  vocab:{title:'核心 500 词汇 · Power 500',categories:[
+    {id:'numbers',name:'数字',subgroups:[{label:null,items:enNumbers()}]},
+    {id:'time',name:'时间',subgroups:[
+      {label:'星期',items:[{w:'Monday',t:'周一'},{w:'Tuesday',t:'周二'},{w:'Wednesday',t:'周三'},{w:'Thursday',t:'周四'},{w:'Friday',t:'周五'},{w:'Saturday',t:'周六'},{w:'Sunday',t:'周日'}]},
+      {label:'月份',items:[{w:'January',t:'1月'},{w:'February',t:'2月'},{w:'March',t:'3月'},{w:'April',t:'4月'},{w:'May',t:'5月'},{w:'June',t:'6月'},{w:'July',t:'7月'},{w:'August',t:'8月'},{w:'September',t:'9月'},{w:'October',t:'10月'},{w:'November',t:'11月'},{w:'December',t:'12月'}]},
+      {label:'季节',items:[{w:'spring',t:'春'},{w:'summer',t:'夏'},{w:'autumn',t:'秋'},{w:'winter',t:'冬'}]},
+      {label:'时间单位',items:[{w:'hour',t:'小时'},{w:'minute',t:'分钟'},{w:'second',t:'秒'},{w:'today',t:'今天'},{w:'tomorrow',t:'明天'},{w:'yesterday',t:'昨天'},{w:'morning',t:'早上'},{w:'afternoon',t:'下午'},{w:'evening',t:'晚上'},{w:'night',t:'夜晚'},{w:'now',t:'现在'},{w:'later',t:'稍后'}]}
+    ]},
+    {id:'pronouns',name:'人称',subgroups:[{label:null,items:[
+      {w:'I',t:'我'},{w:'you',t:'你'},{w:'he',t:'他'},{w:'she',t:'她'},{w:'it',t:'它'},{w:'we',t:'我们'},{w:'they',t:'他们'},
+      {w:'me',t:'我(宾)'},{w:'him',t:'他(宾)'},{w:'her',t:'她(宾)'},{w:'us',t:'我们(宾)'},{w:'them',t:'他们(宾)'},
+      {w:'my',t:'我的'},{w:'your',t:'你的'},{w:'his',t:'他的'}]}]},
+    {id:'relations',name:'关系',subgroups:[{label:null,items:[
+      {w:'father',t:'父亲'},{w:'mother',t:'母亲'},{w:'brother',t:'兄弟'},{w:'sister',t:'姐妹'},{w:'friend',t:'朋友'},
+      {w:'son',t:'儿子'},{w:'daughter',t:'女儿'},{w:'husband',t:'丈夫'},{w:'wife',t:'妻子'},{w:'child',t:'孩子'},
+      {w:'baby',t:'婴儿'},{w:'teacher',t:'老师'},{w:'student',t:'学生'},{w:'neighbor',t:'邻居'},{w:'colleague',t:'同事'}]}]},
+    {id:'verbs',name:'高频动词',subgroups:[{label:null,items:[
+      {w:'be',t:'是'},{w:'have',t:'有'},{w:'go',t:'去'},{w:'come',t:'来'},{w:'eat',t:'吃'},
+      {w:'drink',t:'喝'},{w:'sleep',t:'睡'},{w:'want',t:'想要'},{w:'like',t:'喜欢'},{w:'need',t:'需要'},
+      {w:'can',t:'能够'},{w:'know',t:'知道'},{w:'say',t:'说'},{w:'see',t:'看'},{w:'hear',t:'听'},
+      {w:'write',t:'写'},{w:'buy',t:'买'},{w:'work',t:'工作'},{w:'play',t:'玩'},{w:'give',t:'给'},
+      {w:'take',t:'拿'},{w:'make',t:'做'},{w:'think',t:'想'},{w:'run',t:'跑'},{w:'walk',t:'走'},
+      {w:'read',t:'读'},{w:'open',t:'开'},{w:'close',t:'关'},{w:'love',t:'爱'},{w:'help',t:'帮助'},
+      {w:'ask',t:'问'},{w:'answer',t:'答'},{w:'learn',t:'学'},{w:'teach',t:'教'},{w:'wait',t:'等'},
+      {w:'try',t:'试'},{w:'use',t:'用'},{w:'find',t:'找'},{w:'put',t:'放'},{w:'call',t:'打电话'}]}]},
+    {id:'home',name:'居家',subgroups:[{label:null,items:[
+      {w:'house',t:'房子'},{w:'room',t:'房间'},{w:'kitchen',t:'厨房'},{w:'bedroom',t:'卧室'},{w:'bathroom',t:'浴室'},
+      {w:'table',t:'桌子'},{w:'chair',t:'椅子'},{w:'bed',t:'床'},{w:'door',t:'门'},{w:'window',t:'窗户'},
+      {w:'light',t:'灯'},{w:'phone',t:'电话'},{w:'computer',t:'电脑'},{w:'key',t:'钥匙'},{w:'clock',t:'钟'}]}]},
+    {id:'restaurant',name:'餐厅',subgroups:[{label:null,items:[
+      {w:'water',t:'水'},{w:'rice',t:'米饭'},{w:'bread',t:'面包'},{w:'meat',t:'肉'},{w:'fish',t:'鱼'},
+      {w:'egg',t:'鸡蛋'},{w:'fruit',t:'水果'},{w:'coffee',t:'咖啡'},{w:'tea',t:'茶'},{w:'milk',t:'牛奶'},
+      {w:'sugar',t:'糖'},{w:'salt',t:'盐'},{w:'menu',t:'菜单'},{w:'bill',t:'账单'},
+      {w:'fork',t:'叉子'},{w:'knife',t:'刀'},{w:'spoon',t:'勺子'},{w:'plate',t:'盘子'}]}]},
+    {id:'transport',name:'城市交通',subgroups:[{label:null,items:[
+      {w:'airport',t:'机场'},{w:'station',t:'车站'},{w:'hotel',t:'酒店'},{w:'bus',t:'巴士'},{w:'taxi',t:'出租车'},
+      {w:'train',t:'火车'},{w:'left',t:'左'},{w:'right',t:'右'},{w:'street',t:'街道'},{w:'map',t:'地图'},
+      {w:'ticket',t:'票'},{w:'passport',t:'护照'},{w:'bank',t:'银行'},{w:'hospital',t:'医院'},{w:'school',t:'学校'}]}]},
+    {id:'emotions',name:'情感表达',subgroups:[{label:null,items:[
+      {w:'happy',t:'开心'},{w:'sad',t:'伤心'},{w:'tired',t:'累'},{w:'good',t:'好'},{w:'bad',t:'坏'},
+      {w:'big',t:'大'},{w:'small',t:'小'},{w:'hot',t:'热'},{w:'cold',t:'冷'},{w:'new',t:'新'},
+      {w:'old',t:'旧'},{w:'beautiful',t:'美丽'},{w:'sorry',t:'抱歉'},{w:'thank you',t:'谢谢'},
+      {w:'please',t:'请'},{w:'yes',t:'是'},{w:'no',t:'不'}]}]}
+  ]},
+  grammar:{title:'句式学习与系统语法',subtitle:'Sentence Patterns & Grammar',
+    sentenceGroups:[
+      {cat:'自我介绍',desc:'Introduction',sentences:[
+        {main:'My name is David.',sub:'我的名字叫David。'},
+        {main:'I am 25 years old.',sub:'我25岁。'},
+        {main:'I am from China.',sub:'我来自中国。'},
+        {main:'I am a student.',sub:'我是一名学生。'},
+        {main:'I live in Beijing.',sub:'我住在北京。'},
+        {main:'Nice to meet you.',sub:'很高兴认识你。'}
+      ]},
+      {cat:'兴趣爱好',desc:'Hobbies & Interests',sentences:[
+        {main:'I like reading books.',sub:'我喜欢看书。'},
+        {main:'I enjoy listening to music.',sub:'我喜欢听音乐。'},
+        {main:'I love cooking.',sub:'我喜欢做饭。'},
+        {main:'My hobby is playing basketball.',sub:'我的爱好是打篮球。'},
+        {main:'I usually watch movies on weekends.',sub:'我周末通常看电影。'},
+        {main:'I am interested in learning languages.',sub:'我对学语言感兴趣。'}
+      ]},
+      {cat:'日常生活',desc:'Daily Life',sentences:[
+        {main:'I wake up at 7 every morning.',sub:'我每天早上7点起床。'},
+        {main:'I have breakfast at home.',sub:'我在家吃早餐。'},
+        {main:'I go to work by bus.',sub:'我坐公交车上班。'},
+        {main:'I finish work at 6 pm.',sub:'我下午6点下班。'},
+        {main:'I usually go to bed at 11.',sub:'我通常11点睡觉。'},
+        {main:'I exercise three times a week.',sub:'我一周运动三次。'}
+      ]},
+      {cat:'餐厅点餐',desc:'Ordering Food',sentences:[
+        {main:'Can I see the menu, please?',sub:'请给我看一下菜单。'},
+        {main:'I would like a coffee.',sub:'我想要一杯咖啡。'},
+        {main:'How much is this?',sub:'这个多少钱？'},
+        {main:'The bill, please.',sub:'请买单。'},
+        {main:'This is delicious!',sub:'这个很好吃！'},
+        {main:'Do you have vegetarian food?',sub:'你们有素食吗？'}
+      ]},
+      {cat:'问路与交通',desc:'Directions & Transport',sentences:[
+        {main:'Excuse me, where is the station?',sub:'打扰一下，车站在哪里？'},
+        {main:'How do I get to the airport?',sub:'怎么去机场？'},
+        {main:'Turn left at the corner.',sub:'在拐角处左转。'},
+        {main:'Go straight for two blocks.',sub:'直走两个街区。'},
+        {main:'Is it far from here?',sub:'离这里远吗？'},
+        {main:'I want to take a taxi.',sub:'我想打出租车。'}
+      ]},
+      {cat:'购物',desc:'Shopping',sentences:[
+        {main:'How much does this cost?',sub:'这个多少钱？'},
+        {main:'Can I try this on?',sub:'我可以试穿吗？'},
+        {main:'Do you have a smaller size?',sub:'有小一号的吗？'},
+        {main:'I will take this one.',sub:'我要这个。'},
+        {main:'Can I pay by card?',sub:'可以刷卡吗？'},
+        {main:'Do you have this in another color?',sub:'有其他颜色的吗？'}
+      ]},
+      {cat:'表达感受',desc:'Feelings & Opinions',sentences:[
+        {main:'I am very happy today.',sub:'我今天很开心。'},
+        {main:'I feel a little tired.',sub:'我感觉有点累。'},
+        {main:'I think this is a good idea.',sub:'我觉得这是个好主意。'},
+        {main:'I am sorry about that.',sub:'关于那件事我很抱歉。'},
+        {main:'I agree with you.',sub:'我同意你的看法。'},
+        {main:'I don\'t understand.',sub:'我不明白。'}
+      ]},
+      {cat:'请求帮助',desc:'Asking for Help',sentences:[
+        {main:'Can you help me?',sub:'你能帮我吗？'},
+        {main:'Could you speak more slowly?',sub:'你能说慢一点吗？'},
+        {main:'What does this word mean?',sub:'这个词是什么意思？'},
+        {main:'How do you say this in English?',sub:'这个用英语怎么说？'},
+        {main:'I need a doctor.',sub:'我需要看医生。'},
+        {main:'Can you show me on the map?',sub:'你能在地图上指给我看吗？'}
+      ]}
+    ],
+    tables:[]
+  },
+  ttsLang:'en-US'
+},
+es: {
+  sounds:{title:'Fundamentos de Pronunciación',subtitle:'Haz clic para escuchar · Click to hear',categories:[
+    {name:'27 Letras',items:'A B C D E F G H I J K L M N Ñ O P Q R S T U V W X Y Z'.split(' ').map(l=>({text:l,sub:l.toLowerCase(),speak:l}))},
+    {name:'Vocales',items:[{text:'A',sub:'/a/',speak:'a'},{text:'E',sub:'/e/',speak:'e'},{text:'I',sub:'/i/',speak:'i'},{text:'O',sub:'/o/',speak:'o'},{text:'U',sub:'/u/',speak:'u'}]},
+    {name:'Diptongos',items:[
+      {text:'AI',sub:'aire',speak:'aire'},{text:'AU',sub:'auto',speak:'auto'},{text:'EI',sub:'seis',speak:'seis'},
+      {text:'EU',sub:'Europa',speak:'Europa'},{text:'IA',sub:'piano',speak:'piano'},{text:'IE',sub:'bien',speak:'bien'},
+      {text:'IO',sub:'radio',speak:'radio'},{text:'IU',sub:'ciudad',speak:'ciudad'},{text:'OI',sub:'oigo',speak:'oigo'},
+      {text:'UA',sub:'agua',speak:'agua'},{text:'UE',sub:'bueno',speak:'bueno'},{text:'UO',sub:'antiguo',speak:'antiguo'}]},
+    {name:'Consonantes Especiales',items:[
+      {text:'Ñ',sub:'año',speak:'año'},{text:'LL',sub:'llave',speak:'llave'},{text:'RR',sub:'perro',speak:'perro'},
+      {text:'CH',sub:'chico',speak:'chico'},{text:'GU',sub:'guitarra',speak:'guitarra'},{text:'QU',sub:'queso',speak:'queso'}]}
+  ]},
+  vocab:{title:'Power 500 Vocabulario',categories:[
+    {id:'numbers',name:'Números 数字',subgroups:[{label:null,items:esNumbers()}]},
+    {id:'time',name:'Tiempo 时间',subgroups:[
+      {label:'Días de la semana 星期',items:[{w:'lunes',t:'Mon'},{w:'martes',t:'Tue'},{w:'miércoles',t:'Wed'},{w:'jueves',t:'Thu'},{w:'viernes',t:'Fri'},{w:'sábado',t:'Sat'},{w:'domingo',t:'Sun'}]},
+      {label:'Meses 月份',items:[{w:'enero',t:'Jan'},{w:'febrero',t:'Feb'},{w:'marzo',t:'Mar'},{w:'abril',t:'Apr'},{w:'mayo',t:'May'},{w:'junio',t:'Jun'},{w:'julio',t:'Jul'},{w:'agosto',t:'Aug'},{w:'septiembre',t:'Sep'},{w:'octubre',t:'Oct'},{w:'noviembre',t:'Nov'},{w:'diciembre',t:'Dec'}]},
+      {label:'Estaciones 季节',items:[{w:'primavera',t:'spring'},{w:'verano',t:'summer'},{w:'otoño',t:'autumn'},{w:'invierno',t:'winter'}]},
+      {label:'Unidades 时间单位',items:[{w:'hora',t:'hour'},{w:'minuto',t:'minute'},{w:'segundo',t:'second'},{w:'hoy',t:'today'},{w:'mañana',t:'tomorrow'},{w:'ayer',t:'yesterday'},{w:'ahora',t:'now'},{w:'después',t:'later'},{w:'temprano',t:'early'},{w:'tarde',t:'late'}]}
+    ]},
+    {id:'pronouns',name:'Pronombres 人称',subgroups:[{label:null,items:[
+      {w:'yo',t:'I'},{w:'tú',t:'you'},{w:'él',t:'he'},{w:'ella',t:'she'},{w:'nosotros',t:'we'},
+      {w:'ellos',t:'they'},{w:'usted',t:'you(formal)'},{w:'me',t:'me'},{w:'te',t:'you(obj)'},{w:'nos',t:'us'}]}]},
+    {id:'relations',name:'Relaciones 关系',subgroups:[{label:null,items:[
+      {w:'padre',t:'father'},{w:'madre',t:'mother'},{w:'hermano',t:'brother'},{w:'hermana',t:'sister'},{w:'amigo',t:'friend'},
+      {w:'hijo',t:'son'},{w:'hija',t:'daughter'},{w:'esposo',t:'husband'},{w:'esposa',t:'wife'},
+      {w:'niño',t:'child'},{w:'profesor',t:'teacher'},{w:'estudiante',t:'student'},{w:'vecino',t:'neighbor'},{w:'compañero',t:'colleague'}]}]},
+    {id:'verbs',name:'Verbos 高频动词',subgroups:[{label:null,items:[
+      {w:'ser',t:'to be'},{w:'estar',t:'to be'},{w:'tener',t:'to have'},{w:'ir',t:'to go'},{w:'venir',t:'to come'},
+      {w:'comer',t:'to eat'},{w:'beber',t:'to drink'},{w:'dormir',t:'to sleep'},{w:'querer',t:'to want'},
+      {w:'gustar',t:'to like'},{w:'necesitar',t:'to need'},{w:'poder',t:'can'},{w:'saber',t:'to know'},
+      {w:'decir',t:'to say'},{w:'ver',t:'to see'},{w:'oír',t:'to hear'},{w:'escribir',t:'to write'},
+      {w:'comprar',t:'to buy'},{w:'trabajar',t:'to work'},{w:'jugar',t:'to play'},
+      {w:'dar',t:'to give'},{w:'tomar',t:'to take'},{w:'hacer',t:'to make'},{w:'pensar',t:'to think'},
+      {w:'correr',t:'to run'},{w:'caminar',t:'to walk'},{w:'leer',t:'to read'},{w:'abrir',t:'to open'},
+      {w:'cerrar',t:'to close'},{w:'amar',t:'to love'},{w:'ayudar',t:'to help'},
+      {w:'preguntar',t:'to ask'},{w:'responder',t:'to answer'},{w:'aprender',t:'to learn'},
+      {w:'enseñar',t:'to teach'},{w:'esperar',t:'to wait'},{w:'intentar',t:'to try'},
+      {w:'usar',t:'to use'},{w:'encontrar',t:'to find'},{w:'llamar',t:'to call'}]}]},
+    {id:'home',name:'Hogar 居家',subgroups:[{label:null,items:[
+      {w:'casa',t:'house'},{w:'habitación',t:'room'},{w:'cocina',t:'kitchen'},{w:'dormitorio',t:'bedroom'},{w:'baño',t:'bathroom'},
+      {w:'mesa',t:'table'},{w:'silla',t:'chair'},{w:'cama',t:'bed'},{w:'puerta',t:'door'},{w:'ventana',t:'window'},
+      {w:'luz',t:'light'},{w:'teléfono',t:'phone'},{w:'computadora',t:'computer'},{w:'llave',t:'key'},{w:'reloj',t:'clock'}]}]},
+    {id:'restaurant',name:'Restaurante 餐厅',subgroups:[{label:null,items:[
+      {w:'agua',t:'water'},{w:'arroz',t:'rice'},{w:'pan',t:'bread'},{w:'carne',t:'meat'},{w:'pescado',t:'fish'},
+      {w:'huevo',t:'egg'},{w:'fruta',t:'fruit'},{w:'café',t:'coffee'},{w:'té',t:'tea'},{w:'leche',t:'milk'},
+      {w:'azúcar',t:'sugar'},{w:'sal',t:'salt'},{w:'menú',t:'menu'},{w:'cuenta',t:'bill'},
+      {w:'tenedor',t:'fork'},{w:'cuchillo',t:'knife'},{w:'cuchara',t:'spoon'},{w:'plato',t:'plate'}]}]},
+    {id:'transport',name:'Transporte 交通',subgroups:[{label:null,items:[
+      {w:'aeropuerto',t:'airport'},{w:'estación',t:'station'},{w:'hotel',t:'hotel'},{w:'autobús',t:'bus'},{w:'taxi',t:'taxi'},
+      {w:'tren',t:'train'},{w:'izquierda',t:'left'},{w:'derecha',t:'right'},{w:'calle',t:'street'},{w:'mapa',t:'map'},
+      {w:'boleto',t:'ticket'},{w:'pasaporte',t:'passport'},{w:'banco',t:'bank'},{w:'hospital',t:'hospital'},{w:'escuela',t:'school'}]}]},
+    {id:'emotions',name:'Emociones 情感',subgroups:[{label:null,items:[
+      {w:'feliz',t:'happy'},{w:'triste',t:'sad'},{w:'cansado',t:'tired'},{w:'bueno',t:'good'},{w:'malo',t:'bad'},
+      {w:'grande',t:'big'},{w:'pequeño',t:'small'},{w:'caliente',t:'hot'},{w:'frío',t:'cold'},
+      {w:'nuevo',t:'new'},{w:'viejo',t:'old'},{w:'hermoso',t:'beautiful'},
+      {w:'lo siento',t:'sorry'},{w:'gracias',t:'thanks'},{w:'por favor',t:'please'},{w:'sí',t:'yes'},{w:'no',t:'no'}]}]}
+  ]},
+  grammar:{title:'Oraciones y Gramática',subtitle:'句式与语法系统',
+    sentenceGroups:[
+      {cat:'自我介绍',desc:'Presentación',sentences:[
+        {main:'Me llamo María.',sub:'My name is María.'},
+        {main:'Tengo 25 años.',sub:'I am 25 years old.'},
+        {main:'Soy de México.',sub:'I am from Mexico.'},
+        {main:'Soy estudiante.',sub:'I am a student.'},
+        {main:'Vivo en Madrid.',sub:'I live in Madrid.'},
+        {main:'Mucho gusto.',sub:'Nice to meet you.'}
+      ]},
+      {cat:'兴趣爱好',desc:'Pasatiempos',sentences:[
+        {main:'Me gusta leer libros.',sub:'I like reading books.'},
+        {main:'Me encanta escuchar música.',sub:'I love listening to music.'},
+        {main:'Me gusta cocinar.',sub:'I like cooking.'},
+        {main:'Mi pasatiempo es jugar fútbol.',sub:'My hobby is playing football.'},
+        {main:'Los fines de semana veo películas.',sub:'I watch movies on weekends.'},
+        {main:'Me interesa aprender idiomas.',sub:'I\'m interested in learning languages.'}
+      ]},
+      {cat:'日常生活',desc:'Vida diaria',sentences:[
+        {main:'Me despierto a las 7 cada mañana.',sub:'I wake up at 7 every morning.'},
+        {main:'Desayuno en casa.',sub:'I have breakfast at home.'},
+        {main:'Voy al trabajo en autobús.',sub:'I go to work by bus.'},
+        {main:'Termino de trabajar a las 6.',sub:'I finish work at 6.'},
+        {main:'Normalmente me acuesto a las 11.',sub:'I usually go to bed at 11.'},
+        {main:'Hago ejercicio tres veces a la semana.',sub:'I exercise 3 times a week.'}
+      ]},
+      {cat:'餐厅点餐',desc:'En el restaurante',sentences:[
+        {main:'¿Puedo ver el menú, por favor?',sub:'Can I see the menu, please?'},
+        {main:'Quisiera un café.',sub:'I would like a coffee.'},
+        {main:'¿Cuánto cuesta esto?',sub:'How much is this?'},
+        {main:'La cuenta, por favor.',sub:'The bill, please.'},
+        {main:'¡Está delicioso!',sub:'This is delicious!'},
+        {main:'¿Tienen comida vegetariana?',sub:'Do you have vegetarian food?'}
+      ]},
+      {cat:'问路与交通',desc:'Direcciones',sentences:[
+        {main:'Disculpe, ¿dónde está la estación?',sub:'Excuse me, where is the station?'},
+        {main:'¿Cómo llego al aeropuerto?',sub:'How do I get to the airport?'},
+        {main:'Gire a la izquierda en la esquina.',sub:'Turn left at the corner.'},
+        {main:'Siga recto dos cuadras.',sub:'Go straight for two blocks.'},
+        {main:'¿Está lejos de aquí?',sub:'Is it far from here?'},
+        {main:'Quiero tomar un taxi.',sub:'I want to take a taxi.'}
+      ]},
+      {cat:'购物',desc:'De compras',sentences:[
+        {main:'¿Cuánto cuesta esto?',sub:'How much does this cost?'},
+        {main:'¿Puedo probármelo?',sub:'Can I try this on?'},
+        {main:'¿Tiene una talla más pequeña?',sub:'Do you have a smaller size?'},
+        {main:'Me llevo este.',sub:'I\'ll take this one.'},
+        {main:'¿Puedo pagar con tarjeta?',sub:'Can I pay by card?'},
+        {main:'¿Lo tiene en otro color?',sub:'Do you have another color?'}
+      ]},
+      {cat:'表达感受',desc:'Sentimientos',sentences:[
+        {main:'Hoy estoy muy feliz.',sub:'I am very happy today.'},
+        {main:'Estoy un poco cansado.',sub:'I feel a little tired.'},
+        {main:'Creo que es buena idea.',sub:'I think it\'s a good idea.'},
+        {main:'Lo siento mucho.',sub:'I\'m very sorry.'},
+        {main:'Estoy de acuerdo contigo.',sub:'I agree with you.'},
+        {main:'No entiendo.',sub:'I don\'t understand.'}
+      ]},
+      {cat:'请求帮助',desc:'Pedir ayuda',sentences:[
+        {main:'¿Puede ayudarme?',sub:'Can you help me?'},
+        {main:'¿Puede hablar más despacio?',sub:'Could you speak more slowly?'},
+        {main:'¿Qué significa esta palabra?',sub:'What does this word mean?'},
+        {main:'¿Cómo se dice esto en español?',sub:'How do you say this in Spanish?'},
+        {main:'Necesito un médico.',sub:'I need a doctor.'},
+        {main:'¿Puede mostrármelo en el mapa?',sub:'Can you show me on the map?'}
+      ]}
+    ],
+    tables:[
+      {name:'Conjugación · Present Tense 动词变位',
+       headers:['Pronoun','-AR (hablar)','-ER (comer)','-IR (vivir)'],
+       rows:[['yo','hablo','como','vivo'],['tú','hablas','comes','vives'],['él/ella','habla','come','vive'],['nosotros','hablamos','comemos','vivimos'],['ellos','hablan','comen','viven']]},
+      {name:'Pronoun Matrix 代词矩阵',
+       headers:['Subject','Object','Indirect','Reflexive'],
+       rows:[['yo','me','me','me'],['tú','te','te','te'],['él/ella','lo/la','le','se'],['nosotros','nos','nos','nos'],['ellos','los/las','les','se']]},
+      {name:'Noun Gender 名词阴阳性',
+       headers:['Rule','Masculine (el)','Feminine (la)'],
+       rows:[['Ending -o/-a','el libro','la casa'],['Ending -or/-ión','el profesor','la canción'],['Ending -ma','el problema','la cama'],['Plural','los libros','las casas']]}
+    ]
+  },
+  ttsLang:'es-ES'
+},
+kr: {
+  sounds:{title:'발음 기초 · 发音基石',subtitle:'点击方块即发音',categories:[
+    {name:'기본 모음 · 基本元音',items:[
+      {text:'ㅏ',sub:'a',speak:'아'},{text:'ㅑ',sub:'ya',speak:'야'},{text:'ㅓ',sub:'eo',speak:'어'},{text:'ㅕ',sub:'yeo',speak:'여'},
+      {text:'ㅗ',sub:'o',speak:'오'},{text:'ㅛ',sub:'yo',speak:'요'},{text:'ㅜ',sub:'u',speak:'우'},{text:'ㅠ',sub:'yu',speak:'유'},
+      {text:'ㅡ',sub:'eu',speak:'으'},{text:'ㅣ',sub:'i',speak:'이'}]},
+    {name:'복합 모음 · 复合元音',items:[
+      {text:'ㅐ',sub:'ae',speak:'애'},{text:'ㅒ',sub:'yae',speak:'얘'},{text:'ㅔ',sub:'e',speak:'에'},{text:'ㅖ',sub:'ye',speak:'예'},
+      {text:'ㅘ',sub:'wa',speak:'와'},{text:'ㅙ',sub:'wae',speak:'왜'},{text:'ㅚ',sub:'oe',speak:'외'},{text:'ㅝ',sub:'wo',speak:'워'},
+      {text:'ㅞ',sub:'we',speak:'웨'},{text:'ㅟ',sub:'wi',speak:'위'},{text:'ㅢ',sub:'ui',speak:'의'}]},
+    {name:'기본 자음 · 基本辅音',items:[
+      {text:'ㄱ',sub:'g/k',speak:'기역'},{text:'ㄴ',sub:'n',speak:'니은'},{text:'ㄷ',sub:'d/t',speak:'디귿'},{text:'ㄹ',sub:'r/l',speak:'리을'},
+      {text:'ㅁ',sub:'m',speak:'미음'},{text:'ㅂ',sub:'b/p',speak:'비읍'},{text:'ㅅ',sub:'s',speak:'시옷'},{text:'ㅇ',sub:'ng',speak:'이응'},
+      {text:'ㅈ',sub:'j',speak:'지읒'},{text:'ㅊ',sub:'ch',speak:'치읓'},{text:'ㅋ',sub:'k',speak:'키읔'},{text:'ㅌ',sub:'t',speak:'티읕'},
+      {text:'ㅍ',sub:'p',speak:'피읖'},{text:'ㅎ',sub:'h',speak:'히읗'}]},
+    {name:'쌍자음 · 双辅音',items:[
+      {text:'ㄲ',sub:'kk',speak:'쌍기역'},{text:'ㄸ',sub:'tt',speak:'쌍디귿'},{text:'ㅃ',sub:'pp',speak:'쌍비읍'},
+      {text:'ㅆ',sub:'ss',speak:'쌍시옷'},{text:'ㅉ',sub:'jj',speak:'쌍지읒'}]},
+    {name:'받침 · Batchim 收音',items:[
+      {text:'ㄱ',sub:'k 먹',speak:'먹'},{text:'ㄴ',sub:'n 눈',speak:'눈'},{text:'ㄷ',sub:'t 듣',speak:'듣'},
+      {text:'ㄹ',sub:'l 달',speak:'달'},{text:'ㅁ',sub:'m 밤',speak:'밤'},{text:'ㅂ',sub:'p 밥',speak:'밥'},{text:'ㅇ',sub:'ng 강',speak:'강'}]}
+  ]},
+  vocab:{title:'핵심 500 단어 · 核心500词汇',categories:[
+    {id:'numbers',name:'숫자 数字',subgroups:[{label:null,items:krNumbers()}]},
+    {id:'time',name:'시간 时间',subgroups:[
+      {label:'요일 星期',items:[{w:'월요일',t:'周一'},{w:'화요일',t:'周二'},{w:'수요일',t:'周三'},{w:'목요일',t:'周四'},{w:'금요일',t:'周五'},{w:'토요일',t:'周六'},{w:'일요일',t:'周日'}]},
+      {label:'달 月份',items:[{w:'1월',t:'1月'},{w:'2월',t:'2月'},{w:'3월',t:'3月'},{w:'4월',t:'4月'},{w:'5월',t:'5月'},{w:'6월',t:'6月'},{w:'7월',t:'7月'},{w:'8월',t:'8月'},{w:'9월',t:'9月'},{w:'10월',t:'10月'},{w:'11월',t:'11月'},{w:'12월',t:'12月'}]},
+      {label:'계절 季节',items:[{w:'봄',t:'春'},{w:'여름',t:'夏'},{w:'가을',t:'秋'},{w:'겨울',t:'冬'}]},
+      {label:'시간 단위 时间单位',items:[{w:'시간',t:'小时'},{w:'분',t:'分钟'},{w:'초',t:'秒'},{w:'오늘',t:'今天'},{w:'내일',t:'明天'},{w:'어제',t:'昨天'},{w:'아침',t:'早上'},{w:'오후',t:'下午'},{w:'저녁',t:'晚上'},{w:'밤',t:'夜晚'},{w:'지금',t:'现在'},{w:'나중에',t:'稍后'}]}
+    ]},
+    {id:'pronouns',name:'인칭 人称',subgroups:[{label:null,items:[
+      {w:'나',t:'我'},{w:'너',t:'你'},{w:'그',t:'他'},{w:'그녀',t:'她'},{w:'우리',t:'我们'},
+      {w:'그들',t:'他们'},{w:'저',t:'我(敬)'},{w:'당신',t:'您'}]}]},
+    {id:'relations',name:'관계 关系',subgroups:[{label:null,items:[
+      {w:'아버지',t:'父亲'},{w:'어머니',t:'母亲'},{w:'형/오빠',t:'哥哥'},{w:'누나/언니',t:'姐姐'},{w:'친구',t:'朋友'},
+      {w:'아들',t:'儿子'},{w:'딸',t:'女儿'},{w:'남편',t:'丈夫'},{w:'아내',t:'妻子'},
+      {w:'아이',t:'孩子'},{w:'선생님',t:'老师'},{w:'학생',t:'学生'},{w:'이웃',t:'邻居'},{w:'동료',t:'同事'}]}]},
+    {id:'verbs',name:'핵심 동사 高频动词',subgroups:[{label:null,items:[
+      {w:'이다',t:'是'},{w:'있다',t:'有'},{w:'가다',t:'去'},{w:'오다',t:'来'},{w:'먹다',t:'吃'},
+      {w:'마시다',t:'喝'},{w:'자다',t:'睡'},{w:'원하다',t:'想要'},{w:'좋아하다',t:'喜欢'},{w:'필요하다',t:'需要'},
+      {w:'할 수 있다',t:'能'},{w:'알다',t:'知道'},{w:'말하다',t:'说'},{w:'보다',t:'看'},{w:'듣다',t:'听'},
+      {w:'쓰다',t:'写'},{w:'사다',t:'买'},{w:'일하다',t:'工作'},{w:'놀다',t:'玩'},{w:'주다',t:'给'},
+      {w:'만들다',t:'做'},{w:'생각하다',t:'想'},{w:'달리다',t:'跑'},{w:'걷다',t:'走'},
+      {w:'읽다',t:'读'},{w:'열다',t:'开'},{w:'닫다',t:'关'},{w:'사랑하다',t:'爱'},{w:'돕다',t:'帮'},
+      {w:'묻다',t:'问'},{w:'대답하다',t:'答'},{w:'배우다',t:'学'},{w:'가르치다',t:'教'},
+      {w:'기다리다',t:'等'},{w:'시도하다',t:'试'},{w:'사용하다',t:'用'},{w:'찾다',t:'找'},
+      {w:'놓다',t:'放'},{w:'전화하다',t:'打电话'}]}]},
+    {id:'home',name:'집 居家',subgroups:[{label:null,items:[
+      {w:'집',t:'房子'},{w:'방',t:'房间'},{w:'부엌',t:'厨房'},{w:'침실',t:'卧室'},{w:'화장실',t:'浴室'},
+      {w:'탁자',t:'桌子'},{w:'의자',t:'椅子'},{w:'침대',t:'床'},{w:'문',t:'门'},{w:'창문',t:'窗户'},
+      {w:'불',t:'灯'},{w:'전화',t:'电话'},{w:'컴퓨터',t:'电脑'},{w:'열쇠',t:'钥匙'},{w:'시계',t:'钟'}]}]},
+    {id:'restaurant',name:'식당 餐厅',subgroups:[{label:null,items:[
+      {w:'물',t:'水'},{w:'밥',t:'米饭'},{w:'빵',t:'面包'},{w:'고기',t:'肉'},{w:'생선',t:'鱼'},
+      {w:'계란',t:'鸡蛋'},{w:'과일',t:'水果'},{w:'커피',t:'咖啡'},{w:'차',t:'茶'},{w:'우유',t:'牛奶'},
+      {w:'설탕',t:'糖'},{w:'소금',t:'盐'},{w:'메뉴',t:'菜单'},{w:'계산서',t:'账单'},
+      {w:'포크',t:'叉子'},{w:'칼',t:'刀'},{w:'숟가락',t:'勺子'},{w:'접시',t:'盘子'}]}]},
+    {id:'transport',name:'도시와 교통 交通',subgroups:[{label:null,items:[
+      {w:'공항',t:'机场'},{w:'역',t:'车站'},{w:'호텔',t:'酒店'},{w:'버스',t:'巴士'},{w:'택시',t:'出租车'},
+      {w:'기차',t:'火车'},{w:'왼쪽',t:'左'},{w:'오른쪽',t:'右'},{w:'거리',t:'街道'},{w:'지도',t:'地图'},
+      {w:'표',t:'票'},{w:'여권',t:'护照'},{w:'은행',t:'银行'},{w:'병원',t:'医院'},{w:'학교',t:'学校'}]}]},
+    {id:'emotions',name:'감정 표현 情感',subgroups:[{label:null,items:[
+      {w:'행복하다',t:'开心'},{w:'슬프다',t:'伤心'},{w:'피곤하다',t:'累'},{w:'좋다',t:'好'},{w:'나쁘다',t:'坏'},
+      {w:'크다',t:'大'},{w:'작다',t:'小'},{w:'덥다',t:'热'},{w:'춥다',t:'冷'},
+      {w:'새롭다',t:'新'},{w:'오래되다',t:'旧'},{w:'아름답다',t:'美'},
+      {w:'미안합니다',t:'对不起'},{w:'감사합니다',t:'谢谢'},{w:'주세요',t:'请'},{w:'네',t:'是'},{w:'아니요',t:'不'}]}]}
+  ]},
+  grammar:{title:'문장과 문법 · 句式语法',subtitle:'체계적 정리 · 系统化呈现',
+    sentenceGroups:[
+      {cat:'自我介绍',desc:'자기소개',sentences:[
+        {main:'제 이름은 민수입니다.',sub:'我叫民秀。'},
+        {main:'저는 25살입니다.',sub:'我25岁。'},
+        {main:'저는 중국에서 왔어요.',sub:'我从中国来。'},
+        {main:'저는 학생이에요.',sub:'我是学生。'},
+        {main:'서울에 살고 있어요.',sub:'我住在首尔。'},
+        {main:'만나서 반갑습니다.',sub:'很高兴认识你。'}
+      ]},
+      {cat:'兴趣爱好',desc:'취미',sentences:[
+        {main:'저는 책 읽는 것을 좋아해요.',sub:'我喜欢看书。'},
+        {main:'음악 듣는 것을 즐겨요.',sub:'我喜欢听音乐。'},
+        {main:'요리하는 것을 좋아해요.',sub:'我喜欢做饭。'},
+        {main:'제 취미는 축구예요.',sub:'我的爱好是踢足球。'},
+        {main:'주말에 보통 영화를 봐요.',sub:'周末通常看电影。'},
+        {main:'언어 배우는 것에 관심이 있어요.',sub:'我对学语言感兴趣。'}
+      ]},
+      {cat:'日常生活',desc:'일상생활',sentences:[
+        {main:'매일 아침 7시에 일어나요.',sub:'每天早上7点起床。'},
+        {main:'집에서 아침을 먹어요.',sub:'在家吃早餐。'},
+        {main:'버스로 출근해요.',sub:'坐公交上班。'},
+        {main:'저녁 6시에 퇴근해요.',sub:'晚上6点下班。'},
+        {main:'보통 11시에 자요.',sub:'通常11点睡觉。'},
+        {main:'일주일에 세 번 운동해요.',sub:'一周运动三次。'}
+      ]},
+      {cat:'餐厅点餐',desc:'식당에서',sentences:[
+        {main:'메뉴 좀 보여주세요.',sub:'请给我看菜单。'},
+        {main:'커피 한 잔 주세요.',sub:'请给我一杯咖啡。'},
+        {main:'이거 얼마예요?',sub:'这个多少钱？'},
+        {main:'계산서 주세요.',sub:'请买单。'},
+        {main:'정말 맛있어요!',sub:'真好吃！'},
+        {main:'채식 메뉴 있어요?',sub:'有素食菜单吗？'}
+      ]},
+      {cat:'问路与交通',desc:'길 묻기',sentences:[
+        {main:'실례합니다, 역이 어디예요?',sub:'打扰，车站在哪？'},
+        {main:'공항에 어떻게 가요?',sub:'怎么去机场？'},
+        {main:'모퉁이에서 왼쪽으로 가세요.',sub:'在拐角处左转。'},
+        {main:'두 블록 직진하세요.',sub:'直走两个街区。'},
+        {main:'여기서 멀어요?',sub:'离这里远吗？'},
+        {main:'택시를 타고 싶어요.',sub:'我想打出租车。'}
+      ]},
+      {cat:'购物',desc:'쇼핑',sentences:[
+        {main:'이거 얼마예요?',sub:'这个多少钱？'},
+        {main:'입어봐도 돼요?',sub:'可以试穿吗？'},
+        {main:'더 작은 사이즈 있어요?',sub:'有小一号的吗？'},
+        {main:'이걸로 할게요.',sub:'我要这个。'},
+        {main:'카드로 결제할 수 있어요?',sub:'可以刷卡吗？'},
+        {main:'다른 색상 있어요?',sub:'有其他颜色吗？'}
+      ]},
+      {cat:'表达感受',desc:'감정 표현',sentences:[
+        {main:'오늘 너무 행복해요.',sub:'今天很开心。'},
+        {main:'좀 피곤해요.',sub:'有点累。'},
+        {main:'좋은 생각이에요.',sub:'好主意。'},
+        {main:'정말 죄송합니다.',sub:'非常抱歉。'},
+        {main:'동의합니다.',sub:'我同意。'},
+        {main:'이해가 안 돼요.',sub:'我不明白。'}
+      ]},
+      {cat:'请求帮助',desc:'도움 요청',sentences:[
+        {main:'도와주실 수 있어요?',sub:'能帮我吗？'},
+        {main:'천천히 말해주세요.',sub:'请说慢一点。'},
+        {main:'이 단어가 무슨 뜻이에요?',sub:'这个词什么意思？'},
+        {main:'이것을 한국어로 뭐라고 해요?',sub:'这个韩语怎么说？'},
+        {main:'의사가 필요해요.',sub:'需要看医生。'},
+        {main:'지도에서 보여주세요.',sub:'请在地图上指给我看。'}
+      ]}
+    ],
+    tables:[
+      {name:'조사 · Particles 助词表',
+       headers:['功能','元音后','辅音后','例子'],
+       rows:[['主语','가','이','나가, 학생이'],['话题','는','은','나는, 선생님은'],['宾语','를','을','책을, 커피를'],['位置','에서','에서','학교에서'],['方向','에','에','집에'],['的','의','의','나의']]},
+      {name:'어체 · Speech Levels 语体切换',
+       headers:['动词','格式体','非格式体','半语'],
+       rows:[['가다(去)','갑니다','가요','가'],['먹다(吃)','먹습니다','먹어요','먹어'],['하다(做)','합니다','해요','해'],['있다(有)','있습니다','있어요','있어'],['이다(是)','입니다','이에요/예요','이야/야']]}
+    ]
+  },
+  ttsLang:'ko-KR'
+}
+};
+
+const LANG_PAIRS={en:{from:'en',to:'zh-CN'},es:{from:'es',to:'en'},kr:{from:'ko',to:'zh-CN'}};
+let currentLang='en', currentSection='sounds', searchHistory=[];
+
+// TTS
+function speak(text,lang){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang||DATA[currentLang].ttsLang; u.rate=0.9;
+  window.speechSynthesis.speak(u);
+}
+
+// SOUNDS
+function renderSounds(){
+  const d=DATA[currentLang].sounds;
+  let h=`<h2 class="section-title">${d.title}</h2><p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:24px">${d.subtitle}</p>`;
+  for(const cat of d.categories){
+    h+=`<div class="sound-category"><h3>${cat.name}</h3><div class="sound-grid">`;
+    for(const item of cat.items){
+      const sp=(item.speak||item.text).replace(/'/g,"\\'");
+      h+=`<div class="sound-block" onclick="playSound(this,'${sp}')"><span>${item.text}</span>${item.sub?`<span class="sub">${item.sub}</span>`:''}</div>`;
+    }
+    h+=`</div></div>`;
+  }
+  document.getElementById('sec-sounds').innerHTML=h;
+}
+function playSound(el,text){speak(text);el.classList.add('playing');setTimeout(()=>el.classList.remove('playing'),400)}
+
+// VOCAB
+function renderVocab(){
+  const d=DATA[currentLang].vocab;
+  let sidebar='', content='';
+  for(const cat of d.categories){
+    const cnName=cat.name.includes(' ')?cat.name.split(' ').pop():cat.name;
+    sidebar+=`<a href="#vocab-${cat.id}" data-id="vocab-${cat.id}">${cnName}</a>`;
+    content+=`<div class="vocab-section" id="vocab-${cat.id}"><h3>${cat.name}</h3>`;
+    for(const sg of cat.subgroups){
+      if(sg.label) content+=`<div class="vocab-subgroup"><h4>${sg.label}</h4>`;
+      else content+=`<div class="vocab-subgroup">`;
+      const isNum=cat.id==='numbers';
+      content+=`<div class="vocab-grid${isNum?'':' wide'}">`;
+      for(const item of sg.items){
+        const w=item.w.replace(/'/g,"\\'");
+        content+=`<div class="vocab-card" onclick="playSound(this,'${w}')"><div class="vocab-word">${item.w}</div><div class="vocab-trans">${item.t}</div></div>`;
+      }
+      content+=`</div></div>`;
+    }
+    content+=`</div>`;
+  }
+  document.getElementById('sec-vocab').innerHTML=
+    `<h2 class="section-title">${d.title}</h2>
+     <div class="vocab-layout"><nav class="vocab-sidebar">${sidebar}</nav><div class="vocab-content">${content}</div></div>`;
+  document.querySelectorAll('.vocab-sidebar a').forEach(a=>{
+    a.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(a.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})});
+  });
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{if(entry.isIntersecting){
+      document.querySelectorAll('.vocab-sidebar a').forEach(a=>a.classList.remove('active'));
+      const link=document.querySelector(`.vocab-sidebar a[data-id="${entry.target.id}"]`);
+      if(link)link.classList.add('active');
+    }});
+  },{rootMargin:'-100px 0px -60% 0px'});
+  document.querySelectorAll('.vocab-section').forEach(s=>obs.observe(s));
+  const fl=document.querySelector('.vocab-sidebar a');if(fl)fl.classList.add('active');
+}
+
+// GRAMMAR
+const spkSVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.08"/></svg>`;
+function renderGrammar(){
+  const d=DATA[currentLang].grammar;
+  let h=`<h2 class="section-title">${d.title}</h2>`;
+  // Sentence groups by category
+  for(const g of d.sentenceGroups){
+    h+=`<div class="grammar-cat"><div class="grammar-cat-title">${g.cat}</div><div class="grammar-cat-sub">${g.desc}</div>`;
+    for(const s of g.sentences){
+      const m=s.main.replace(/'/g,"\\'");
+      h+=`<div class="sentence-row"><div class="text-col"><div class="main-text">${s.main}</div><div class="sub-text">${s.sub}</div></div>
+        <button class="speaker-btn" onclick="speak('${m}')">${spkSVG}</button></div>`;
+    }
+    h+=`</div>`;
+  }
+  // Tables
+  for(const t of d.tables){
+    h+=`<div class="grammar-block"><h3>${t.name}</h3><div class="grammar-table-wrap"><table class="grammar-table"><thead><tr>`;
+    for(const hd of t.headers)h+=`<th>${hd}</th>`;
+    h+=`</tr></thead><tbody>`;
+    for(const row of t.rows){
+      h+=`<tr>`;
+      for(const cell of row){const c=cell.replace(/'/g,"\\'");h+=`<td onclick="playCellAudio(this,'${c}')">${cell}</td>`}
+      h+=`</tr>`;
+    }
+    h+=`</tbody></table></div></div>`;
+  }
+  document.getElementById('sec-grammar').innerHTML=h;
+}
+function playCellAudio(el,text){const c=text.split('(')[0].split('/')[0].trim();speak(c);el.classList.add('playing-cell');setTimeout(()=>el.classList.remove('playing-cell'),500)}
+
+// LOOKUP
+function renderLookup(){
+  document.getElementById('lookup-input').value='';
+  document.getElementById('lookup-result').classList.remove('show');
+  document.getElementById('lookup-loading').classList.remove('show');
+  renderHistory();
+}
+async function doLookup(){
+  const input=document.getElementById('lookup-input').value.trim();
+  if(!input)return;
+  const pair=LANG_PAIRS[currentLang];
+  const loading=document.getElementById('lookup-loading');
+  const resultEl=document.getElementById('lookup-result');
+  resultEl.classList.remove('show'); loading.classList.add('show');
+  try{
+    const url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=${pair.from}|${pair.to}`;
+    const resp=await fetch(url); const data=await resp.json();
+    loading.classList.remove('show');
+    document.getElementById('lookup-main').textContent=input;
+    document.getElementById('lookup-sub').textContent=data.responseData?.translatedText||'(暂无翻译结果)';
+    resultEl.classList.add('show');
+  }catch(e){
+    loading.classList.remove('show');
+    document.getElementById('lookup-main').textContent=input;
+    document.getElementById('lookup-sub').textContent='(网络错误，请稍后重试)';
+    resultEl.classList.add('show');
+  }
+  if(!searchHistory.includes(input)){searchHistory.unshift(input);if(searchHistory.length>5)searchHistory.pop();renderHistory()}
+}
+function speakLookup(){const t=document.getElementById('lookup-main').textContent;if(t)speak(t)}
+function renderHistory(){
+  const label=document.getElementById('history-label'),chips=document.getElementById('history-chips');
+  if(!searchHistory.length){label.style.display='none';chips.innerHTML='';return}
+  label.style.display='block';
+  chips.innerHTML=searchHistory.map(h=>`<div class="history-chip" onclick="document.getElementById('lookup-input').value='${h.replace(/'/g,"\\'")}';doLookup()">${h}</div>`).join('');
+}
+
+// NAV
+function switchLang(lang){currentLang=lang;document.body.className=`lang-${lang}`;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));switchSection('sounds')}
+function switchSection(sec){currentSection=sec;document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.section===sec));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(`sec-${sec}`).classList.add('active');renderCurrentSection()}
+function renderCurrentSection(){
+  switch(currentSection){case'sounds':renderSounds();break;case'vocab':renderVocab();break;case'grammar':renderGrammar();break;case'lookup':renderLookup();break}
+}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>switchLang(b.dataset.lang)));
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchSection(b.dataset.section)));
+document.getElementById('lookup-input').addEventListener('keydown',e=>{if(e.key==='Enter')doLookup()});
+renderSounds();
+</script>
+</body>
+</html>
