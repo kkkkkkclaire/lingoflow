@@ -300,7 +300,11 @@ en: {
       {w:'happy',t:'开心'},{w:'sad',t:'伤心'},{w:'tired',t:'累'},{w:'good',t:'好'},{w:'bad',t:'坏'},
       {w:'big',t:'大'},{w:'small',t:'小'},{w:'hot',t:'热'},{w:'cold',t:'冷'},{w:'new',t:'新'},
       {w:'old',t:'旧'},{w:'beautiful',t:'美丽'},{w:'sorry',t:'抱歉'},{w:'thank you',t:'谢谢'},
-      {w:'please',t:'请'},{w:'yes',t:'是'},{w:'no',t:'不'}]}]}
+      {w:'please',t:'请'},{w:'yes',t:'是'},{w:'no',t:'不'}]}]},
+    {id:'colors',name:'颜色',subgroups:[{label:null,items:[
+      {w:'red',t:'红'},{w:'orange',t:'橙'},{w:'yellow',t:'黄'},{w:'green',t:'绿'},{w:'blue',t:'蓝'},
+      {w:'purple',t:'紫'},{w:'pink',t:'粉'},{w:'black',t:'黑'},{w:'white',t:'白'},{w:'gray',t:'灰'},
+      {w:'brown',t:'棕'},{w:'gold',t:'金'}]}]}
   ]},
   grammar:{title:'句式学习与系统语法',subtitle:'Sentence Patterns & Grammar',
     sentenceGroups:[
@@ -430,7 +434,11 @@ es: {
       {w:'feliz',t:'happy'},{w:'triste',t:'sad'},{w:'cansado',t:'tired'},{w:'bueno',t:'good'},{w:'malo',t:'bad'},
       {w:'grande',t:'big'},{w:'pequeño',t:'small'},{w:'caliente',t:'hot'},{w:'frío',t:'cold'},
       {w:'nuevo',t:'new'},{w:'viejo',t:'old'},{w:'hermoso',t:'beautiful'},
-      {w:'lo siento',t:'sorry'},{w:'gracias',t:'thanks'},{w:'por favor',t:'please'},{w:'sí',t:'yes'},{w:'no',t:'no'}]}]}
+      {w:'lo siento',t:'sorry'},{w:'gracias',t:'thanks'},{w:'por favor',t:'please'},{w:'sí',t:'yes'},{w:'no',t:'no'}]}]},
+    {id:'colors',name:'Colores 颜色',subgroups:[{label:null,items:[
+      {w:'rojo',t:'red'},{w:'naranja',t:'orange'},{w:'amarillo',t:'yellow'},{w:'verde',t:'green'},{w:'azul',t:'blue'},
+      {w:'morado',t:'purple'},{w:'rosa',t:'pink'},{w:'negro',t:'black'},{w:'blanco',t:'white'},{w:'gris',t:'gray'},
+      {w:'marrón',t:'brown'},{w:'dorado',t:'gold'}]}]}
   ]},
   grammar:{title:'Oraciones y Gramática',subtitle:'句式与语法系统',
     sentenceGroups:[
@@ -577,7 +585,11 @@ kr: {
       {w:'행복하다',t:'开心'},{w:'슬프다',t:'伤心'},{w:'피곤하다',t:'累'},{w:'좋다',t:'好'},{w:'나쁘다',t:'坏'},
       {w:'크다',t:'大'},{w:'작다',t:'小'},{w:'덥다',t:'热'},{w:'춥다',t:'冷'},
       {w:'새롭다',t:'新'},{w:'오래되다',t:'旧'},{w:'아름답다',t:'美'},
-      {w:'미안합니다',t:'对不起'},{w:'감사합니다',t:'谢谢'},{w:'주세요',t:'请'},{w:'네',t:'是'},{w:'아니요',t:'不'}]}]}
+      {w:'미안합니다',t:'对不起'},{w:'감사합니다',t:'谢谢'},{w:'주세요',t:'请'},{w:'네',t:'是'},{w:'아니요',t:'不'}]}]},
+    {id:'colors',name:'색깔 颜色',subgroups:[{label:null,items:[
+      {w:'빨간색',t:'红'},{w:'주황색',t:'橙'},{w:'노란색',t:'黄'},{w:'초록색',t:'绿'},{w:'파란색',t:'蓝'},
+      {w:'보라색',t:'紫'},{w:'분홍색',t:'粉'},{w:'검은색',t:'黑'},{w:'흰색',t:'白'},{w:'회색',t:'灰'},
+      {w:'갈색',t:'棕'},{w:'금색',t:'金'}]}]}
   ]},
   grammar:{title:'문장과 문법 · 句式语法',subtitle:'체계적 정리 · 系统化呈现',
     sentenceGroups:[
@@ -794,7 +806,21 @@ function renderHistory(){
 }
 
 // NAV
-function switchLang(lang){currentLang=lang;document.body.className=`lang-${lang}`;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));switchSection('sounds')}
+function switchLang(lang){
+  // Remember scroll position and active vocab section
+  const scrollY=window.scrollY;
+  const activeVocabLink=document.querySelector('.vocab-sidebar a.active');
+  const activeVocabId=activeVocabLink?activeVocabLink.dataset.id:null;
+  currentLang=lang;document.body.className=`lang-${lang}`;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  renderCurrentSection();
+  // Restore scroll or navigate to same vocab section
+  if(currentSection==='vocab'&&activeVocabId){
+    const target=document.getElementById(activeVocabId);
+    if(target){setTimeout(()=>target.scrollIntoView({behavior:'auto',block:'start'}),50);return}
+  }
+  window.scrollTo(0,scrollY);
+}
 function switchSection(sec){currentSection=sec;document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.section===sec));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(`sec-${sec}`).classList.add('active');renderCurrentSection()}
 function renderCurrentSection(){
   switch(currentSection){case'sounds':renderSounds();break;case'vocab':renderVocab();break;case'grammar':renderGrammar();break;case'lookup':renderLookup();break}
