@@ -675,12 +675,69 @@ const LANG_PAIRS={en:{from:'en',to:'zh-CN'},es:{from:'es',to:'en'},kr:{from:'ko'
 let currentLang='en', currentSection='sounds', searchHistory=[];
 
 // TTS
+let availableVoices=[];
+let preferredVoiceCache={};
+const TTS_CONFIG={
+  'en-US':{rate:0.92,pitch:1.0,volume:1.0},
+  'es-ES':{rate:0.9,pitch:1.0,volume:1.0},
+  'ko-KR':{rate:0.88,pitch:1.0,volume:1.0}
+};
+function refreshVoices(){
+  availableVoices=window.speechSynthesis?window.speechSynthesis.getVoices():[];
+  preferredVoiceCache={};
+}
+function normalizeSpeechText(text,lang){
+  if(!text)return '';
+  let out=String(text).replace(/\s+/g,' ').trim();
+  // Add slight pauses for smoother phrasing.
+  out=out.replace(/([,;:])/g,'$1 ');
+  if(lang==='en-US'){
+    out=out.replace(/\bpm\b/gi,'P M').replace(/\bam\b/gi,'A M');
+  }else if(lang==='es-ES'){
+    out=out.replace(/\b\d{1,2}:\d{2}\b/g,(m)=>m.replace(':',' y '));
+  }
+  return out;
+}
+function getPreferredVoice(lang){
+  if(preferredVoiceCache[lang]) return preferredVoiceCache[lang];
+  const voices=availableVoices.length?availableVoices:(window.speechSynthesis?window.speechSynthesis.getVoices():[]);
+  if(!voices.length) return null;
+  const byLang=voices.filter(v=>(v.lang||'').toLowerCase().startsWith(lang.toLowerCase().slice(0,2)));
+  const score=(v)=>{
+    const name=(v.name||'').toLowerCase();
+    let s=0;
+    if((v.lang||'').toLowerCase()===lang.toLowerCase()) s+=6;
+    if(v.localService) s+=3;
+    if(v.default) s+=2;
+    // Favor natural voices when available.
+    if(name.includes('natural')||name.includes('premium')||name.includes('enhanced')) s+=4;
+    if(name.includes('neural')||name.includes('siri')||name.includes('google')) s+=2;
+    return s;
+  };
+  const pool=byLang.length?byLang:voices;
+  pool.sort((a,b)=>score(b)-score(a));
+  preferredVoiceCache[lang]=pool[0]||null;
+  return preferredVoiceCache[lang];
+}
 function speak(text,lang){
   if(!window.speechSynthesis)return;
+  const targetLang=lang||DATA[currentLang].ttsLang;
+  const cleanedText=normalizeSpeechText(text,targetLang);
+  if(!cleanedText) return;
   window.speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang=lang||DATA[currentLang].ttsLang; u.rate=0.9;
+  const u=new SpeechSynthesisUtterance(cleanedText);
+  const cfg=TTS_CONFIG[targetLang]||{rate:0.9,pitch:1.0,volume:1.0};
+  u.lang=targetLang;
+  u.rate=cfg.rate;
+  u.pitch=cfg.pitch;
+  u.volume=cfg.volume;
+  const v=getPreferredVoice(targetLang);
+  if(v)u.voice=v;
   window.speechSynthesis.speak(u);
+}
+if(window.speechSynthesis){
+  refreshVoices();
+  window.speechSynthesis.onvoiceschanged=refreshVoices;
 }
 
 // SOUNDS
