@@ -200,6 +200,133 @@ footer{text-align:center;padding:32px;font-size:0.75rem;color:var(--text-seconda
 .back-btn{padding:8px 18px;border:none;border-radius:40px;cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:500;background:rgba(255,255,255,.4);color:var(--text-primary);border:1px solid rgba(255,255,255,.5);transition:all var(--transition)}
 .back-btn:hover{background:rgba(255,255,255,.7);transform:translateY(-1px)}
 @media(max-width:768px){.features-grid,.lang-cards{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}.hero{min-height:90vh;padding:30px 20px}}
+
+/* ===== VISUAL ENHANCEMENTS ===== */
+
+/* Grain texture overlay */
+body::before {
+  content:''; position:fixed; inset:0; z-index:9999; pointer-events:none; opacity:0.022;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Section title accent underline */
+.section-title{position:relative;display:inline-block}
+.section-title::after{content:'';position:absolute;bottom:-8px;left:0;width:36px;height:3px;border-radius:2px;opacity:0.5}
+body.lang-en .section-title::after{background:var(--mint-accent)}
+body.lang-es .section-title::after{background:var(--peach-accent)}
+body.lang-kr .section-title::after{background:var(--lavender-accent)}
+body.lang-yue .section-title::after{background:var(--tea-accent)}
+
+/* Spring-feel hover on vocab cards */
+.vocab-card{transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1)!important;position:relative;overflow:hidden}
+.vocab-card:hover{transform:translateY(-3px) scale(1.04)!important;box-shadow:0 8px 24px rgba(0,0,0,0.08)!important}
+
+/* Spring hover on sound blocks */
+.sound-block{transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1)!important;position:relative;overflow:hidden}
+.sound-block:hover{transform:translateY(-3px) scale(1.06)!important;box-shadow:0 8px 20px rgba(0,0,0,0.1)!important}
+
+/* Enhanced playing animation with glow */
+@keyframes playBounce{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+.sound-block.playing{animation:playBounce 0.5s cubic-bezier(0.34,1.56,0.64,1)!important}
+.vocab-card.playing{animation:playBounce 0.45s cubic-bezier(0.34,1.56,0.64,1)!important}
+body.lang-en .vocab-card.playing{box-shadow:0 0 0 3px var(--mint-accent),0 4px 16px rgba(143,181,161,0.3)!important}
+body.lang-es .vocab-card.playing{box-shadow:0 0 0 3px var(--peach-accent),0 4px 16px rgba(196,145,142,0.3)!important}
+body.lang-kr .vocab-card.playing{box-shadow:0 0 0 3px var(--lavender-accent),0 4px 16px rgba(163,146,196,0.3)!important}
+body.lang-yue .vocab-card.playing{box-shadow:0 0 0 3px var(--tea-accent),0 4px 16px rgba(176,160,128,0.3)!important}
+
+/* Ripple effect */
+.ripple-fx{position:absolute;border-radius:50%;transform:scale(0);animation:rippleGrow 0.55s ease-out forwards;pointer-events:none;opacity:0.25}
+body.lang-en .ripple-fx{background:var(--mint-accent)}
+body.lang-es .ripple-fx{background:var(--peach-accent)}
+body.lang-kr .ripple-fx{background:var(--lavender-accent)}
+body.lang-yue .ripple-fx{background:var(--tea-accent)}
+@keyframes rippleGrow{to{transform:scale(4);opacity:0}}
+
+/* Enhanced sentence rows */
+.sentence-row{transition:all 0.3s ease!important}
+.sentence-row:hover{background:rgba(255,255,255,0.5)!important;transform:translateX(4px)}
+
+/* Grammar table row hover */
+.grammar-table tbody tr{transition:background 0.25s ease}
+.grammar-table tbody tr:hover{background:rgba(255,255,255,0.2)}
+
+/* Vocab sidebar active spring */
+.vocab-sidebar a{transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1)!important}
+.vocab-sidebar a.active{transform:translateX(3px)}
+
+/* Feature card top accent line */
+.feature-card{position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--morandi-sage),var(--morandi-rose),var(--morandi-violet));opacity:0;transition:opacity 0.4s ease}
+.feature-card:hover::before{opacity:1}
+
+/* Lang card shimmer overlay */
+.lang-card::after{content:'';position:absolute;inset:0;border-radius:24px;opacity:0;transition:opacity 0.5s;background:linear-gradient(135deg,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%);pointer-events:none}
+.lang-card:hover::after{opacity:1}
+
+/* Hero gradient shimmer */
+.hero-title{background-size:200% 200%!important;animation:fadeUp .8s .4s both,gradientShimmer 6s ease-in-out infinite!important}
+@keyframes gradientShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* Tab active indicator dot */
+.tab-btn{position:relative}
+.tab-btn.active::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:14px;height:2px;border-radius:1px}
+body.lang-en .tab-btn.active::after{background:var(--mint-accent)}
+body.lang-es .tab-btn.active::after{background:var(--peach-accent)}
+body.lang-kr .tab-btn.active::after{background:var(--lavender-accent)}
+body.lang-yue .tab-btn.active::after{background:var(--tea-accent)}
+
+/* Search box focus glow */
+.search-box{transition:box-shadow 0.3s ease,transform 0.3s ease!important}
+.search-box:focus-within{box-shadow:0 8px 32px rgba(0,0,0,0.1)!important;transform:translateY(-2px)}
+
+/* History chips spring */
+.history-chip{transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1)!important}
+.history-chip:hover{transform:translateY(-2px) scale(1.04)!important}
+
+/* Orb smooth transitions */
+.orb{transition:background 0.8s ease}
+
+/* Particles canvas */
+#particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.35}
+
+/* Header scroll shadow */
+header.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.06)!important}
+
+/* Speaker button hover */
+.speaker-btn{transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1)!important}
+.speaker-btn:hover{transform:scale(1.12)!important;background:rgba(255,255,255,0.8)!important}
+
+/* Lookup result entrance */
+.lookup-result.show{animation:resultSlideIn 0.4s cubic-bezier(0.34,1.56,0.64,1)!important}
+@keyframes resultSlideIn{from{opacity:0;transform:translateY(12px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Back button hover */
+.back-btn{transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1)!important}
+.back-btn:hover{transform:translateX(-3px)!important}
+
+/* Grammar category title accent */
+.grammar-cat-title{position:relative;display:inline-block}
+.grammar-cat-title::after{content:'';position:absolute;bottom:-4px;left:0;width:28px;height:2px;border-radius:1px;opacity:0.4}
+body.lang-en .grammar-cat-title::after{background:var(--mint-accent)}
+body.lang-es .grammar-cat-title::after{background:var(--peach-accent)}
+body.lang-kr .grammar-cat-title::after{background:var(--lavender-accent)}
+body.lang-yue .grammar-cat-title::after{background:var(--tea-accent)}
+
+/* Vocab section header subtle left border */
+.vocab-section h3{border-left:3px solid transparent;padding-left:10px;border-bottom:none!important}
+body.lang-en .vocab-section h3{border-left-color:var(--mint-accent)}
+body.lang-es .vocab-section h3{border-left-color:var(--peach-accent)}
+body.lang-kr .vocab-section h3{border-left-color:var(--lavender-accent)}
+body.lang-yue .vocab-section h3{border-left-color:var(--tea-accent)}
+
+/* Landing page enhanced reveal */
+.reveal{transition:all .8s cubic-bezier(.16,1,.3,1)!important}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-title{animation:fadeUp .8s .4s both!important}
+  #particles-canvas{display:none}
+  body::before{display:none}
+}
 </style>
 </head>
 <body>
@@ -1216,6 +1343,51 @@ const revealObs=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target)}});
 },{threshold:0.15});
 document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// ===== VISUAL ENHANCEMENTS =====
+
+// Ripple effect on clicks
+function addRipple(e,el){
+  const r=document.createElement('span');
+  r.classList.add('ripple-fx');
+  const rect=el.getBoundingClientRect();
+  const sz=Math.max(rect.width,rect.height)*2;
+  r.style.width=r.style.height=sz+'px';
+  r.style.left=(e.clientX-rect.left-sz/2)+'px';
+  r.style.top=(e.clientY-rect.top-sz/2)+'px';
+  el.appendChild(r);
+  setTimeout(()=>r.remove(),600);
+}
+document.addEventListener('click',e=>{
+  const card=e.target.closest('.vocab-card,.sound-block,.lang-card,.feature-card');
+  if(card)addRipple(e,card);
+});
+
+// Floating particles
+(function initParticles(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const c=document.createElement('canvas');
+  c.id='particles-canvas';
+  document.body.appendChild(c);
+  const ctx=c.getContext('2d');
+  let w,h,pts=[];
+  function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
+  resize();addEventListener('resize',resize);
+  class P{
+    constructor(){this.reset()}
+    reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.sz=Math.random()*1.8+0.4;this.vx=(Math.random()-0.5)*0.25;this.vy=(Math.random()-0.5)*0.25;this.o=Math.random()*0.25+0.08}
+    update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset()}
+    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.sz,0,Math.PI*2);ctx.fillStyle=`rgba(155,145,135,${this.o})`;ctx.fill()}
+  }
+  for(let i=0;i<35;i++)pts.push(new P);
+  (function loop(){ctx.clearRect(0,0,w,h);pts.forEach(p=>{p.update();p.draw()});requestAnimationFrame(loop)})()
+})();
+
+// Header shadow on scroll
+window.addEventListener('scroll',()=>{
+  const hdr=document.querySelector('#learning-page header');
+  if(hdr)hdr.classList.toggle('scrolled',scrollY>10);
+},{passive:true});
 
 </script>
 </body>
