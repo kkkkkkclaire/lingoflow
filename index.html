@@ -70,9 +70,9 @@ body.lang-yue .sound-block.playing{box-shadow:0 0 0 3px var(--tea-accent)}
 .vocab-layout{display:flex;gap:20px;position:relative}
 .vocab-sidebar{width:110px;flex-shrink:0;position:sticky;top:100px;align-self:flex-start;max-height:calc(100vh - 120px);overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;}
 .vocab-sidebar::-webkit-scrollbar{display:none;}
-.vocab-sidebar a{display:block;padding:8px 12px;font-size:0.78rem;color:#666;text-decoration:none;transition:all var(--transition);cursor:pointer;white-space:nowrap;border-radius:10px;margin-bottom:4px;outline:none;}
-.vocab-sidebar a:hover{color:var(--text-primary);background:rgba(255,255,255,0.3);transform:translateX(2px);}
-.vocab-sidebar a.active{color:var(--text-primary);font-weight:700;background:rgba(255,255,255,0.5);box-shadow:0 4px 12px rgba(0,0,0,0.04);transform:translateX(4px);}
+.vocab-sidebar a{display:block;padding:5px 8px;font-size:0.75rem;color:var(--text-secondary);text-decoration:none;transition:all var(--transition);cursor:pointer;white-space:nowrap;border-radius:6px;margin-bottom:1px;outline:none;}
+.vocab-sidebar a:hover{color:var(--text-primary);background:rgba(255,255,255,0.3);transform:translateX(1px);}
+.vocab-sidebar a.active{color:var(--text-primary);font-weight:600;background:rgba(255,255,255,0.6);box-shadow:0 1px 4px rgba(0,0,0,0.02);transform:translateX(2px);}
 .vocab-content{flex:1;min-width:0}
 .vocab-section{margin-bottom:20px;scroll-margin-top:110px}
 .vocab-section h3{font-size:0.95rem;font-weight:600;margin-bottom:10px;padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,0.3)}
@@ -112,30 +112,29 @@ body.lang-yue .sound-block.playing{box-shadow:0 0 0 3px var(--tea-accent)}
 .speaker-btn:hover{background:rgba(255,255,255,0.7)}
 .speaker-btn svg{width:14px;height:14px;opacity:0.5}
 
-/* PRACTICE */
-.practice-container{max-width:700px;margin:0 auto;text-align:center;}
-.practice-cats{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:32px;}
-.p-cat-btn{width:160px;padding:28px 12px;border-radius:24px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.6);cursor:pointer;font-weight:600;font-size:1.05rem;transition:all var(--transition);color:#5A5652;display:flex;align-items:center;justify-content:center;height:100px;box-shadow:0 4px 15px rgba(0,0,0,0.03);}
-.p-cat-btn:hover{background:rgba(255,255,255,0.85);transform:translateY(-4px) scale(1.02);color:var(--text-primary);box-shadow:0 12px 30px rgba(0,0,0,0.08);border-color:rgba(255,255,255,1);}
-.p-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;padding:0 10px;}
-.p-back-btn{background:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.5);padding:10px 20px;border-radius:40px;cursor:pointer;font-size:0.9rem;font-weight:500;transition:all 0.3s;}
-.p-back-btn:hover{background:#fff;transform:translateX(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.05);}
-.p-progress{flex:1;margin:0 24px;height:12px;position:relative;cursor:pointer;}
+/.practice-container{max-width:600px;margin:0 auto;text-align:center;}
+.practice-cats{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px;}
+.p-cat-btn{padding:14px 24px;border-radius:16px;background:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.8);cursor:pointer;font-weight:500;font-size:1rem;transition:all var(--transition);color:var(--text-secondary);box-shadow:0 2px 8px rgba(0,0,0,0.02);}
+.p-cat-btn:hover{background:#fff;transform:translateY(-2px);color:var(--text-primary);box-shadow:0 8px 20px rgba(0,0,0,0.05);border-color:#fff;}
+.p-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding:0 5px;}
+.p-back-btn{background:transparent;border:none;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:0.85rem;font-weight:500;color:var(--text-secondary);transition:all 0.3s;}
+.p-back-btn:hover{background:rgba(255,255,255,0.4);color:var(--text-primary);transform:translateX(-2px);}
+.p-progress{flex:1;margin:0 20px;height:6px;position:relative;cursor:pointer;}
 .p-progress input[type="range"]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;}
-.p-progress-track{position:absolute;inset:0;background:rgba(255,255,255,0.4);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.5);box-shadow:inset 0 2px 4px rgba(0,0,0,0.02);}
-.p-progress-fill{height:100%;background:linear-gradient(90deg, var(--morandi-sage), var(--morandi-rose));width:0%;transition:width 0.3s ease;}
-.practice-card{background:rgba(255,255,255,0.6);border-radius:24px;padding:32px 20px;backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 15px 45px rgba(0,0,0,0.03);border:1px solid rgba(255,255,255,0.8);margin-bottom:24px;}
-.p-target-word{font-size:2rem;font-weight:600;margin-bottom:8px;color:var(--text-primary);}
-.p-hint{color:var(--text-secondary);font-size:0.95rem;margin-bottom:24px;min-height:24px;}
-.p-input-wrap{display:flex;justify-content:center;gap:12px;margin-bottom:20px;}
-.p-input{font-size:1.6rem;padding:12px 20px;border-radius:16px;border:2px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.5);outline:none;text-align:center;width:280px;transition:all 0.2s;font-weight:500;}
-.p-input:focus{border-color:var(--text-primary);background:#fff;box-shadow:0 4px 20px rgba(0,0,0,0.04);}
-.p-submit{padding:12px 32px;border-radius:16px;border:none;background:var(--text-primary);color:#fff;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s;}
-.p-submit:hover{transform:translateY(-1px);filter:brightness(1.1);}
-.p-submit:active{transform:translateY(0);}
-.p-controls{display:flex;justify-content:center;gap:12px;}
-.p-nav-btn{padding:10px 20px;border-radius:16px;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.4);cursor:pointer;font-size:0.9rem;font-weight:500;transition:all 0.2s;color:var(--text-primary);}
-.p-nav-btn:hover{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.p-progress-track{position:absolute;inset:0;background:rgba(255,255,255,0.5);border-radius:6px;overflow:hidden;}
+.p-progress-fill{height:100%;background:linear-gradient(90deg, var(--morandi-sage), var(--morandi-rose));width:0%;transition:width 0.4s ease;}
+.practice-card{background:rgba(255,255,255,0.7);border-radius:20px;padding:40px 20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,0.02);border:1px solid rgba(255,255,255,0.9);margin-bottom:20px;}
+.p-target-word{font-size:1.8rem;font-weight:500;margin-bottom:6px;color:var(--text-primary);letter-spacing:normal;}
+.p-hint{color:var(--text-secondary);font-size:0.9rem;margin-bottom:20px;min-height:20px;}
+.p-input-wrap{display:flex;justify-content:center;gap:10px;margin-bottom:16px;}
+.p-input{font-size:1.4rem;padding:10px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.8);outline:none;text-align:center;width:240px;transition:all 0.2s;font-weight:400;color:var(--text-primary);}
+.p-input:focus{background:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.03);border-color:#fff;}
+.p-submit{padding:10px 24px;border-radius:20px;border:none;background:var(--text-primary);color:#fff;font-size:0.95rem;font-weight:500;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.p-submit:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,0.15);}
+.p-submit:active{transform:translateY(0);box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.p-controls{display:flex;justify-content:center;align-items:center;gap:16px;}
+.p-nav-btn{background:transparent;border:none;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:0.85rem;color:var(--text-secondary);transition:all 0.2s;}
+.p-nav-btn:hover{background:rgba(255,255,255,0.5);color:var(--text-primary);}
 .p-feedback{margin-top:20px;font-weight:600;font-size:1.2rem;min-height:30px;transition:all 0.3s;}
 .p-gender{font-size:0.95rem;font-weight:600;margin-top:-8px;margin-bottom:15px;letter-spacing:1px;}
 
@@ -1274,47 +1273,72 @@ function renderVocab(){
   document.getElementById('sec-vocab').innerHTML=
     `<h2 class="section-title">${d.title}</h2>
      <div class="vocab-layout"><nav class="vocab-sidebar">${sidebar}</nav><div class="vocab-content">${content}</div></div>`;
-  document.querySelectorAll('.vocab-sidebar a').forEach(a=>{
+  document.querySelectorAll('#sec-vocab .vocab-sidebar a').forEach(a=>{
     a.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(a.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})});
   });
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{if(entry.isIntersecting){
-      document.querySelectorAll('.vocab-sidebar a').forEach(a=>a.classList.remove('active'));
-      const link=document.querySelector(`.vocab-sidebar a[data-id="${entry.target.id}"]`);
+      document.querySelectorAll('#sec-vocab .vocab-sidebar a').forEach(a=>a.classList.remove('active'));
+      const link=document.querySelector(`#sec-vocab .vocab-sidebar a[data-id="${entry.target.id}"]`);
       if(link)link.classList.add('active');
     }});
   },{rootMargin:'-100px 0px -60% 0px'});
-  document.querySelectorAll('.vocab-section').forEach(s=>obs.observe(s));
-  const fl=document.querySelector('.vocab-sidebar a');if(fl)fl.classList.add('active');
+  document.querySelectorAll('#sec-vocab .vocab-section').forEach(s=>obs.observe(s));
+  const fl=document.querySelector('#sec-vocab .vocab-sidebar a');if(fl)fl.classList.add('active');
 }
 
 // GRAMMAR
 const spkSVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.08"/></svg>`;
 function renderGrammar(){
   const d=DATA[currentLang].grammar;
-  let h=`<h2 class="section-title">${d.title}</h2>`;
-  // Sentence groups by category
-  for(const g of d.sentenceGroups){
-    h+=`<div class="grammar-cat"><div class="grammar-cat-title">${g.cat}</div><div class="grammar-cat-sub">${g.desc}</div>`;
+  let sidebar='', content='';
+  
+  for(let i=0; i<d.sentenceGroups.length; i++){
+    const g = d.sentenceGroups[i];
+    const catId = `grammar-cat-${i}`;
+    const shortName = g.cat.split(' ')[0];
+    sidebar+=`<a href="#${catId}" data-id="${catId}">${shortName}</a>`;
+    content+=`<div class="vocab-section" id="${catId}"><div class="grammar-cat-title">${g.cat}</div><div class="grammar-cat-sub">${g.desc}</div>`;
     for(const s of g.sentences){
       const m=s.main.replace(/'/g,"\\'");
-      h+=`<div class="sentence-row" onclick="playRowAudio(this, '${m}')"><div class="text-col"><div class="main-text">${s.main}</div><div class="sub-text">${s.sub}</div></div></div>`;
+      content+=`<div class="sentence-row" onclick="playRowAudio(this, '${m}')"><div class="text-col"><div class="main-text">${s.main}</div><div class="sub-text">${s.sub}</div></div></div>`;
     }
-    h+=`</div>`;
+    content+=`</div>`;
   }
-  // Tables
-  for(const t of d.tables){
-    h+=`<div class="grammar-block"><h3>${t.name}</h3><div class="grammar-table-wrap"><table class="grammar-table"><thead><tr>`;
-    for(const hd of t.headers)h+=`<th>${hd}</th>`;
-    h+=`</tr></thead><tbody>`;
-    for(const row of t.rows){
-      h+=`<tr>`;
-      for(const cell of row){const c=cell.replace(/'/g,"\\'");h+=`<td onclick="playCellAudio(this,'${c}')">${cell}</td>`}
-      h+=`</tr>`;
+  
+  if(d.tables && d.tables.length > 0){
+    sidebar+=`<a href="#grammar-tables" data-id="grammar-tables">语法表</a>`;
+    content+=`<div class="vocab-section" id="grammar-tables"><div class="grammar-cat-title">系统语法表</div><div class="grammar-cat-sub">Grammar Tables</div>`;
+    for(const t of d.tables){
+      content+=`<div class="grammar-block"><h3>${t.name}</h3><div class="grammar-table-wrap"><table class="grammar-table"><thead><tr>`;
+      for(const hd of t.headers)content+=`<th>${hd}</th>`;
+      content+=`</tr></thead><tbody>`;
+      for(const row of t.rows){
+        content+=`<tr>`;
+        for(const cell of row){const c=cell.replace(/'/g,"\\'");content+=`<td onclick="playCellAudio(this,'${c}')">${cell}</td>`}
+        content+=`</tr>`;
+      }
+      content+=`</tbody></table></div></div>`;
     }
-    h+=`</tbody></table></div></div>`;
+    content+=`</div>`;
   }
-  document.getElementById('sec-grammar').innerHTML=h;
+  
+  document.getElementById('sec-grammar').innerHTML=
+    `<h2 class="section-title">${d.title}</h2>
+     <div class="vocab-layout"><nav class="vocab-sidebar">${sidebar}</nav><div class="vocab-content">${content}</div></div>`;
+     
+  document.querySelectorAll('#sec-grammar .vocab-sidebar a').forEach(a=>{
+    a.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(a.dataset.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})});
+  });
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{if(entry.isIntersecting){
+      document.querySelectorAll('#sec-grammar .vocab-sidebar a').forEach(a=>a.classList.remove('active'));
+      const link=document.querySelector(`#sec-grammar .vocab-sidebar a[data-id="${entry.target.id}"]`);
+      if(link)link.classList.add('active');
+    }});
+  },{rootMargin:'-100px 0px -60% 0px'});
+  document.querySelectorAll('#sec-grammar .vocab-section').forEach(s=>obs.observe(s));
+  const fl=document.querySelector('#sec-grammar .vocab-sidebar a');if(fl)fl.classList.add('active');
 }
 function playCellAudio(el,text){const c=text.split('(')[0].split('/')[0].trim();speak(c);el.classList.add('playing-cell');setTimeout(()=>el.classList.remove('playing-cell'),500)}
 function playRowAudio(el,text){speak(text);el.classList.add('playing-row');setTimeout(()=>el.classList.remove('playing-row'),500)}
@@ -1366,11 +1390,11 @@ function renderPracticeCard() {
     return;
   }
   const item = practiceState.words[practiceState.currentIndex];
-  if(!item.isReview && !item.alreadyCounted) {
-    item.alreadyCounted = true;
-    practiceState.newWordsSeen++;
-  }
-  const progress = Math.min(100, Math.floor((practiceState.newWordsSeen / practiceState.totalOriginal) * 100));
+  
+  // Progress reflects how many words have been completed.
+  // Initially at index 0, 0 are completed.
+  const progressVal = Math.min(practiceState.currentIndex, practiceState.totalOriginal);
+  const progressPercent = Math.min(100, Math.floor((progressVal / practiceState.totalOriginal) * 100));
   
   let genderHtml = '';
   const g = getEsGenderInfo(practiceState.cat, item.w);
@@ -1379,13 +1403,13 @@ function renderPracticeCard() {
   sec.innerHTML = `
     <div class="practice-container">
       <div class="p-header">
-        <button class="p-back-btn" onclick="practiceState.cat=null;renderPractice()">← 类别</button>
+        <button class="p-back-btn" onclick="practiceState.cat=null;renderPractice()">← 返回类别</button>
         <div class="p-progress">
-          <div class="p-progress-track"><div class="p-progress-fill" style="width:${progress}%"></div></div>
+          <div class="p-progress-track"><div class="p-progress-fill" style="width:${progressPercent}%"></div></div>
           <input type="range" min="0" max="${practiceState.words.length-1}" value="${practiceState.currentIndex}" 
                  oninput="jumpToPractice(this.value)" onchange="jumpToPractice(this.value)">
         </div>
-        <div style="font-size:1.1rem;font-weight:600;min-width:60px;text-align:right;">${practiceState.newWordsSeen} / ${practiceState.totalOriginal}</div>
+        <div style="font-size:1rem;font-weight:500;min-width:60px;text-align:right;color:var(--text-secondary);">${progressVal} / ${practiceState.totalOriginal}</div>
       </div>
       <div class="practice-card">
         <div class="p-target-word">${item.t}</div>
