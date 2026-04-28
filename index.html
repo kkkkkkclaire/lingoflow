@@ -113,9 +113,9 @@ body.lang-yue .sound-block.playing{box-shadow:0 0 0 3px var(--tea-accent)}
 
 /* PRACTICE */
 .practice-container{max-width:600px;margin:0 auto;text-align:center;}
-.practice-cats{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px;}
-.p-cat-btn{padding:12px 24px;border-radius:12px;background:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.5);cursor:pointer;font-weight:600;font-size:1rem;transition:all var(--transition);}
-.p-cat-btn:hover{background:rgba(255,255,255,0.7);transform:translateY(-2px);}
+.practice-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;justify-content:center;margin-top:24px;}
+.p-cat-btn{padding:24px 12px;border-radius:18px;background:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.5);cursor:pointer;font-weight:600;font-size:1.05rem;transition:all var(--transition);color:var(--text-secondary);}
+.p-cat-btn:hover{background:rgba(255,255,255,0.7);transform:translateY(-2px);color:var(--text-primary);box-shadow:0 8px 24px rgba(0,0,0,0.05);}
 .p-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
 .p-back-btn{background:rgba(255,255,255,0.3);border:none;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:0.9rem;}
 .p-progress{flex:1;margin:0 20px;height:8px;background:rgba(255,255,255,0.3);border-radius:4px;overflow:hidden;}
@@ -227,10 +227,11 @@ footer{text-align:center;padding:32px;font-size:0.75rem;color:var(--text-seconda
 /* ===== VISUAL ENHANCEMENTS ===== */
 
 /* Grain texture overlay */
-body::before {
+/* Grain texture overlay - REMOVED per user request if it looked like a black square */
+/* body::before {
   content:''; position:fixed; inset:0; z-index:9999; pointer-events:none; opacity:0.022;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+} */
 
 /* Section title accent underline */
 .section-title{position:relative;display:inline-block}
@@ -442,16 +443,16 @@ body.lang-yue .vocab-section h3{border-left-color:var(--tea-accent)}
   <div class="section-tabs">
     <button class="tab-btn active" data-section="sounds">发音基石</button>
     <button class="tab-btn" data-section="vocab">核心词汇</button>
-    <button class="tab-btn" data-section="grammar">句式语法</button>
     <button class="tab-btn" data-section="practice">单词练习</button>
+    <button class="tab-btn" data-section="grammar">句式语法</button>
     <button class="tab-btn" data-section="lookup">智能查询</button>
   </div>
 </header>
 <main>
   <div class="section active" id="sec-sounds"></div>
   <div class="section" id="sec-vocab"></div>
-  <div class="section" id="sec-grammar"></div>
   <div class="section" id="sec-practice"></div>
+  <div class="section" id="sec-grammar"></div>
   <div class="section" id="sec-lookup">
     <h2 class="section-title">智能翻译查询</h2>
     <div class="lookup-wrap">
@@ -627,6 +628,14 @@ en: {
   ]},
   grammar:{title:'句式学习与系统语法',subtitle:'Sentence Patterns & Grammar',
     sentenceGroups:[
+      {cat:'打招呼与问候',desc:'Greetings & Salutations',sentences:[
+        {main:'Hello!',sub:'你好！'},
+        {main:'Good morning.',sub:'早上好。'},
+        {main:'Good afternoon.',sub:'下午好。'},
+        {main:'Good evening.',sub:'晚上好。'},
+        {main:'How are you?',sub:'你好吗？'},
+        {main:'Nice to meet you.',sub:'很高兴认识你。'}
+      ]},
       {cat:'自我介绍',desc:'Introduction',sentences:[
         {main:'My name is David.',sub:'我的名字叫David。'},
         {main:'I am 25 years old.',sub:'我25岁。'},
@@ -777,7 +786,15 @@ es: {
   ]},
   grammar:{title:'Oraciones y Gramática',subtitle:'句式与语法系统',
     sentenceGroups:[
-      {cat:'自我介绍',desc:'Presentación',sentences:[
+      {cat:'Saludos y Despedidas',desc:'Greetings & Farewells',sentences:[
+        {main:'¡Hola!',sub:'你好！'},
+        {main:'Buenos días.',sub:'早上好。'},
+        {main:'Buenas tardes.',sub:'下午好。'},
+        {main:'Buenas noches.',sub:'晚上好。'},
+        {main:'¿Cómo estás?',sub:'你好吗？'},
+        {main:'Mucho gusto.',sub:'很高兴认识你。'}
+      ]},
+      {cat:'Presentaciones',desc:'Introduction',sentences:[
         {main:'Me llamo María.',sub:'My name is María.'},
         {main:'Tengo 25 años.',sub:'I am 25 years old.'},
         {main:'Soy de México.',sub:'I am from Mexico.'},
@@ -944,7 +961,14 @@ kr: {
   ]},
   grammar:{title:'문장과 문법 · 句式语法',subtitle:'체계적 정리 · 系统化呈现',
     sentenceGroups:[
-      {cat:'自我介绍',desc:'자기소개',sentences:[
+      {cat:'인사말',desc:'Greetings',sentences:[
+        {main:'안녕하세요!',sub:'你好！'},
+        {main:'좋은 아침이에요.',sub:'早上好。'},
+        {main:'만나서 반가워요.',sub:'很高兴认识你。'},
+        {main:'잘 지냈어요?',sub:'过得好吗？'},
+        {main:'안녕히 주무세요.',sub:'晚安。'}
+      ]},
+      {cat:'자기소개',desc:'Introduction',sentences:[
         {main:'제 이름은 민수입니다.',sub:'我叫民秀。'},
         {main:'저는 25살입니다.',sub:'我25岁。'},
         {main:'저는 중국에서 왔어요.',sub:'我从中国来。'},
@@ -1106,6 +1130,14 @@ yue: {
   ]},
   grammar:{title:'句式學習與語法',subtitle:'粵語日常句式',
     sentenceGroups:[
+      {cat:'打招呼與問候',desc:'Greetings',sentences:[
+        {main:'你好！',sub:'你好！'},
+        {main:'早晨！',sub:'早上好！'},
+        {main:'午安！',sub:'午安！'},
+        {main:'晚安！',sub:'晚安！'},
+        {main:'你好嗎？',sub:'你好吗？'},
+        {main:'識到你真係好高興。',sub:'很高兴认识你。'}
+      ]},
       {cat:'自我介紹',desc:'自我介绍',sentences:[
         {main:'我叫阿明。',sub:'我叫阿明。'},
         {main:'我今年廿五歲。',sub:'我今年25岁。'},
@@ -1328,7 +1360,10 @@ function renderPracticeCard() {
     return;
   }
   const item = practiceState.words[practiceState.currentIndex];
-  if(!item.isReview) practiceState.newWordsSeen++;
+  if(!item.isReview && !item.alreadyCounted) {
+    item.alreadyCounted = true;
+    practiceState.newWordsSeen++;
+  }
   const progress = Math.min(100, Math.floor((practiceState.newWordsSeen / practiceState.totalOriginal) * 100));
   
   let genderHtml = '';
@@ -1340,7 +1375,7 @@ function renderPracticeCard() {
       <div class="p-header">
         <button class="p-back-btn" onclick="practiceState.cat=null;renderPractice()">← 类别</button>
         <div class="p-progress"><div class="p-progress-fill" style="transition:none;width:${progress}%"></div></div>
-        <div style="font-size:0.9rem">${progress}%</div>
+        <div style="font-size:1.1rem;font-weight:600;min-width:60px;text-align:right;">${practiceState.newWordsSeen} / ${practiceState.totalOriginal}</div>
       </div>
       <div class="practice-card">
         <div class="p-target-word">${item.t}</div>
@@ -1425,8 +1460,6 @@ function nextPractice() {
 function prevPractice() {
   if(practiceState.currentIndex > 0) {
     practiceState.currentIndex--;
-    // If going back to a new word, decrement counter
-    if(!practiceState.words[practiceState.currentIndex].isReview) practiceState.newWordsSeen--;
     renderPracticeCard();
   }
 }
