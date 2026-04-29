@@ -112,31 +112,33 @@ body.lang-yue .sound-block.playing{box-shadow:0 0 0 3px var(--tea-accent)}
 .speaker-btn:hover{background:rgba(255,255,255,0.7)}
 .speaker-btn svg{width:14px;height:14px;opacity:0.5}
 
-/.practice-container{max-width:600px;margin:0 auto;text-align:center;}
-.practice-cats{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px;}
-.p-cat-btn{padding:14px 24px;border-radius:16px;background:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.8);cursor:pointer;font-weight:500;font-size:1rem;transition:all var(--transition);color:var(--text-secondary);box-shadow:0 2px 8px rgba(0,0,0,0.02);}
-.p-cat-btn:hover{background:#fff;transform:translateY(-2px);color:var(--text-primary);box-shadow:0 8px 20px rgba(0,0,0,0.05);border-color:#fff;}
-.p-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding:0 5px;}
-.p-back-btn{background:transparent;border:none;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:0.85rem;font-weight:500;color:var(--text-secondary);transition:all 0.3s;}
-.p-back-btn:hover{background:rgba(255,255,255,0.4);color:var(--text-primary);transform:translateX(-2px);}
-.p-progress{flex:1;margin:0 20px;height:6px;position:relative;cursor:pointer;}
+/* PRACTICE */
+.practice-container{max-width:460px;margin:0 auto;text-align:center;}
+.practice-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:20px;}
+.p-cat-btn{padding:12px 10px;border-radius:14px;background:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.7);cursor:pointer;font-weight:500;font-size:0.9rem;transition:all var(--transition);color:var(--text-secondary);box-shadow:0 2px 8px rgba(0,0,0,0.02);}
+.p-cat-btn:hover{background:#fff;transform:translateY(-2px);color:var(--text-primary);box-shadow:0 6px 16px rgba(0,0,0,0.05);border-color:#fff;}
+.p-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.p-back-btn{background:transparent;border:none;padding:6px 10px;border-radius:16px;cursor:pointer;font-size:0.82rem;font-weight:500;color:var(--text-secondary);transition:all 0.3s;}
+.p-back-btn:hover{background:rgba(255,255,255,0.4);color:var(--text-primary);}
+.p-progress{flex:1;margin:0 16px;height:5px;position:relative;cursor:pointer;}
 .p-progress input[type="range"]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;}
-.p-progress-track{position:absolute;inset:0;background:rgba(255,255,255,0.5);border-radius:6px;overflow:hidden;}
+.p-progress-track{position:absolute;inset:0;background:rgba(255,255,255,0.5);border-radius:4px;overflow:hidden;}
 .p-progress-fill{height:100%;background:linear-gradient(90deg, var(--morandi-sage), var(--morandi-rose));width:0%;transition:width 0.4s ease;}
-.practice-card{background:rgba(255,255,255,0.7);border-radius:20px;padding:40px 20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,0.02);border:1px solid rgba(255,255,255,0.9);margin-bottom:20px;}
-.p-target-word{font-size:1.8rem;font-weight:500;margin-bottom:6px;color:var(--text-primary);letter-spacing:normal;}
-.p-hint{color:var(--text-secondary);font-size:0.9rem;margin-bottom:20px;min-height:20px;}
-.p-input-wrap{display:flex;justify-content:center;gap:10px;margin-bottom:16px;}
-.p-input{font-size:1.4rem;padding:10px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.8);outline:none;text-align:center;width:240px;transition:all 0.2s;font-weight:400;color:var(--text-primary);}
-.p-input:focus{background:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.03);border-color:#fff;}
-.p-submit{padding:10px 24px;border-radius:20px;border:none;background:var(--text-primary);color:#fff;font-size:0.95rem;font-weight:500;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-.p-submit:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,0.15);}
-.p-submit:active{transform:translateY(0);box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-.p-controls{display:flex;justify-content:center;align-items:center;gap:16px;}
-.p-nav-btn{background:transparent;border:none;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:0.85rem;color:var(--text-secondary);transition:all 0.2s;}
+.practice-card{background:rgba(255,255,255,0.65);border-radius:18px;padding:32px 20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 6px 24px rgba(0,0,0,0.02);border:1px solid rgba(255,255,255,0.85);margin-bottom:16px;transition:opacity 0.25s, transform 0.25s;}
+.practice-card.swipe-out{opacity:0;transform:translateX(-80px);}
+.p-target-word{font-size:1.6rem;font-weight:500;margin-bottom:4px;color:var(--text-primary);}
+.p-hint{color:var(--text-secondary);font-size:0.85rem;margin-bottom:16px;min-height:18px;}
+.p-input-wrap{display:flex;justify-content:center;gap:10px;margin-bottom:14px;}
+.p-input{font-size:1.2rem;padding:8px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.8);outline:none;text-align:center;width:220px;transition:all 0.2s;font-weight:400;color:var(--text-primary);}
+.p-input:focus{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.03);border-color:#fff;}
+.p-submit{padding:8px 20px;border-radius:16px;border:none;background:var(--text-primary);color:#fff;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
+.p-submit:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(0,0,0,0.13);}
+.p-submit:active{transform:translateY(0);}
+.p-controls{display:flex;justify-content:center;align-items:center;gap:12px;}
+.p-nav-btn{background:transparent;border:none;padding:6px 14px;border-radius:16px;cursor:pointer;font-size:0.82rem;color:var(--text-secondary);transition:all 0.2s;}
 .p-nav-btn:hover{background:rgba(255,255,255,0.5);color:var(--text-primary);}
-.p-feedback{margin-top:20px;font-weight:600;font-size:1.2rem;min-height:30px;transition:all 0.3s;}
-.p-gender{font-size:0.95rem;font-weight:600;margin-top:-8px;margin-bottom:15px;letter-spacing:1px;}
+.p-feedback{margin-top:14px;font-weight:600;font-size:1rem;min-height:24px;}
+.p-gender{font-size:0.85rem;font-weight:600;margin-top:-4px;margin-bottom:10px;}
 
 /* LOOKUP */
 .lookup-wrap{max-width:600px;margin:0 auto}
@@ -582,7 +584,7 @@ en: {
     {id:'relations',name:'关系',subgroups:[{label:null,items:[
       {w:'father',t:'父亲'},{w:'mother',t:'母亲'},{w:'brother',t:'兄弟'},{w:'sister',t:'姐妹'},{w:'friend',t:'朋友'},
       {w:'son',t:'儿子'},{w:'daughter',t:'女儿'},{w:'husband',t:'丈夫'},{w:'wife',t:'妻子'},{w:'child',t:'孩子'},
-      {w:'baby',t:'婴儿'},{w:'teacher',t:'老师'},{w:'student',t:'学生'},{w:'neighbor',t:'邻居'},{w:'colleague',t:'同事'}]}]},
+      {w:'baby',t:'婴儿'},{w:'teacher',t:'老师'},{w:'student',t:'学生'},{w:'neighbor',t:'邻居'},{w:'colleague',t:'同事'},{w:'grandfather',t:'祖父'},{w:'grandmother',t:'祖母'},{w:'uncle',t:'叔叔'},{w:'aunt',t:'阿姨'},{w:'nephew',t:'侄子'},{w:'niece',t:'侄女'},{w:'cousin',t:'表兄弟/姐妹'}]}]},
     {id:'body',name:'身体与健康',subgroups:[{label:null,items:[{w:'head',t:'头'},{w:'eye',t:'眼睛'},{w:'ear',t:'耳朵'},{w:'mouth',t:'嘴'},{w:'nose',t:'鼻子'},{w:'face',t:'脸'},{w:'hand',t:'手'},{w:'arm',t:'手臂'},{w:'leg',t:'腿'},{w:'foot',t:'脚'},{w:'body',t:'身体'},{w:'hair',t:'头发'},{w:'doctor',t:'医生'},{w:'medicine',t:'药'},{w:'pain',t:'痛'}]}]},
     {id:'verbs',name:'高频动词',subgroups:[{label:null,items:[
       {w:'be',t:'是'},{w:'have',t:'有'},{w:'go',t:'去'},{w:'come',t:'来'},{w:'eat',t:'吃'},
@@ -607,12 +609,20 @@ en: {
       {w:'water',t:'水'},{w:'rice',t:'米饭'},{w:'bread',t:'面包'},{w:'meat',t:'肉'},{w:'fish',t:'鱼'},
       {w:'egg',t:'鸡蛋'},{w:'fruit',t:'水果'},{w:'coffee',t:'咖啡'},{w:'tea',t:'茶'},{w:'milk',t:'牛奶'},
       {w:'sugar',t:'糖'},{w:'salt',t:'盐'},{w:'menu',t:'菜单'},{w:'bill',t:'账单'},
-      {w:'fork',t:'叉子'},{w:'knife',t:'刀'},{w:'spoon',t:'勺子'},{w:'plate',t:'盘子'}]}]},
+      {w:'fork',t:'叉子'},{w:'knife',t:'刀'},{w:'spoon',t:'勺子'},{w:'plate',t:'盘子'},
+      {w:'apple',t:'苹果'},{w:'banana',t:'香蕉'},{w:'cake',t:'蛋糕'},{w:'chicken',t:'鸡肉'},{w:'noodle',t:'面条'},
+      {w:'soup',t:'汤'},{w:'juice',t:'果汁'},{w:'beer',t:'啤酒'},{w:'wine',t:'葡萄酒'},{w:'cheese',t:'奶酪'},
+      {w:'pizza',t:'披萨'},{w:'sandwich',t:'三明治'},{w:'chocolate',t:'巧克力'},{w:'ice cream',t:'冰淇淋'}]}]},
     {id:'transport',name:'城市交通',subgroups:[{label:null,items:[
       {w:'airport',t:'机场'},{w:'station',t:'车站'},{w:'hotel',t:'酒店'},{w:'bus',t:'巴士'},{w:'taxi',t:'出租车'},
       {w:'train',t:'火车'},{w:'left',t:'左'},{w:'right',t:'右'},{w:'street',t:'街道'},{w:'map',t:'地图'},
       {w:'ticket',t:'票'},{w:'passport',t:'护照'},{w:'bank',t:'银行'},{w:'hospital',t:'医院'},{w:'school',t:'学校'}]}]},
-    {id:'jobs',name:'职业与身份',subgroups:[{label:null,items:[{w:'police',t:'警察'},{w:'worker',t:'工人'},{w:'driver',t:'司机'},{w:'boss',t:'老板'},{w:'staff',t:'员工'},{w:'farmer',t:'农夫'},{w:'cook',t:'厨师'},{w:'artist',t:'艺术家'},{w:'singer',t:'歌手'},{w:'actor',t:'演员'},{w:'writer',t:'作家'},{w:'nurse',t:'护士'},{w:'manager',t:'经理'},{w:'pilot',t:'飞行员'},{w:'engineer',t:'工程师'}]}]},
+    {id:'jobs',name:'职业与身份',subgroups:[{label:null,items:[{w:'police',t:'警察'},{w:'worker',t:'工人'},{w:'driver',t:'司机'},{w:'boss',t:'老板'},{w:'staff',t:'员工'},{w:'farmer',t:'农夫'},{w:'cook',t:'厨师'},{w:'artist',t:'艺术家'},{w:'singer',t:'歌手'},{w:'actor',t:'演员'},{w:'writer',t:'作家'},{w:'nurse',t:'护士'},{w:'manager',t:'经理'},{w:'pilot',t:'飞行员'},{w:'engineer',t:'工程师'},{w:'photographer',t:'摄影师'}]}]},
+    {id:'hobbies',name:'爱好',subgroups:[{label:null,items:[
+      {w:'music',t:'音乐'},{w:'movie',t:'电影'},{w:'programming',t:'编程'},{w:'reading',t:'阅读'},{w:'photography',t:'摄影'},
+      {w:'football',t:'足球'},{w:'basketball',t:'篮球'},{w:'tennis',t:'网球'},{w:'swimming',t:'游泳'},{w:'running',t:'跑步'},
+      {w:'hiking',t:'徒步'},{w:'yoga',t:'瑜伽'},{w:'dancing',t:'跳舞'},{w:'painting',t:'画画'},{w:'cooking',t:'烹饪'},
+      {w:'travel',t:'旅行'},{w:'gaming',t:'游戏'},{w:'singing',t:'唱歌'}]}]},
     {id:'nature',name:'大自然与动物',subgroups:[{label:null,items:[{w:'dog',t:'狗'},{w:'cat',t:'猫'},{w:'bird',t:'鸟'},{w:'fish',t:'鱼'},{w:'horse',t:'马'},{w:'tree',t:'树'},{w:'flower',t:'花'},{w:'grass',t:'草'},{w:'mountain',t:'山'},{w:'river',t:'河'},{w:'sea',t:'海'},{w:'sky',t:'天空'},{w:'sun',t:'太阳'},{w:'moon',t:'月亮'},{w:'star',t:'星星'}]}]},
     {id:'colors',name:'颜色',subgroups:[{label:null,items:[
       {w:'red',t:'红'},{w:'orange',t:'橙'},{w:'yellow',t:'黄'},{w:'green',t:'绿'},{w:'blue',t:'蓝'},
@@ -732,12 +742,12 @@ es: {
       {label:'Días de la semana 星期',items:[{w:'lunes',t:'Mon'},{w:'martes',t:'Tue'},{w:'miércoles',t:'Wed'},{w:'jueves',t:'Thu'},{w:'viernes',t:'Fri'},{w:'sábado',t:'Sat'},{w:'domingo',t:'Sun'}]},
       {label:'Meses 月份',items:[{w:'enero',t:'Jan'},{w:'febrero',t:'Feb'},{w:'marzo',t:'Mar'},{w:'abril',t:'Apr'},{w:'mayo',t:'May'},{w:'junio',t:'Jun'},{w:'julio',t:'Jul'},{w:'agosto',t:'Aug'},{w:'septiembre',t:'Sep'},{w:'octubre',t:'Oct'},{w:'noviembre',t:'Nov'},{w:'diciembre',t:'Dec'}]},
       {label:'Estaciones 季节',items:[{w:'primavera',t:'spring'},{w:'verano',t:'summer'},{w:'otoño',t:'autumn'},{w:'invierno',t:'winter'}]},
-      {label:'Unidades 时间单位',items:[{w:'hora',t:'hour'},{w:'minuto',t:'minute'},{w:'segundo',t:'second'},{w:'hoy',t:'today'},{w:'mañana',t:'tomorrow'},{w:'ayer',t:'yesterday'},{w:'ahora',t:'now'},{w:'después',t:'later'},{w:'temprano',t:'early'},{w:'tarde',t:'late'}]}
+      {label:'Unidades 时间单位',items:[{w:'hora',t:'hour'},{w:'minuto',t:'minute'},{w:'segundo',t:'second'},{w:'hoy',t:'today'},{w:'mañana',t:'tomorrow'},{w:'ayer',t:'yesterday'},{w:'la mañana',t:'早上'},{w:'el mediodía',t:'中午'},{w:'la tarde',t:'下午'},{w:'la noche',t:'晚上'},{w:'ahora',t:'now'},{w:'después',t:'later'},{w:'temprano',t:'early'},{w:'tarde',t:'late'}]}
     ]},
     {id:'relations',name:'Relaciones 关系',subgroups:[{label:null,items:[
       {w:'padre',t:'father'},{w:'madre',t:'mother'},{w:'hermano',t:'brother'},{w:'hermana',t:'sister'},{w:'amigo',t:'friend'},
       {w:'hijo',t:'son'},{w:'hija',t:'daughter'},{w:'esposo',t:'husband'},{w:'esposa',t:'wife'},
-      {w:'niño',t:'child'},{w:'profesor',t:'teacher'},{w:'estudiante',t:'student'},{w:'vecino',t:'neighbor'},{w:'compañero',t:'colleague'}]}]},
+      {w:'niño',t:'child'},{w:'profesor',t:'teacher'},{w:'estudiante',t:'student'},{w:'vecino',t:'neighbor'},{w:'compañero',t:'colleague'},{w:'abuelo',t:'grandfather'},{w:'abuela',t:'grandmother'},{w:'tío',t:'uncle'},{w:'tía',t:'aunt'},{w:'sobrino',t:'nephew'},{w:'sobrina',t:'niece'},{w:'primo',t:'cousin'}]}]},
     {id:'body',name:'Cuerpo 身体',subgroups:[{label:null,items:[{w:'cabeza',t:'头'},{w:'ojo',t:'眼睛'},{w:'oreja',t:'耳朵'},{w:'boca',t:'嘴'},{w:'nariz',t:'鼻子'},{w:'cara',t:'脸'},{w:'mano',t:'手'},{w:'brazo',t:'手臂'},{w:'pierna',t:'腿'},{w:'pie',t:'脚'},{w:'cuerpo',t:'身体'},{w:'pelo',t:'头发'},{w:'médico',t:'医生'},{w:'medicina',t:'药'},{w:'dolor',t:'痛'}]}]},
     {id:'verbs',name:'Verbos 高频动词',subgroups:[{label:null,items:[
       {w:'ser',t:'to be'},{w:'estar',t:'to be'},{w:'tener',t:'to have'},{w:'ir',t:'to go'},{w:'venir',t:'to come'},
@@ -765,12 +775,20 @@ es: {
       {w:'agua',t:'water'},{w:'arroz',t:'rice'},{w:'pan',t:'bread'},{w:'carne',t:'meat'},{w:'pescado',t:'fish'},
       {w:'huevo',t:'egg'},{w:'fruta',t:'fruit'},{w:'café',t:'coffee'},{w:'té',t:'tea'},{w:'leche',t:'milk'},
       {w:'azúcar',t:'sugar'},{w:'sal',t:'salt'},{w:'menú',t:'menu'},{w:'cuenta',t:'bill'},
-      {w:'tenedor',t:'fork'},{w:'cuchillo',t:'knife'},{w:'cuchara',t:'spoon'},{w:'plato',t:'plate'}]}]},
+      {w:'tenedor',t:'fork'},{w:'cuchillo',t:'knife'},{w:'cuchara',t:'spoon'},{w:'plato',t:'plate'},
+      {w:'manzana',t:'apple'},{w:'plátano',t:'banana'},{w:'pastel',t:'cake'},{w:'pollo',t:'chicken'},{w:'fideos',t:'noodle'},
+      {w:'sopa',t:'soup'},{w:'jugo',t:'juice'},{w:'cerveza',t:'beer'},{w:'vino',t:'wine'},{w:'queso',t:'cheese'},
+      {w:'pizza',t:'pizza'},{w:'sándwich',t:'sandwich'},{w:'chocolate',t:'chocolate'},{w:'helado',t:'ice cream'}]}]},
     {id:'transport',name:'Transporte 交通',subgroups:[{label:null,items:[
       {w:'aeropuerto',t:'airport'},{w:'estación',t:'station'},{w:'hotel',t:'hotel'},{w:'autobús',t:'bus'},{w:'taxi',t:'taxi'},
       {w:'tren',t:'train'},{w:'izquierda',t:'left'},{w:'derecha',t:'right'},{w:'calle',t:'street'},{w:'mapa',t:'map'},
       {w:'boleto',t:'ticket'},{w:'pasaporte',t:'passport'},{w:'banco',t:'bank'},{w:'hospital',t:'hospital'},{w:'escuela',t:'school'}]}]},
-    {id:'jobs',name:'Trabajos 职业',subgroups:[{label:null,items:[{w:'policía',t:'警察'},{w:'trabajador',t:'工人'},{w:'conductor',t:'司机'},{w:'jefe',t:'老板'},{w:'empleado',t:'员工'},{w:'granjero',t:'农夫'},{w:'cocinero',t:'厨师'},{w:'artista',t:'艺术家'},{w:'cantante',t:'歌手'},{w:'actor',t:'演员'},{w:'escritor',t:'作家'},{w:'enfermera',t:'护士'},{w:'gerente',t:'经理'},{w:'piloto',t:'飞行员'},{w:'ingeniero',t:'工程师'}]}]},
+    {id:'jobs',name:'Trabajos 职业',subgroups:[{label:null,items:[{w:'policía',t:'警察'},{w:'trabajador',t:'工人'},{w:'conductor',t:'司机'},{w:'jefe',t:'老板'},{w:'empleado',t:'员工'},{w:'granjero',t:'农夫'},{w:'cocinero',t:'厨师'},{w:'artista',t:'艺术家'},{w:'cantante',t:'歌手'},{w:'actor',t:'演员'},{w:'escritor',t:'作家'},{w:'enfermera',t:'护士'},{w:'gerente',t:'经理'},{w:'piloto',t:'飞行员'},{w:'ingeniero',t:'工程师'},{w:'fotógrafo',t:'摄影师'}]}]},
+    {id:'hobbies',name:'Pasatiempos 爱好',subgroups:[{label:null,items:[
+      {w:'música',t:'音乐'},{w:'película',t:'电影'},{w:'programación',t:'编程'},{w:'lectura',t:'阅读'},{w:'fotografía',t:'摄影'},
+      {w:'fútbol',t:'足球'},{w:'baloncesto',t:'篮球'},{w:'tenis',t:'网球'},{w:'natación',t:'游泳'},{w:'correr',t:'跑步'},
+      {w:'senderismo',t:'徒步'},{w:'yoga',t:'瑜伽'},{w:'bailar',t:'跳舞'},{w:'pintura',t:'画画'},{w:'cocinar',t:'烹饪'},
+      {w:'viajar',t:'旅行'},{w:'juegos',t:'游戏'},{w:'cantar',t:'唱歌'}]}]},
     {id:'nature',name:'Naturaleza 自然',subgroups:[{label:null,items:[{w:'perro',t:'狗'},{w:'gato',t:'猫'},{w:'pájaro',t:'鸟'},{w:'pez',t:'鱼'},{w:'caballo',t:'马'},{w:'árbol',t:'树'},{w:'flor',t:'花'},{w:'hierba',t:'草'},{w:'montaña',t:'山'},{w:'río',t:'河'},{w:'mar',t:'海'},{w:'cielo',t:'天空'},{w:'sol',t:'太阳'},{w:'luna',t:'月亮'},{w:'estrella',t:'星星'}]}]},
     {id:'colors',name:'Colores 颜色',subgroups:[{label:null,items:[
       {w:'rojo',t:'red'},{w:'naranja',t:'orange'},{w:'amarillo',t:'yellow'},{w:'verde',t:'green'},{w:'azul',t:'blue'},
@@ -914,7 +932,7 @@ kr: {
     {id:'relations',name:'관계 关系',subgroups:[{label:null,items:[
       {w:'아버지',t:'父亲'},{w:'어머니',t:'母亲'},{w:'형/오빠',t:'哥哥'},{w:'누나/언니',t:'姐姐'},{w:'친구',t:'朋友'},
       {w:'아들',t:'儿子'},{w:'딸',t:'女儿'},{w:'남편',t:'丈夫'},{w:'아내',t:'妻子'},
-      {w:'아이',t:'孩子'},{w:'선생님',t:'老师'},{w:'학생',t:'学生'},{w:'이웃',t:'邻居'},{w:'동료',t:'同事'}]}]},
+      {w:'아이',t:'孩子'},{w:'선생님',t:'老师'},{w:'학생',t:'学生'},{w:'이웃',t:'邻居'},{w:'동료',t:'同事'},{w:'할아버지',t:'祖父'},{w:'할머니',t:'祖母'},{w:'삼촌',t:'叔叔'},{w:'이모',t:'阿姨'},{w:'조카',t:'侄子'},{w:'조카딸',t:'侄女'},{w:'사촌',t:'表兄弟/姐妹'}]}]},
     {id:'body',name:'몸 身体',subgroups:[{label:null,items:[{w:'머리',t:'头'},{w:'눈',t:'眼睛'},{w:'귀',t:'耳朵'},{w:'입',t:'嘴'},{w:'코',t:'鼻子'},{w:'얼굴',t:'脸'},{w:'손',t:'手'},{w:'팔',t:'手臂'},{w:'다리',t:'腿'},{w:'발',t:'脚'},{w:'몸',t:'身体'},{w:'머리카락',t:'头发'},{w:'의사',t:'医生'},{w:'약',t:'药'},{w:'아픔',t:'痛'}]}]},
     {id:'verbs',name:'핵심 동사 高频动词',subgroups:[{label:null,items:[
       {w:'이다',t:'是'},{w:'있다',t:'有'},{w:'가다',t:'去'},{w:'오다',t:'来'},{w:'먹다',t:'吃'},
@@ -940,12 +958,20 @@ kr: {
       {w:'물',t:'水'},{w:'밥',t:'米饭'},{w:'빵',t:'面包'},{w:'고기',t:'肉'},{w:'생선',t:'鱼'},
       {w:'계란',t:'鸡蛋'},{w:'과일',t:'水果'},{w:'커피',t:'咖啡'},{w:'차',t:'茶'},{w:'우유',t:'牛奶'},
       {w:'설탕',t:'糖'},{w:'소금',t:'盐'},{w:'메뉴',t:'菜单'},{w:'계산서',t:'账单'},
-      {w:'포크',t:'叉子'},{w:'칼',t:'刀'},{w:'숟가락',t:'勺子'},{w:'접시',t:'盘子'}]}]},
+      {w:'포크',t:'叉子'},{w:'칼',t:'刀'},{w:'숟가락',t:'勺子'},{w:'접시',t:'盘子'},
+      {w:'사과',t:'苹果'},{w:'바나나',t:'香蕉'},{w:'케이크',t:'蛋糕'},{w:'닭고기',t:'鸡肉'},{w:'면',t:'面条'},
+      {w:'수프',t:'汤'},{w:'주스',t:'果汁'},{w:'맥주',t:'啤酒'},{w:'와인',t:'葡萄酒'},{w:'치즈',t:'奶酪'},
+      {w:'피자',t:'披萨'},{w:'샌드위치',t:'三明治'},{w:'초콜릿',t:'巧克力'},{w:'아이스크림',t:'冰淇淋'}]}]},
     {id:'transport',name:'도시와 교통 交通',subgroups:[{label:null,items:[
       {w:'공항',t:'机场'},{w:'역',t:'车站'},{w:'호텔',t:'酒店'},{w:'버스',t:'巴士'},{w:'택시',t:'出租车'},
       {w:'기차',t:'火车'},{w:'왼쪽',t:'左'},{w:'오른쪽',t:'右'},{w:'거리',t:'街道'},{w:'지도',t:'地图'},
       {w:'표',t:'票'},{w:'여권',t:'护照'},{w:'은행',t:'银行'},{w:'병원',t:'医院'},{w:'학교',t:'学校'}]}]},
-    {id:'jobs',name:'직업 职业',subgroups:[{label:null,items:[{w:'경찰',t:'警察'},{w:'노동자',t:'工人'},{w:'운전사',t:'司机'},{w:'사장',t:'老板'},{w:'직원',t:'员工'},{w:'농부',t:'农夫'},{w:'요리사',t:'厨师'},{w:'예술가',t:'艺术家'},{w:'가수',t:'歌手'},{w:'배우',t:'演员'},{w:'작가',t:'作家'},{w:'간호사',t:'护士'},{w:'매니저',t:'经理'},{w:'조종사',t:'飞行员'},{w:'엔지니어',t:'工程师'}]}]},
+    {id:'jobs',name:'직업 职业',subgroups:[{label:null,items:[{w:'경찰',t:'警察'},{w:'노동자',t:'工人'},{w:'운전사',t:'司机'},{w:'사장',t:'老板'},{w:'직원',t:'员工'},{w:'농부',t:'农夫'},{w:'요리사',t:'厨师'},{w:'예술가',t:'艺术家'},{w:'가수',t:'歌手'},{w:'배우',t:'演员'},{w:'작가',t:'作家'},{w:'간호사',t:'护士'},{w:'매니저',t:'经理'},{w:'조종사',t:'飞行员'},{w:'엔지니어',t:'工程师'},{w:'사진작가',t:'摄影师'}]}]},
+    {id:'hobbies',name:'취미 爱好',subgroups:[{label:null,items:[
+      {w:'음악',t:'音乐'},{w:'영화',t:'电影'},{w:'프로그래밍',t:'编程'},{w:'독서',t:'阅读'},{w:'사진',t:'摄影'},
+      {w:'축구',t:'足球'},{w:'농구',t:'篮球'},{w:'테니스',t:'网球'},{w:'수영',t:'游泳'},{w:'달리기',t:'跑步'},
+      {w:'등산',t:'徒步'},{w:'요가',t:'瑜伽'},{w:'춤',t:'跳舞'},{w:'그림',t:'画画'},{w:'요리',t:'烹饪'},
+      {w:'여행',t:'旅行'},{w:'게임',t:'游戏'},{w:'노래',t:'唱歌'}]}]},
     {id:'nature',name:'자연 自然',subgroups:[{label:null,items:[{w:'개',t:'狗'},{w:'고양이',t:'猫'},{w:'새',t:'鸟'},{w:'물고기',t:'鱼'},{w:'말',t:'马'},{w:'나무',t:'树'},{w:'꽃',t:'花'},{w:'풀',t:'草'},{w:'산',t:'山'},{w:'강',t:'河'},{w:'바다',t:'海'},{w:'하늘',t:'天空'},{w:'태양',t:'太阳'},{w:'달',t:'月亮'},{w:'별',t:'星星'}]}]},
     {id:'colors',name:'색깔 颜色',subgroups:[{label:null,items:[
       {w:'빨간색',t:'红'},{w:'주황색',t:'橙'},{w:'노란색',t:'黄'},{w:'초록색',t:'绿'},{w:'파란색',t:'蓝'},
@@ -1084,7 +1110,7 @@ yue: {
     {id:'relations',name:'關係',subgroups:[{label:null,items:[
       {w:'老豆',t:'父亲'},{w:'老母',t:'母亲'},{w:'阿哥',t:'哥哥'},{w:'家姐',t:'姐姐'},{w:'細佬',t:'弟弟'},{w:'細妹',t:'妹妹'},
       {w:'朋友',t:'朋友'},{w:'仔',t:'儿子'},{w:'女',t:'女儿'},{w:'老公',t:'丈夫'},{w:'老婆',t:'妻子'},
-      {w:'細路',t:'小孩'},{w:'老師',t:'老师'},{w:'學生',t:'学生'},{w:'同事',t:'同事'}]}]},
+      {w:'細路',t:'小孩'},{w:'老師',t:'老师'},{w:'學生',t:'学生'},{w:'同事',t:'同事'},{w:'阿爺',t:'祖父'},{w:'阿嫲',t:'祖母'},{w:'叔叔',t:'叔叔'},{w:'阿姨',t:'阿姨'},{w:'姪仔',t:'侄子'},{w:'姪女',t:'侄女'},{w:'表兄弟',t:'表兄弟/姐妹'}]}]},
     {id:'body',name:'身體',subgroups:[{label:null,items:[{w:'頭',t:'头'},{w:'眼',t:'眼睛'},{w:'耳仔',t:'耳朵'},{w:'口',t:'嘴'},{w:'鼻',t:'鼻子'},{w:'面',t:'脸'},{w:'手',t:'手'},{w:'手臂',t:'手臂'},{w:'腳',t:'脚'},{w:'腳板',t:'脚掌'},{w:'身體',t:'身体'},{w:'頭髮',t:'头发'},{w:'醫生',t:'医生'},{w:'藥',t:'药'},{w:'痛',t:'痛'}]}]},
     {id:'verbs',name:'高頻動詞',subgroups:[{label:null,items:[
       {w:'係',t:'是'},{w:'有',t:'有'},{w:'去',t:'去'},{w:'嚟',t:'来'},{w:'食',t:'吃'},
@@ -1109,12 +1135,20 @@ yue: {
       {w:'水',t:'水'},{w:'飯',t:'米饭'},{w:'麵包',t:'面包'},{w:'肉',t:'肉'},{w:'魚',t:'鱼'},
       {w:'雞蛋',t:'鸡蛋'},{w:'生果',t:'水果'},{w:'咖啡',t:'咖啡'},{w:'茶',t:'茶'},{w:'奶',t:'牛奶'},
       {w:'糖',t:'糖'},{w:'鹽',t:'盐'},{w:'餐牌',t:'菜单'},{w:'埋單',t:'买单'},
-      {w:'叉',t:'叉子'},{w:'刀',t:'刀'},{w:'匙羹',t:'勺子'},{w:'碟',t:'盘子'}]}]},
+      {w:'叉',t:'叉子'},{w:'刀',t:'刀'},{w:'匙羹',t:'勺子'},{w:'碟',t:'盘子'},
+      {w:'蘋果',t:'苹果'},{w:'香蕉',t:'香蕉'},{w:'蛋糕',t:'蛋糕'},{w:'雞肉',t:'鸡肉'},{w:'麵',t:'面条'},
+      {w:'湯',t:'汤'},{w:'果汁',t:'果汁'},{w:'啤酒',t:'啤酒'},{w:'紅酒',t:'葡萄酒'},{w:'芝士',t:'奶酪'},
+      {w:'薄餅',t:'披萨'},{w:'三文治',t:'三明治'},{w:'朱古力',t:'巧克力'},{w:'雪糕',t:'冰淇淋'}]}]},
     {id:'transport',name:'交通出行',subgroups:[{label:null,items:[
       {w:'機場',t:'机场'},{w:'車站',t:'车站'},{w:'酒店',t:'酒店'},{w:'巴士',t:'巴士'},{w:'的士',t:'出租车'},
       {w:'火車',t:'火车'},{w:'左邊',t:'左'},{w:'右邊',t:'右'},{w:'街',t:'街道'},{w:'地圖',t:'地图'},
       {w:'飛',t:'票'},{w:'護照',t:'护照'},{w:'銀行',t:'银行'},{w:'醫院',t:'医院'},{w:'學校',t:'学校'}]}]},
-    {id:'jobs',name:'職業',subgroups:[{label:null,items:[{w:'警察',t:'警察'},{w:'工人',t:'工人'},{w:'司機',t:'司机'},{w:'老闆',t:'老板'},{w:'員工',t:'员工'},{w:'農夫',t:'农夫'},{w:'廚師',t:'厨师'},{w:'藝術家',t:'艺术家'},{w:'歌手',t:'歌手'},{w:'演員',t:'演员'},{w:'作家',t:'作家'},{w:'護士',t:'护士'},{w:'經理',t:'经理'},{w:'飛機師',t:'飞行员'},{w:'工程師',t:'工程师'}]}]},
+    {id:'jobs',name:'職業',subgroups:[{label:null,items:[{w:'警察',t:'警察'},{w:'工人',t:'工人'},{w:'司機',t:'司机'},{w:'老闆',t:'老板'},{w:'員工',t:'员工'},{w:'農夫',t:'农夫'},{w:'廚師',t:'厨师'},{w:'藝術家',t:'艺术家'},{w:'歌手',t:'歌手'},{w:'演員',t:'演员'},{w:'作家',t:'作家'},{w:'護士',t:'护士'},{w:'經理',t:'经理'},{w:'飛機師',t:'飞行员'},{w:'工程師',t:'工程师'},{w:'攝影師',t:'摄影师'}]}]},
+    {id:'hobbies',name:'愛好',subgroups:[{label:null,items:[
+      {w:'音樂',t:'音乐'},{w:'電影',t:'电影'},{w:'編程',t:'编程'},{w:'閱讀',t:'阅读'},{w:'攝影',t:'摄影'},
+      {w:'足球',t:'足球'},{w:'籃球',t:'篮球'},{w:'網球',t:'网球'},{w:'游水',t:'游泳'},{w:'跑步',t:'跑步'},
+      {w:'行山',t:'徒步'},{w:'瑜伽',t:'瑜伽'},{w:'跳舞',t:'跳舞'},{w:'畫畫',t:'画画'},{w:'煮嘢食',t:'烹饪'},
+      {w:'旅行',t:'旅行'},{w:'打機',t:'游戏'},{w:'唱歌',t:'唱歌'}]}]},
     {id:'nature',name:'大自然',subgroups:[{label:null,items:[{w:'狗',t:'狗'},{w:'貓',t:'猫'},{w:'雀仔',t:'鸟'},{w:'魚',t:'鱼'},{w:'馬',t:'马'},{w:'樹',t:'树'},{w:'花',t:'花'},{w:'草',t:'草'},{w:'山',t:'山'},{w:'河',t:'河'},{w:'海',t:'海'},{w:'天',t:'天空'},{w:'太陽',t:'太阳'},{w:'月亮',t:'月亮'},{w:'星',t:'星星'}]}]},
     {id:'colors',name:'顏色',subgroups:[{label:null,items:[
       {w:'紅色',t:'红'},{w:'橙色',t:'橙'},{w:'黃色',t:'黄'},{w:'綠色',t:'绿'},{w:'藍色',t:'蓝'},
@@ -1344,13 +1378,14 @@ function playCellAudio(el,text){const c=text.split('(')[0].split('/')[0].trim();
 function playRowAudio(el,text){speak(text);el.classList.add('playing-row');setTimeout(()=>el.classList.remove('playing-row'),500)}
 
 // PRACTICE
-const practiceState = { cat: null, words: [], currentIndex: 0, totalOriginal: 0, newWordsSeen: 0 };
+const practiceStates = {};
+const practiceState = { cat: null, words: [], currentIndex: 0, totalOriginal: 0 };
 function getEsGenderInfo(catId, w) {
   if(currentLang!=='es') return null;
   const nounCats=['home','restaurant','transport','relations','hobbies','body','clothes','nature','jobs'];
   if(!nounCats.includes(catId)) return null;
-  const m=['padre','hermano','amigo','hijo','esposo','niño','profesor','vecino','compañero','dormitorio','baño','teléfono','reloj','arroz','pan','pescado','huevo','café','té','menú','tenedor','cuchillo','plato','aeropuerto','hotel','autobús','taxi','tren','mapa','boleto','pasaporte','banco','hospital','estudiante','azúcar','libro','deporte','juego','arte','viaje','baile','piano','equipo','pasatiempo','ojo','brazo','pie','cuerpo','pelo','médico','dolor','pantalones','vestido','abrigo','zapato','sombrero','calcetín','bolso','cinturón','anillo','perro','gato','pájaro','pez','caballo','árbol','río','mar','cielo','sol','policía','trabajador','conductor','jefe','empleado','granjero','cocinero','artista','cantante','actor','escritor','gerente','piloto','ingeniero'];
-  const f=['madre','hermana','hija','esposa','casa','habitación','cocina','mesa','silla','cama','puerta','ventana','luz','computadora','llave','agua','carne','fruta','leche','sal','cuenta','cuchara','estación','izquierda','derecha','calle','escuela','música','película','foto','canción','guitarra','pelota','cabeza','oreja','boca','nariz','cara','mano','pierna','medicina','ropa','camisa','camiseta','falda','chaqueta','gafas','flor','hierba','montaña','luna','estrella','enfermera'];
+  const m=['fotógrafo','padre','hermano','amigo','hijo','esposo','niño','profesor','vecino','compañero','dormitorio','baño','teléfono','reloj','arroz','pan','pescado','huevo','café','té','menú','tenedor','cuchillo','plato','aeropuerto','hotel','autobús','taxi','tren','mapa','boleto','pasaporte','banco','hospital','estudiante','azúcar','libro','deporte','juego','arte','viaje','baile','piano','equipo','pasatiempo','plátano','pastel','pollo','jugo','sándwich','helado','ojo','brazo','pie','cuerpo','pelo','médico','dolor','pantalones','vestido','abrigo','zapato','sombrero','calcetín','bolso','cinturón','anillo','perro','gato','pájaro','pez','caballo','árbol','río','mar','cielo','sol','policía','trabajador','conductor','jefe','empleado','granjero','cocinero','artista','cantante','actor','escritor','gerente','piloto','ingeniero'];
+  const f=['madre','hermana','hija','esposa','casa','habitación','cocina','mesa','silla','cama','puerta','ventana','luz','computadora','llave','agua','carne','fruta','leche','sal','cuenta','cuchara','estación','izquierda','derecha','calle','escuela','música','película','foto','canción','guitarra','pelota','cabeza','oreja','boca','nariz','cara','mano','pierna','medicina','ropa','camisa','camiseta','falda','chaqueta','gafas','flor','hierba','montaña','luna','estrella','enfermera','abuela','tía','sobrina','manzana','sopa','cerveza','pizza','música','película','programación','lectura','fotografía','natación','pintura'];
   if(m.includes(w.toLowerCase())) return {color:'#4F8BCA', label:'阳性 (m.)'};
   if(f.includes(w.toLowerCase())) return {color:'#D26B88', label:'阴性 (f.)'};
   return null;
@@ -1492,8 +1527,14 @@ function jumpToPractice(val) {
   renderPracticeCard();
 }
 function nextPractice() {
-  practiceState.currentIndex++;
-  renderPracticeCard();
+  const card = document.querySelector('.practice-card');
+  if(card) {
+    card.classList.add('swipe-out');
+    setTimeout(() => { practiceState.currentIndex++; renderPracticeCard(); }, 250);
+  } else {
+    practiceState.currentIndex++;
+    renderPracticeCard();
+  }
 }
 function prevPractice() {
   if(practiceState.currentIndex > 0) {
@@ -1545,7 +1586,17 @@ function switchLang(lang){
   const scrollY=window.scrollY;
   const activeVocabLink=document.querySelector('.vocab-sidebar a.active');
   const activeVocabId=activeVocabLink?activeVocabLink.dataset.id:null;
+  // Save current practice state for previous lang
+  if(practiceState.cat) {
+    practiceStates[currentLang] = { cat: practiceState.cat, words: [...practiceState.words], currentIndex: practiceState.currentIndex, totalOriginal: practiceState.totalOriginal };
+  }
   currentLang=lang;document.body.className=`lang-${lang}`;
+  // Restore or reset practice state for new lang
+  if(practiceStates[lang]) {
+    Object.assign(practiceState, practiceStates[lang]);
+  } else {
+    practiceState.cat = null; practiceState.words = []; practiceState.currentIndex = 0; practiceState.totalOriginal = 0;
+  }
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
   renderCurrentSection();
   // Restore scroll or navigate to same vocab section
