@@ -3085,11 +3085,49 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
     let currentLang = 'en', currentSection = 'sounds', searchHistory = [];
 
     // ========== 7. 语音合成 (TTS) ==========
+    let availableVoices = [];
+    // 提前加载声音列表 (Safari/Chrome 会异步加载声音)
+    if (window.speechSynthesis) {
+      availableVoices = window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        availableVoices = window.speechSynthesis.getVoices();
+      };
+    }
+
     function speak(text, lang) {
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = lang || DATA[currentLang].ttsLang; u.rate = 0.9;
+      const targetLang = lang || DATA[currentLang].ttsLang;
+      u.lang = targetLang;
+      
+      // 语速优化：粤语保留 0.9 稍慢语速，其他语言恢复 1.0 正常语速，使得连读和声调更加自然流畅
+      u.rate = (targetLang === 'zh-HK' || currentLang === 'yue') ? 0.9 : 1.0;
+
+      // 尝试匹配系统里的高质量“真人级”声音引擎 (Premium / Enhanced / Natural)
+      if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
+      if (availableVoices.length > 0) {
+        const langPrefix = targetLang.split('-')[0].toLowerCase();
+        let langVoices = availableVoices.filter(v => v.lang.toLowerCase().startsWith(langPrefix) || v.lang.toLowerCase().replace('_', '-').startsWith(langPrefix));
+        
+        let bestVoice = null;
+        // 为不同语言指定 Mac/iOS/Windows 上听感最好的内置声音
+        if (langPrefix === 'en') {
+          bestVoice = langVoices.find(v => /(Samantha|Alex|Daniel|Karen|Premium|Enhanced|Natural)/i.test(v.name));
+        } else if (langPrefix === 'es') {
+          bestVoice = langVoices.find(v => /(Monica|Paulina|Jorge|Premium|Enhanced|Natural)/i.test(v.name));
+        } else if (langPrefix === 'ko') {
+          bestVoice = langVoices.find(v => /(Yuna|Premium|Enhanced|Natural)/i.test(v.name));
+        }
+        
+        if (bestVoice) {
+          u.voice = bestVoice;
+        } else if (langVoices.length > 0) {
+          const premium = langVoices.find(v => /(Premium|Enhanced|Natural)/i.test(v.name));
+          u.voice = premium || langVoices[0];
+        }
+      }
+
       window.speechSynthesis.speak(u);
     }
 
