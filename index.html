@@ -18,6 +18,7 @@
       box-sizing: border-box;
     }
 
+    /* ========== 1. 全局样式及 CSS 变量定义 ========== */
     :root {
       --glass-bg: rgba(255, 255, 255, 0.45);
       --glass-border: rgba(255, 255, 255, 0.7);
@@ -1857,7 +1858,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
 
 <body>
 
-  <!-- LANDING PAGE -->
+  <!-- ========== 2. 引导页 (Landing Page) 结构 ========== -->
   <div id="landing-page">
     <div class="landing-orb lo-1"></div>
     <div class="landing-orb lo-2"></div>
@@ -1933,7 +1934,9 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
   </div>
 
   <!-- LEARNING PAGE -->
+  <!-- ========== 3. 主学习界面 (Learning Page) 结构 ========== -->
   <div id="learning-page">
+    <!-- 背景光晕动画 -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
@@ -1988,7 +1991,10 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
   </div><!-- end learning-page -->
 
   <script>
+    // ========== 4. 数据生成辅助函数 ==========
+    // 用于生成各国语言数字数据
     // ===== NUMBER GENERATORS (Arabic digits for translation) =====
+    // 生成英语的 0-100 数字及其对应英文单词的数组
     function enNumbers() {
       const w = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
         'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
@@ -2004,6 +2010,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       }
       return r;
     }
+    // 生成西班牙语的 0-100 数字及其对应西文单词的数组
     function esNumbers() {
       const n = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez',
         'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve', 'veinte',
@@ -2020,6 +2027,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       }
       return r;
     }
+    // 生成韩语的 0-100 纯韩数字和汉字词数字的数据
     function krNumbers() {
       const sk = ['영', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구', '십',
         '십일', '십이', '십삼', '십사', '십오', '십육', '십칠', '십팔', '십구'];
@@ -2035,6 +2043,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       }
       return r;
     }
+    // 生成粤语的 0-100 数字发音及文字数据
     function yueNumbers() {
       const u = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
         '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九'];
@@ -3071,10 +3080,11 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       }
     };
 
+    // ========== 6. 核心状态与配置 ==========
     const LANG_PAIRS = { en: { from: 'en', to: 'zh-CN' }, es: { from: 'es', to: 'en' }, kr: { from: 'ko', to: 'zh-CN' }, yue: { from: 'zh', to: 'zh-CN' } };
     let currentLang = 'en', currentSection = 'sounds', searchHistory = [];
 
-    // TTS
+    // ========== 7. 语音合成 (TTS) ==========
     function speak(text, lang) {
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
@@ -3083,7 +3093,9 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       window.speechSynthesis.speak(u);
     }
 
-    // SOUNDS
+    // ========== 8. 渲染逻辑 (UI 渲染与更新) ==========
+    
+    // 渲染发音模块
     function renderSounds() {
       const d = DATA[currentLang].sounds;
       let h = `<h2 class="section-title">${d.title}</h2><p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:24px">${d.subtitle}</p>`;
@@ -3097,9 +3109,11 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       }
       document.getElementById('sec-sounds').innerHTML = h;
     }
+    // 播放发音块的语音，并添加短暂的点击动画效果
     function playSound(el, text) { speak(text); el.classList.add('playing'); setTimeout(() => el.classList.remove('playing'), 400) }
 
     // VOCAB
+    // 渲染词汇模块：构建侧边栏分类导航和主内容区域的词汇卡片
     function renderVocab() {
       const d = DATA[currentLang].vocab;
       let sidebar = '', content = '';
@@ -3141,6 +3155,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
 
     // GRAMMAR
     const spkSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.08"/></svg>`;
+    // 渲染语法模块：将语法类别以表格或句子列表的形式渲染到页面上
     function renderGrammar() {
       const d = DATA[currentLang].grammar;
       let sidebar = '', content = '';
@@ -3194,12 +3209,15 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       document.querySelectorAll('#sec-grammar .vocab-section').forEach(s => obs.observe(s));
       const fl = document.querySelector('#sec-grammar .vocab-sidebar a'); if (fl) fl.classList.add('active');
     }
+    // 播放表格单元格（单词级别）的音频，带有视觉反馈
     function playCellAudio(el, text) { const c = text.split('(')[0].split('/')[0].trim(); speak(c); el.classList.add('playing-cell'); setTimeout(() => el.classList.remove('playing-cell'), 500) }
+    // 播放句子级别的音频，带有行高亮的视觉反馈
     function playRowAudio(el, text) { speak(text); el.classList.add('playing-row'); setTimeout(() => el.classList.remove('playing-row'), 500) }
 
     // PRACTICE
     const practiceStates = {};
     const practiceState = { cat: null, words: [], currentIndex: 0, totalOriginal: 0 };
+    // 获取西班牙语名词的阴阳性信息，用于在练习中提供颜色和标签提示
     function getEsGenderInfo(catId, w) {
       if (currentLang !== 'es') return null;
       const nounCats = ['home', 'restaurant', 'transport', 'relations', 'hobbies', 'body', 'clothes', 'nature', 'jobs'];
@@ -3210,7 +3228,9 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       if (f.includes(w.toLowerCase())) return { color: '#D26B88', label: '阴性 (f.)' };
       return null;
     }
+    // 去除字符串中的音标/重音符号，用于在练习时放宽答案比对要求
     function stripAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+    // 渲染练习模块：如果是初始状态则显示类别选择，否则渲染当前练习卡片
     function renderPractice() {
       const sec = document.getElementById('sec-practice');
       if (!practiceState.cat) {
@@ -3224,6 +3244,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
         renderPracticeCard();
       }
     }
+    // 根据选定的类别初始化练习数据，加载该类别下的所有单词并重置进度
     function startPractice(catId) {
       const cat = DATA[currentLang].vocab.categories.find(c => c.id === catId);
       if (!cat) return;
@@ -3238,6 +3259,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       practiceState.newWordsSeen = 0;
       renderPracticeCard();
     }
+    // 渲染具体的练习卡片（包括进度条、目标词汇、输入框等）
     function renderPracticeCard() {
       const sec = document.getElementById('sec-practice');
       if (practiceState.currentIndex >= practiceState.words.length) {
@@ -3293,6 +3315,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
         if (e.key === 'Enter') checkPractice();
       });
     }
+    // 检查练习答案：比对输入与目标词汇，处理重音忽略，处理错误时插入复习队列（艾宾浩斯记忆法）
     function checkPractice() {
       const inputEl = document.getElementById('p-input');
       const val = inputEl.value.trim();
@@ -3342,10 +3365,12 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
         setTimeout(nextPractice, 2000);
       }
     }
+    // 跳转到指定进度的练习题
     function jumpToPractice(val) {
       practiceState.currentIndex = parseInt(val);
       renderPracticeCard();
     }
+    // 切换到下一题，带滑动动画
     function nextPractice() {
       const card = document.querySelector('.practice-card');
       if (card) {
@@ -3356,6 +3381,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
         renderPracticeCard();
       }
     }
+    // 切换到上一题
     function prevPractice() {
       if (practiceState.currentIndex > 0) {
         practiceState.currentIndex--;
@@ -3364,12 +3390,14 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
     }
 
     // LOOKUP
+    // 渲染查词模块：初始化输入框及搜索历史显示
     function renderLookup() {
       document.getElementById('lookup-input').value = '';
       document.getElementById('lookup-result').classList.remove('show');
       document.getElementById('lookup-loading').classList.remove('show');
       renderHistory();
     }
+    // 调用第三方翻译 API (MyMemory) 进行词汇查询，并处理查询结果和网络状态，同时保存搜索历史
     async function doLookup() {
       const input = document.getElementById('lookup-input').value.trim();
       if (!input) return;
@@ -3392,7 +3420,9 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       }
       if (!searchHistory.includes(input)) { searchHistory.unshift(input); if (searchHistory.length > 5) searchHistory.pop(); renderHistory() }
     }
+    // 朗读当前查词模块主界面中显示的单词
     function speakLookup() { const t = document.getElementById('lookup-main').textContent; if (t) speak(t) }
+    // 渲染查词模块的搜索历史记录，以小标签的形式显示
     function renderHistory() {
       const label = document.getElementById('history-label'), chips = document.getElementById('history-chips');
       if (!searchHistory.length) { label.style.display = 'none'; chips.innerHTML = ''; return }
@@ -3401,6 +3431,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
     }
 
     // NAV
+    // 切换当前学习语言：保存旧语言状态，恢复新语言状态，并应用相应的 CSS 皮肤
     function switchLang(lang) {
       // Remember scroll position and active vocab section
       const scrollY = window.scrollY;
@@ -3426,15 +3457,19 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       }
       window.scrollTo(0, scrollY);
     }
+    // 切换侧边栏/顶部导航的主题部分 (发音/词汇/语法/练习/查词)
     function switchSection(sec) { currentSection = sec; document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.section === sec)); document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(`sec-${sec}`).classList.add('active'); renderCurrentSection() }
+    // 根据当前选定的模块调用对应的渲染函数
     function renderCurrentSection() {
       switch (currentSection) { case 'sounds': renderSounds(); break; case 'vocab': renderVocab(); break; case 'grammar': renderGrammar(); break; case 'practice': renderPractice(); break; case 'lookup': renderLookup(); break }
     }
+    // ========== 9. 交互与事件绑定 ==========
     document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => switchLang(b.dataset.lang)));
     document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => switchSection(b.dataset.section)));
     document.getElementById('lookup-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLookup() });
 
     // === LANDING PAGE LOGIC ===
+    // 从引导页进入主学习界面：执行平滑过渡动画并初始化所选语言环境
     function enterLearning(lang) {
       const landing = document.getElementById('landing-page');
       const learning = document.getElementById('learning-page');
@@ -3455,6 +3490,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
         window.scrollTo(0, 0);
       }, 450);
     }
+    // 从主学习界面返回到引导页：执行反向过渡动画并重置环境
     function backToLanding() {
       const landing = document.getElementById('landing-page');
       const learning = document.getElementById('learning-page');
@@ -3480,6 +3516,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
     // ===== VISUAL ENHANCEMENTS =====
 
     // Ripple effect on clicks
+    // 给卡片或按钮等元素添加点击水波纹特效
     function addRipple(e, el) {
       const r = document.createElement('span');
       r.classList.add('ripple-fx');
@@ -3497,6 +3534,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
     });
 
     // Floating particles
+    // 初始化全屏悬浮粒子动画，用于作为动态背景
     (function initParticles() {
       if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
       const c = document.createElement('canvas');
@@ -3504,6 +3542,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       document.body.appendChild(c);
       const ctx = c.getContext('2d');
       let w, h, pts = [];
+      // 粒子画布窗口大小改变时的适配逻辑
       function resize() { w = c.width = innerWidth; h = c.height = innerHeight }
       resize(); addEventListener('resize', resize);
       class P {
