@@ -3499,42 +3499,14 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       window.speechSynthesis.cancel();
       const targetLang = lang || DATA[currentLang].ttsLang;
 
-      // ===== 日语发音优化 =====
-      // 核心思路：TTS 对单个假名/汉字会截断尾音，因此采用"慢读示范 + 正常跟读"二段式播放
-      // 第一段：加句号强制 TTS 保持完整尾音，慢速清晰示范
-      // 第二段：正常语速自然再读一遍，模拟"老师示范 → 正常语速"的教学节奏
-      if (targetLang === 'ja') {
-        const isShort = text.length <= 2;
-        // 在文字后加全角句号，让 TTS 引擎持住尾音不截断
-        const slowText = text + '。';
-        const u1 = new SpeechSynthesisUtterance(slowText);
-        u1.lang = targetLang;
-        u1.rate = isShort ? 0.6 : 0.72;
-        u1.pitch = 1.05;  // 轻微提高音调，听感更清晰明亮
-
-        // 第二段：正常速度自然跟读
-        const u2 = new SpeechSynthesisUtterance(text + '。');
-        u2.lang = targetLang;
-        u2.rate = isShort ? 0.82 : 0.9;
-        u2.pitch = 1.0;
-
-        // 选择最佳语音引擎后同时设置给两段话语
-        if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
-        if (availableVoices.length > 0) {
-          const jaVoices = availableVoices.filter(v => v.lang.toLowerCase().startsWith('ja'));
-          const best = jaVoices.find(v => /(Kyoko|Otoya|Premium|Enhanced|Natural)/i.test(v.name)) || jaVoices[0];
-          if (best) { u1.voice = best; u2.voice = best; }
-        }
-
-        window.speechSynthesis.speak(u1);
-        window.speechSynthesis.speak(u2);
-        return;
-      }
-
-      // ===== 其他语言 =====
       const u = new SpeechSynthesisUtterance(text);
       u.lang = targetLang;
-      if (targetLang === 'zh-HK' || currentLang === 'yue') {
+
+      // 日语：慢速 + 句号结尾防止尾音被截断（renderSounds 已对单字扩展为三次重复）
+      if (targetLang === 'ja') {
+        u.rate = 0.75;
+        u.pitch = 1.05;
+      } else if (targetLang === 'zh-HK' || currentLang === 'yue') {
         u.rate = 0.9;
       } else {
         u.rate = 1.0;
@@ -3584,7 +3556,13 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       for (const cat of d.categories) {
         h += `<div class="sound-category"><h3>${cat.name}</h3><div class="sound-grid">`;
         for (const item of cat.items) {
-          const sp = (item.speak || item.text).replace(/'/g, "\\'");
+          let sp = (item.speak || item.text);
+          // 日语发音基石：单个假名/汉字直接读发音太短，改为用逗号间隔重复三次
+          // 例如 'あ' → 'あ、あ、あ'，让 TTS 引擎有充足的音节时长，发音清晰饱满
+          if (currentLang === 'ja' && sp.length <= 2) {
+            sp = sp + '、' + sp + '、' + sp;
+          }
+          sp = sp.replace(/'/g, "\\'");
           h += `<div class="sound-block" onclick="playSound(this,'${sp}')"><span>${item.text}</span>${item.sub ? `<span class="sub">${item.sub}</span>` : ''}</div>`;
         }
         h += `</div></div>`;
