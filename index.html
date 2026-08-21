@@ -2691,15 +2691,15 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
             },
             {
               name: '기본 자음 · 基本辅音', items: [
-                { text: 'ㄱ', sub: 'g/k', speak: '기역' }, { text: 'ㄴ', sub: 'n', speak: '니은' }, { text: 'ㄷ', sub: 'd/t', speak: '디귿' }, { text: 'ㄹ', sub: 'r/l', speak: '리을' },
-                { text: 'ㅁ', sub: 'm', speak: '미음' }, { text: 'ㅂ', sub: 'b/p', speak: '비읍' }, { text: 'ㅅ', sub: 's', speak: '시옷' }, { text: 'ㅇ', sub: 'ng', speak: '이응' },
-                { text: 'ㅈ', sub: 'j', speak: '지읒' }, { text: 'ㅊ', sub: 'ch', speak: '치읓' }, { text: 'ㅋ', sub: 'k', speak: '키읔' }, { text: 'ㅌ', sub: 't', speak: '티읕' },
-                { text: 'ㅍ', sub: 'p', speak: '피읖' }, { text: 'ㅎ', sub: 'h', speak: '히읗' }]
+                { text: 'ㄱ', sub: 'g/k', speak: '그' }, { text: 'ㄴ', sub: 'n', speak: '느' }, { text: 'ㄷ', sub: 'd/t', speak: '드' }, { text: 'ㄹ', sub: 'r/l', speak: '르' },
+                { text: 'ㅁ', sub: 'm', speak: '므' }, { text: 'ㅂ', sub: 'b/p', speak: '브' }, { text: 'ㅅ', sub: 's', speak: '스' }, { text: 'ㅇ', sub: 'ng', speak: '응' },
+                { text: 'ㅈ', sub: 'j', speak: '즈' }, { text: 'ㅊ', sub: 'ch', speak: '츠' }, { text: 'ㅋ', sub: 'k', speak: '크' }, { text: 'ㅌ', sub: 't', speak: '트' },
+                { text: 'ㅍ', sub: 'p', speak: '프' }, { text: 'ㅎ', sub: 'h', speak: '흐' }]
             },
             {
               name: '쌍자음 · 双辅音', items: [
-                { text: 'ㄲ', sub: 'kk', speak: '쌍기역' }, { text: 'ㄸ', sub: 'tt', speak: '쌍디귿' }, { text: 'ㅃ', sub: 'pp', speak: '쌍비읍' },
-                { text: 'ㅆ', sub: 'ss', speak: '쌍시옷' }, { text: 'ㅉ', sub: 'jj', speak: '쌍지읒' }]
+                { text: 'ㄲ', sub: 'kk', speak: '끄' }, { text: 'ㄸ', sub: 'tt', speak: '뜨' }, { text: 'ㅃ', sub: 'pp', speak: '쁘' },
+                { text: 'ㅆ', sub: 'ss', speak: '쓰' }, { text: 'ㅉ', sub: 'jj', speak: '쯔' }]
             },
             {
               name: '받침 · Batchim 收音', items: [
@@ -2997,7 +2997,10 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
               name: '常用汉字', items: [
                 { text: '日', sub: 'nichi / hi', speak: '日' }, { text: '月', sub: 'getsu / tsuki', speak: '月' }, { text: '火', sub: 'ka / hi', speak: '火' }, { text: '水', sub: 'sui / mizu', speak: '水' }, { text: '木', sub: 'moku / ki', speak: '木' },
                 { text: '金', sub: 'kin / kane', speak: '金' }, { text: '土', sub: 'do / tsuchi', speak: '土' }, { text: '山', sub: 'san / yama', speak: '山' }, { text: '川', sub: 'sen / kawa', speak: '川' }, { text: '海', sub: 'kai / umi', speak: '海' },
-                { text: '人', sub: 'jin / hito', speak: '人' }, { text: '男', sub: 'dan / otoko', speak: '男' }, { text: '女', sub: 'jo / onna', speak: '女' }, { text: '子', sub: 'shi / ko', speak: '子' }, { text: '父', sub: 'fu / chichi', speak: '父' }]
+                { text: '人', sub: 'jin / hito', speak: '人' }, { text: '男', sub: 'dan / otoko', speak: '男' }, { text: '女', sub: 'jo / onna', speak: '女' }, { text: '子', sub: 'shi / ko', speak: '子' }, { text: '父', sub: 'fu / chichi', speak: '父' },
+                { text: '母', sub: 'bo / haha', speak: '母' }, { text: '兄', sub: 'kyou / ani', speak: '兄' }, { text: '弟', sub: 'tei / otouto', speak: '弟' }, { text: '姉', sub: 'shi / ane', speak: '姉' }, { text: '妹', sub: 'mai / imouto', speak: '妹' },
+                { text: '上', sub: 'jou / ue', speak: '上' }, { text: '下', sub: 'ka / shita', speak: '下' }, { text: '左', sub: 'sa / hidari', speak: '左' }, { text: '右', sub: 'yu / migi', speak: '右' }, { text: '中', sub: 'chuu / naka', speak: '中' },
+                { text: '大', sub: 'dai / oo', speak: '大' }, { text: '小', sub: 'shou / chii', speak: '小' }, { text: '円', sub: 'en / maru', speak: '円' }, { text: '年', sub: 'nen / toshi', speak: '年' }, { text: '学', sub: 'gaku / mana', speak: '学' }]
             }
           ]
         },
@@ -3505,7 +3508,11 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
       if (availableVoices.length > 0) {
         const langPrefix = targetLang.split('-')[0].toLowerCase();
-        let langVoices = availableVoices.filter(v => v.lang.toLowerCase().startsWith(langPrefix) || v.lang.toLowerCase().replace('_', '-').startsWith(langPrefix));
+        let langVoices = availableVoices.filter(v => {
+          const vLang = v.lang.toLowerCase().replace('_', '-');
+          if (targetLang === 'zh-HK') return vLang.includes('hk');
+          return vLang.startsWith(langPrefix);
+        });
         
         let bestVoice = null;
         // 为不同语言指定 Mac/iOS/Windows 上听感最好的内置声音
@@ -3517,6 +3524,8 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
           bestVoice = langVoices.find(v => /(Yuna|Premium|Enhanced|Natural)/i.test(v.name));
         } else if (langPrefix === 'ja') {
           bestVoice = langVoices.find(v => /(Kyoko|Otoya|Premium|Enhanced|Natural)/i.test(v.name));
+        } else if (targetLang === 'zh-HK') {
+          bestVoice = langVoices.find(v => /(Sin-ji|Premium|Enhanced|Natural)/i.test(v.name));
         }
         
         if (bestVoice) {
