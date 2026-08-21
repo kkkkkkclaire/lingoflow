@@ -3501,8 +3501,14 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       const targetLang = lang || DATA[currentLang].ttsLang;
       u.lang = targetLang;
       
-      // 语速优化：粤语保留 0.9 稍慢语速，其他语言恢复 1.0 正常语速，使得连读和声调更加自然流畅
-      u.rate = (targetLang === 'ja') ? 0.85 : ((targetLang === 'zh-HK' || currentLang === 'yue') ? 0.9 : 1.0);
+      // 语速优化：日语适当放慢，如果是单个假名/汉字则放得更慢以防过短
+      if (targetLang === 'ja') {
+        u.rate = (text.length <= 2) ? 0.65 : 0.75;
+      } else if (targetLang === 'zh-HK' || currentLang === 'yue') {
+        u.rate = 0.9;
+      } else {
+        u.rate = 1.0;
+      }
 
       // 尝试匹配系统里的高质量“真人级”声音引擎 (Premium / Enhanced / Natural)
       if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
