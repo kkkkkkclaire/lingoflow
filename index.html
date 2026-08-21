@@ -1442,6 +1442,10 @@
       background: linear-gradient(145deg, #E8E2F0, #D8D0E8)
     }
 
+    .card-ja {
+      background: linear-gradient(145deg, #D8EAF0, #C8DCE8);
+    }
+
     .card-yue {
       background: linear-gradient(145deg, #EDE8DC, #E0D8C8)
     }
@@ -1967,6 +1971,12 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
           <span class="lang-card-emoji">💜</span>
           <h3>한국어</h3>
           <p>韩语</p>
+          <span class="lang-card-cta">开始学习 →</span>
+        </div>
+        <div class="lang-card card-ja reveal" style="transition-delay:.30s" onclick="enterLearning('ja')">
+          <span class="lang-card-emoji">🌸</span>
+          <h3>日本語</h3>
+          <p>日语</p>
           <span class="lang-card-cta">开始学习 →</span>
         </div>
         <div class="lang-card card-yue reveal" style="transition-delay:.35s" onclick="enterLearning('yue')">
@@ -2969,6 +2979,25 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
                 { text: 'だ', sub: 'da', speak: 'だ' }, { text: 'ぢ', sub: 'ji', speak: 'ぢ' }, { text: 'づ', sub: 'zu', speak: 'づ' }, { text: 'で', sub: 'de', speak: 'で' }, { text: 'ど', sub: 'do', speak: 'ど' },
                 { text: 'ば', sub: 'ba', speak: 'ば' }, { text: 'び', sub: 'bi', speak: 'び' }, { text: 'ぶ', sub: 'bu', speak: 'ぶ' }, { text: 'べ', sub: 'be', speak: 'べ' }, { text: 'ぼ', sub: 'bo', speak: 'ぼ' },
                 { text: 'ぱ', sub: 'pa', speak: 'ぱ' }, { text: 'ぴ', sub: 'pi', speak: 'ぴ' }, { text: 'ぷ', sub: 'pu', speak: 'ぷ' }, { text: 'ぺ', sub: 'pe', speak: 'ぺ' }, { text: 'ぽ', sub: 'po', speak: 'ぽ' }]
+            },
+            {
+              name: '片假名', items: [
+                { text: 'ア', sub: 'a', speak: 'ア' }, { text: 'イ', sub: 'i', speak: 'イ' }, { text: 'ウ', sub: 'u', speak: 'ウ' }, { text: 'エ', sub: 'e', speak: 'エ' }, { text: 'オ', sub: 'o', speak: 'オ' },
+                { text: 'カ', sub: 'ka', speak: 'カ' }, { text: 'キ', sub: 'ki', speak: 'キ' }, { text: 'ク', sub: 'ku', speak: 'ク' }, { text: 'ケ', sub: 'ke', speak: 'ケ' }, { text: 'コ', sub: 'ko', speak: 'コ' },
+                { text: 'サ', sub: 'sa', speak: 'サ' }, { text: 'シ', sub: 'shi', speak: 'シ' }, { text: 'ス', sub: 'su', speak: 'ス' }, { text: 'セ', sub: 'se', speak: 'セ' }, { text: 'ソ', sub: 'so', speak: 'ソ' },
+                { text: 'タ', sub: 'ta', speak: 'タ' }, { text: 'チ', sub: 'chi', speak: 'チ' }, { text: 'ツ', sub: 'tsu', speak: 'ツ' }, { text: 'テ', sub: 'te', speak: 'テ' }, { text: 'ト', sub: 'to', speak: 'ト' },
+                { text: 'ナ', sub: 'na', speak: 'ナ' }, { text: 'ニ', sub: 'ni', speak: 'ニ' }, { text: 'ヌ', sub: 'nu', speak: 'ヌ' }, { text: 'ネ', sub: 'ne', speak: 'ネ' }, { text: 'ノ', sub: 'no', speak: 'ノ' },
+                { text: 'ハ', sub: 'ha', speak: 'ハ' }, { text: 'ヒ', sub: 'hi', speak: 'ヒ' }, { text: 'フ', sub: 'fu', speak: 'フ' }, { text: 'ヘ', sub: 'he', speak: 'ヘ' }, { text: 'ホ', sub: 'ho', speak: 'ホ' },
+                { text: 'マ', sub: 'ma', speak: 'マ' }, { text: 'ミ', sub: 'mi', speak: 'ミ' }, { text: 'ム', sub: 'mu', speak: 'ム' }, { text: 'メ', sub: 'me', speak: 'メ' }, { text: 'モ', sub: 'mo', speak: 'モ' },
+                { text: 'ヤ', sub: 'ya', speak: 'ヤ' }, { text: 'ユ', sub: 'yu', speak: 'ユ' }, { text: 'ヨ', sub: 'yo', speak: 'ヨ' },
+                { text: 'ラ', sub: 'ra', speak: 'ラ' }, { text: 'リ', sub: 'ri', speak: 'リ' }, { text: 'ル', sub: 'ru', speak: 'ル' }, { text: 'レ', sub: 're', speak: 'レ' }, { text: 'ロ', sub: 'ro', speak: 'ロ' },
+                { text: 'ワ', sub: 'wa', speak: 'ワ' }, { text: 'ヲ', sub: 'wo', speak: 'ヲ' }, { text: 'ン', sub: 'n', speak: 'ン' }]
+            },
+            {
+              name: '常用汉字', items: [
+                { text: '日', sub: 'nichi / hi', speak: '日' }, { text: '月', sub: 'getsu / tsuki', speak: '月' }, { text: '火', sub: 'ka / hi', speak: '火' }, { text: '水', sub: 'sui / mizu', speak: '水' }, { text: '木', sub: 'moku / ki', speak: '木' },
+                { text: '金', sub: 'kin / kane', speak: '金' }, { text: '土', sub: 'do / tsuchi', speak: '土' }, { text: '山', sub: 'san / yama', speak: '山' }, { text: '川', sub: 'sen / kawa', speak: '川' }, { text: '海', sub: 'kai / umi', speak: '海' },
+                { text: '人', sub: 'jin / hito', speak: '人' }, { text: '男', sub: 'dan / otoko', speak: '男' }, { text: '女', sub: 'jo / onna', speak: '女' }, { text: '子', sub: 'shi / ko', speak: '子' }, { text: '父', sub: 'fu / chichi', speak: '父' }]
             }
           ]
         },
@@ -3470,7 +3499,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       u.lang = targetLang;
       
       // 语速优化：粤语保留 0.9 稍慢语速，其他语言恢复 1.0 正常语速，使得连读和声调更加自然流畅
-      u.rate = (targetLang === 'zh-HK' || currentLang === 'yue') ? 0.9 : 1.0;
+      u.rate = (targetLang === 'ja') ? 0.85 : ((targetLang === 'zh-HK' || currentLang === 'yue') ? 0.9 : 1.0);
 
       // 尝试匹配系统里的高质量“真人级”声音引擎 (Premium / Enhanced / Natural)
       if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
@@ -3486,6 +3515,8 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
           bestVoice = langVoices.find(v => /(Monica|Paulina|Jorge|Premium|Enhanced|Natural)/i.test(v.name));
         } else if (langPrefix === 'ko') {
           bestVoice = langVoices.find(v => /(Yuna|Premium|Enhanced|Natural)/i.test(v.name));
+        } else if (langPrefix === 'ja') {
+          bestVoice = langVoices.find(v => /(Kyoko|Otoya|Premium|Enhanced|Natural)/i.test(v.name));
         }
         
         if (bestVoice) {
