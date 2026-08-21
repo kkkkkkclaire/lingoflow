@@ -48,6 +48,10 @@
       --tea-2: #E8E2D6;
       --tea-3: #F4F0EA;
       --tea-accent: #B0A080;
+      --sky-1: #CDE0E7;
+      --sky-2: #E6EEF1;
+      --sky-3: #F3F7F8;
+      --sky-accent: #8DA9C4;
     }
 
     body {
@@ -69,6 +73,10 @@
 
     body.lang-kr {
       background: linear-gradient(135deg, var(--lavender-1) 0%, var(--lavender-2) 40%, var(--lavender-3) 100%);
+    }
+
+    body.lang-ja {
+      background: linear-gradient(135deg, var(--sky-1) 0%, var(--sky-2) 40%, var(--sky-3) 100%);
     }
 
     body.lang-yue {
@@ -140,6 +148,18 @@
 
     body.lang-kr .orb-3 {
       background: #A898C0
+    }
+
+    body.lang-ja .orb-1 {
+      background: var(--sky-accent)
+    }
+
+    body.lang-ja .orb-2 {
+      background: #B0C4DE
+    }
+
+    body.lang-ja .orb-3 {
+      background: #A0B8D0
     }
 
     body.lang-yue .orb-1 {
@@ -242,6 +262,10 @@
 
     body.lang-kr .lang-btn.active {
       color: #7b5ec8
+    }
+
+    body.lang-ja .lang-btn.active {
+      color: #6C8EAD
     }
 
     body.lang-yue .lang-btn.active {
@@ -380,6 +404,10 @@
 
     body.lang-kr .sound-block.playing {
       box-shadow: 0 0 0 3px var(--lavender-accent)
+    }
+
+    body.lang-ja .sound-block.playing {
+      box-shadow: 0 0 0 3px var(--sky-accent)
     }
 
     body.lang-yue .sound-block.playing {
@@ -1552,6 +1580,10 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       box-shadow: 0 0 0 3px var(--lavender-accent), 0 4px 16px rgba(163, 146, 196, 0.3) !important
     }
 
+    body.lang-ja .vocab-card.playing {
+      box-shadow: 0 0 0 3px var(--sky-accent), 0 4px 16px rgba(141, 169, 196, 0.3) !important
+    }
+
     body.lang-yue .vocab-card.playing {
       box-shadow: 0 0 0 3px var(--tea-accent), 0 4px 16px rgba(176, 160, 128, 0.3) !important
     }
@@ -1576,6 +1608,10 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
 
     body.lang-kr .ripple-fx {
       background: var(--lavender-accent)
+    }
+
+    body.lang-ja .ripple-fx {
+      background: var(--sky-accent)
     }
 
     body.lang-yue .ripple-fx {
@@ -1701,6 +1737,10 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       background: var(--lavender-accent)
     }
 
+    body.lang-ja .tab-btn.active::after {
+      background: var(--sky-accent)
+    }
+
     body.lang-yue .tab-btn.active::after {
       background: var(--tea-accent)
     }
@@ -1808,6 +1848,10 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
       background: var(--lavender-accent)
     }
 
+    body.lang-ja .grammar-cat-title::after {
+      background: var(--sky-accent)
+    }
+
     body.lang-yue .grammar-cat-title::after {
       background: var(--tea-accent)
     }
@@ -1829,6 +1873,10 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
 
     body.lang-kr .vocab-section h3 {
       border-left-color: var(--lavender-accent)
+    }
+
+    body.lang-ja .vocab-section h3 {
+      border-left-color: var(--sky-accent)
     }
 
     body.lang-yue .vocab-section h3 {
@@ -1947,6 +1995,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
         <button class="lang-btn active" data-lang="en">🌿 English</button>
         <button class="lang-btn" data-lang="es">🍑 Español</button>
         <button class="lang-btn" data-lang="kr">💜 한국어</button>
+        <button class="lang-btn" data-lang="ja">🌸 日本語</button>
         <button class="lang-btn" data-lang="yue">🍵 粵語</button>
       </div>
       <div class="section-tabs">
@@ -2039,6 +2088,22 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
         else if (i === 100) word = '백';
         else if (i % 10 === 0) word = t2[Math.floor(i / 10)];
         else word = t2[Math.floor(i / 10)] + sk[i % 10];
+        r.push({ w: word, t: String(i) });
+      }
+      return r;
+    }
+    // 生成日语的 0-100 数字发音及文字数据
+    function jaNumbers() {
+      const u = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
+        '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九'];
+      const t2 = ['', '', '二十', '三十', '四十', '五十', '六十', '七十', '八十', '九十'];
+      const r = [];
+      for (let i = 0; i <= 100; i++) {
+        let word;
+        if (i < 20) word = u[i];
+        else if (i === 100) word = '百';
+        else if (i % 10 === 0) word = t2[Math.floor(i / 10)];
+        else word = t2[Math.floor(i / 10)] + u[i % 10];
         r.push({ w: word, t: String(i) });
       }
       return r;
@@ -2881,6 +2946,229 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
         },
         ttsLang: 'ko-KR'
       },
+      ja: {
+        sounds: {
+          title: '発音基礎 · 发音基石', subtitle: '点击方块即发音', categories: [
+            {
+              name: '清音 · 五十音', items: [
+                { text: 'あ', sub: 'a', speak: 'あ' }, { text: 'い', sub: 'i', speak: 'い' }, { text: 'う', sub: 'u', speak: 'う' }, { text: 'え', sub: 'e', speak: 'え' }, { text: 'お', sub: 'o', speak: 'お' },
+                { text: 'か', sub: 'ka', speak: 'か' }, { text: 'き', sub: 'ki', speak: 'き' }, { text: 'く', sub: 'ku', speak: 'く' }, { text: 'け', sub: 'ke', speak: 'け' }, { text: 'こ', sub: 'ko', speak: 'こ' },
+                { text: 'さ', sub: 'sa', speak: 'さ' }, { text: 'し', sub: 'shi', speak: 'し' }, { text: 'す', sub: 'su', speak: 'す' }, { text: 'せ', sub: 'se', speak: 'せ' }, { text: 'そ', sub: 'so', speak: 'そ' },
+                { text: 'た', sub: 'ta', speak: 'た' }, { text: 'ち', sub: 'chi', speak: 'ち' }, { text: 'つ', sub: 'tsu', speak: 'つ' }, { text: 'て', sub: 'te', speak: 'て' }, { text: 'と', sub: 'to', speak: 'と' },
+                { text: 'な', sub: 'na', speak: 'な' }, { text: 'に', sub: 'ni', speak: 'に' }, { text: 'ぬ', sub: 'nu', speak: 'ぬ' }, { text: 'ね', sub: 'ne', speak: 'ね' }, { text: 'の', sub: 'no', speak: 'の' },
+                { text: 'は', sub: 'ha', speak: 'は' }, { text: 'ひ', sub: 'hi', speak: 'ひ' }, { text: 'ふ', sub: 'fu', speak: 'ふ' }, { text: 'へ', sub: 'he', speak: 'へ' }, { text: 'ほ', sub: 'ho', speak: 'ほ' },
+                { text: 'ま', sub: 'ma', speak: 'ま' }, { text: 'み', sub: 'mi', speak: 'み' }, { text: 'む', sub: 'mu', speak: 'む' }, { text: 'め', sub: 'me', speak: 'め' }, { text: 'も', sub: 'mo', speak: 'も' },
+                { text: 'や', sub: 'ya', speak: 'や' }, { text: 'ゆ', sub: 'yu', speak: 'ゆ' }, { text: 'よ', sub: 'yo', speak: 'よ' },
+                { text: 'ら', sub: 'ra', speak: 'ら' }, { text: 'り', sub: 'ri', speak: 'り' }, { text: 'る', sub: 'ru', speak: 'る' }, { text: 'れ', sub: 're', speak: 'れ' }, { text: 'ろ', sub: 'ro', speak: 'ろ' },
+                { text: 'わ', sub: 'wa', speak: 'わ' }, { text: 'を', sub: 'wo', speak: 'を' }, { text: 'ん', sub: 'n', speak: 'ん' }]
+            },
+            {
+              name: '濁音 / 半濁音', items: [
+                { text: 'が', sub: 'ga', speak: 'が' }, { text: 'ぎ', sub: 'gi', speak: 'ぎ' }, { text: 'ぐ', sub: 'gu', speak: 'ぐ' }, { text: 'げ', sub: 'ge', speak: 'げ' }, { text: 'ご', sub: 'go', speak: 'ご' },
+                { text: 'ざ', sub: 'za', speak: 'ざ' }, { text: 'じ', sub: 'ji', speak: 'じ' }, { text: 'ず', sub: 'zu', speak: 'ず' }, { text: 'ぜ', sub: 'ze', speak: 'ぜ' }, { text: 'ぞ', sub: 'zo', speak: 'ぞ' },
+                { text: 'だ', sub: 'da', speak: 'だ' }, { text: 'ぢ', sub: 'ji', speak: 'ぢ' }, { text: 'づ', sub: 'zu', speak: 'づ' }, { text: 'で', sub: 'de', speak: 'で' }, { text: 'ど', sub: 'do', speak: 'ど' },
+                { text: 'ば', sub: 'ba', speak: 'ば' }, { text: 'び', sub: 'bi', speak: 'び' }, { text: 'ぶ', sub: 'bu', speak: 'ぶ' }, { text: 'べ', sub: 'be', speak: 'べ' }, { text: 'ぼ', sub: 'bo', speak: 'ぼ' },
+                { text: 'ぱ', sub: 'pa', speak: 'ぱ' }, { text: 'ぴ', sub: 'pi', speak: 'ぴ' }, { text: 'ぷ', sub: 'pu', speak: 'ぷ' }, { text: 'ぺ', sub: 'pe', speak: 'ぺ' }, { text: 'ぽ', sub: 'po', speak: 'ぽ' }]
+            }
+          ]
+        },
+        vocab: {
+          title: '核心500词汇', categories: [
+            {
+              id: 'pronouns', name: '人称', subgroups: [{
+                label: null, items: [
+                  { w: '私', t: '我' }, { w: 'あなた', t: '你' }, { w: '彼', t: '他' }, { w: '彼女', t: '她' }, { w: '私たち', t: '我们' },
+                  { w: '彼ら', t: '他们' }, { w: '誰', t: '谁' }, { w: 'みんな', t: '大家' }]
+              }]
+            },
+            { id: 'numbers', name: '数字', subgroups: [{ label: null, items: jaNumbers() }] },
+            {
+              id: 'time', name: '时间', subgroups: [
+                { label: '星期', items: [{ w: '月曜日', t: '周一' }, { w: '火曜日', t: '周二' }, { w: '水曜日', t: '周三' }, { w: '木曜日', t: '周四' }, { w: '金曜日', t: '周五' }, { w: '土曜日', t: '周六' }, { w: '日曜日', t: '周日' }] },
+                { label: '月份', items: [{ w: '一月', t: '1月' }, { w: '二月', t: '2月' }, { w: '三月', t: '3月' }, { w: '四月', t: '4月' }, { w: '五月', t: '5月' }, { w: '六月', t: '6月' }, { w: '七月', t: '7月' }, { w: '八月', t: '8月' }, { w: '九月', t: '9月' }, { w: '十月', t: '10月' }, { w: '十一月', t: '11月' }, { w: '十二月', t: '12月' }] },
+                { label: '季节', items: [{ w: '春', t: '春' }, { w: '夏', t: '夏' }, { w: '秋', t: '秋' }, { w: '冬', t: '冬' }] },
+                { label: '时间单位', items: [{ w: '時間', t: '小时' }, { w: '分', t: '分钟' }, { w: '秒', t: '秒' }, { w: '今日', t: '今天' }, { w: '明日', t: '明天' }, { w: '昨日', t: '昨天' }, { w: '朝', t: '早上' }, { w: '午後', t: '下午' }, { w: '夜', t: '晚上' }, { w: '今', t: '现在' }, { w: '後で', t: '稍后' }] }
+              ]
+            },
+            {
+              id: 'relations', name: '关系', subgroups: [{
+                label: null, items: [
+                  { w: '父', t: '父亲' }, { w: '母', t: '母亲' }, { w: '兄', t: '哥哥' }, { w: '姉', t: '姐姐' }, { w: '友達', t: '朋友' },
+                  { w: '息子', t: '儿子' }, { w: '娘', t: '女儿' }, { w: '夫', t: '丈夫' }, { w: '妻', t: '妻子' },
+                  { w: '子供', t: '孩子' }, { w: '先生', t: '老师' }, { w: '学生', t: '学生' }]
+              }]
+            },
+            { id: 'body', name: '身体', subgroups: [{ label: null, items: [{ w: '頭', t: '头' }, { w: '目', t: '眼睛' }, { w: '耳', t: '耳朵' }, { w: '口', t: '嘴' }, { w: '鼻', t: '鼻子' }, { w: '顔', t: '脸' }, { w: '手', t: '手' }, { w: '足', t: '脚' }, { w: '体', t: '身体' }, { w: '髪', t: '头发' }] }] },
+            {
+              id: 'verbs', name: '高频动词', subgroups: [{
+                label: null, items: [
+                  { w: 'です', t: '是' }, { w: 'ある', t: '有(物)' }, { w: 'いる', t: '有(人)' }, { w: '行く', t: '去' }, { w: '来る', t: '来' }, { w: '食べる', t: '吃' },
+                  { w: '飲む', t: '喝' }, { w: '寝る', t: '睡' }, { w: '欲しい', t: '想要' }, { w: '好き', t: '喜欢' }, { w: '必要', t: '需要' },
+                  { w: 'できる', t: '能' }, { w: '分かる', t: '知道' }, { w: '言う', t: '说' }, { w: '見る', t: '看' }, { w: '聞く', t: '听' },
+                  { w: '書く', t: '写' }, { w: '買う', t: '买' }, { w: '働く', t: '工作' }, { w: '遊ぶ', t: '玩' }, { w: 'あげる', t: '给' },
+                  { w: '作る', t: '做' }, { w: '思う', t: '想' }, { w: '走る', t: '跑' }, { w: '歩く', t: '走' }]
+              }]
+            },
+            {
+              id: 'emotions', name: '情感', subgroups: [{
+                label: null, items: [
+                  { w: '嬉しい', t: '开心' }, { w: '悲しい', t: '伤心' }, { w: '疲れた', t: '累' }, { w: '良い', t: '好' }, { w: '悪い', t: '坏' },
+                  { w: '大きい', t: '大' }, { w: '小さい', t: '小' }, { w: '暑い', t: '热' }, { w: '寒い', t: '冷' },
+                  { w: '新しい', t: '新' }, { w: '古い', t: '旧' }, { w: '美しい', t: '美' },
+                  { w: 'ごめんなさい', t: '对不起' }, { w: 'ありがとう', t: '谢谢' }, { w: 'ください', t: '请' }, { w: 'はい', t: '是' }, { w: 'いいえ', t: '不' }]
+              }]
+            },
+            {
+              id: 'home', name: '居家', subgroups: [{
+                label: null, items: [
+                  { w: '家', t: '房子' }, { w: '部屋', t: '房间' }, { w: '台所', t: '厨房' }, { w: '寝室', t: '卧室' }, { w: 'トイレ', t: '浴室' },
+                  { w: '机', t: '桌子' }, { w: '椅子', t: '椅子' }, { w: 'ベッド', t: '床' }, { w: 'ドア', t: '门' }, { w: '窓', t: '窗户' },
+                  { w: '電気', t: '灯' }, { w: '電話', t: '电话' }, { w: 'パソコン', t: '电脑' }, { w: '鍵', t: '钥匙' }, { w: '時計', t: '钟' }]
+              }]
+            },
+            { id: 'clothes', name: '衣物', subgroups: [{ label: null, items: [{ w: '服', t: '衣服' }, { w: 'シャツ', t: '衬衫' }, { w: 'ズボン', t: '裤子' }, { w: '靴', t: '鞋' }, { w: '帽子', t: '帽子' }, { w: '靴下', t: '袜子' }, { w: '鞄', t: '包' }, { w: '眼鏡', t: '眼镜' }] }] },
+            {
+              id: 'restaurant', name: '餐厅', subgroups: [{
+                label: null, items: [
+                  { w: '水', t: '水' }, { w: 'ご飯', t: '米饭' }, { w: 'パン', t: '面包' }, { w: '肉', t: '肉' }, { w: '魚', t: '鱼' },
+                  { w: '卵', t: '鸡蛋' }, { w: '果物', t: '水果' }, { w: 'コーヒー', t: '咖啡' }, { w: 'お茶', t: '茶' }, { w: '牛乳', t: '牛奶' },
+                  { w: '砂糖', t: '糖' }, { w: '塩', t: '盐' }, { w: 'メニュー', t: '菜单' }, { w: 'お会計', t: '账单' },
+                  { w: 'フォーク', t: '叉子' }, { w: 'ナイフ', t: '刀' }, { w: 'スプーン', t: '勺子' }, { w: '皿', t: '盘子' }]
+              }]
+            },
+            {
+              id: 'transport', name: '交通', subgroups: [{
+                label: null, items: [
+                  { w: '空港', t: '机场' }, { w: '駅', t: '车站' }, { w: 'ホテル', t: '酒店' }, { w: 'バス', t: '巴士' }, { w: 'タクシー', t: '出租车' },
+                  { w: '電車', t: '火车' }, { w: '左', t: '左' }, { w: '右', t: '右' }, { w: '道', t: '街道' }, { w: '地図', t: '地图' },
+                  { w: '切符', t: '票' }, { w: 'パスポート', t: '护照' }, { w: '銀行', t: '银行' }, { w: '病院', t: '医院' }, { w: '学校', t: '学校' }]
+              }]
+            },
+            {
+              id: 'colors', name: '颜色', subgroups: [{
+                label: null, items: [
+                  { w: '赤', t: '红' }, { w: 'オレンジ', t: '橙' }, { w: '黄色', t: '黄' }, { w: '緑', t: '绿' }, { w: '青', t: '蓝' },
+                  { w: '紫', t: '紫' }, { w: 'ピンク', t: '粉' }, { w: '黒', t: '黑' }, { w: '白', t: '白' }, { w: 'グレー', t: '灰' },
+                  { w: '茶色', t: '棕' }, { w: '金', t: '金' }]
+              }]
+            },
+            {
+              id: 'weather', name: '天气', subgroups: [{
+                label: null, items: [
+                  { w: '晴れ', t: '晴天' }, { w: '曇り', t: '阴天' }, { w: '雨', t: '下雨' }, { w: '雪', t: '下雪' }, { w: '風', t: '风' },
+                  { w: '嵐', t: '暴风雨' }, { w: '霧', t: '雾' }, { w: '雷', t: '雷' }, { w: '虹', t: '彩虹' }]
+              }]
+            }
+          ]
+        },
+        grammar: {
+          title: '句式语法', subtitle: '系统化呈现',
+          sentenceGroups: [
+            {
+              cat: '打招呼与问候', desc: '挨拶', sentences: [
+                { main: 'こんにちは！', sub: '你好！' },
+                { main: 'おはようございます。', sub: '早上好。' },
+                { main: 'はじめまして。', sub: '很高兴认识你。' },
+                { main: 'お元気ですか？', sub: '过得好吗？' },
+                { main: 'おやすみなさい。', sub: '晚安。' }
+              ]
+            },
+            {
+              cat: '自我介绍', desc: '自己紹介', sentences: [
+                { main: '私の名前は田中です。', sub: '我叫田中。' },
+                { main: '私は25歳です。', sub: '我25岁。' },
+                { main: '中国から来ました。', sub: '我从中国来。' },
+                { main: '私は学生です。', sub: '我是学生。' },
+                { main: '東京に住んでいます。', sub: '我住在东京。' },
+                { main: 'よろしくお願いします。', sub: '请多关照。' }
+              ]
+            },
+            {
+              cat: '兴趣爱好', desc: '趣味', sentences: [
+                { main: '本を読むのが好きです。', sub: '我喜欢看书。' },
+                { main: '音楽を聴くのが楽しいです。', sub: '我喜欢听音乐。' },
+                { main: '料理をするのが好きです。', sub: '我喜欢做饭。' },
+                { main: '趣味はサッカーです。', sub: '我的爱好是踢足球。' },
+                { main: '週末はよく映画を見ます。', sub: '周末通常看电影。' },
+                { main: '語学に興味があります。', sub: '我对学语言感兴趣。' }
+              ]
+            },
+            {
+              cat: '日常生活', desc: '日常生活', sentences: [
+                { main: '毎朝7時に起きます。', sub: '每天早上7点起床。' },
+                { main: '家で朝ごはんを食べます。', sub: '在家吃早餐。' },
+                { main: 'バスで出勤します。', sub: '坐公交上班。' },
+                { main: '夕方6時に退社します。', sub: '晚上6点下班。' },
+                { main: 'たいてい11時に寝ます。', sub: '通常11点睡觉。' },
+                { main: '週に3回運動します。', sub: '一周运动三次。' }
+              ]
+            },
+            {
+              cat: '餐厅点餐', desc: 'レストランで', sentences: [
+                { main: 'メニューを見せてください。', sub: '请给我看菜单。' },
+                { main: 'コーヒーを1杯お願いします。', sub: '请给我一杯咖啡。' },
+                { main: 'これはいくらですか？', sub: '这个多少钱？' },
+                { main: 'お会計をお願いします。', sub: '请买单。' },
+                { main: 'とても美味しいです！', sub: '真好吃！' },
+                { main: 'ベジタリアンのメニューはありますか？', sub: '有素食菜单吗？' }
+              ]
+            },
+            {
+              cat: '问路与交通', desc: '道を尋ねる', sentences: [
+                { main: 'すみません、駅はどこですか？', sub: '打扰，车站在哪？' },
+                { main: '空港にはどうやって行きますか？', sub: '怎么去机场？' },
+                { main: '角を左に曲がってください。', sub: '在拐角处左转。' },
+                { main: '2ブロックまっすぐ行ってください。', sub: '直走两个街区。' },
+                { main: 'ここから遠いですか？', sub: '离这里远吗？' },
+                { main: 'タクシーに乗りたいです。', sub: '我想打出租车。' }
+              ]
+            },
+            {
+              cat: '购物', desc: '買い物', sentences: [
+                { main: 'これはいくらですか？', sub: '这个多少钱？' },
+                { main: '試着してもいいですか？', sub: '可以试穿吗？' },
+                { main: 'もっと小さいサイズはありますか？', sub: '有小一号的吗？' },
+                { main: 'これにします。', sub: '我要这个。' },
+                { main: 'クレジットカードは使えますか？', sub: '可以刷卡吗？' },
+                { main: '他の色はありますか？', sub: '有其他颜色吗？' }
+              ]
+            },
+            {
+              cat: '表达感受', desc: '感情表現', sentences: [
+                { main: '今日はとても幸せです。', sub: '今天很开心。' },
+                { main: '少し疲れました。', sub: '有点累。' },
+                { main: 'いいアイデアですね。', sub: '好主意。' },
+                { main: '本当に申し訳ありません。', sub: '非常抱歉。' },
+                { main: '賛成です。', sub: '我同意。' },
+                { main: 'わかりません。', sub: '我不明白。' }
+              ]
+            },
+            {
+              cat: '请求帮助', desc: '助けを求める', sentences: [
+                { main: '手伝ってくれませんか？', sub: '能帮我吗？' },
+                { main: 'ゆっくり話してください。', sub: '请说慢一点。' },
+                { main: 'この言葉はどういう意味ですか？', sub: '这个词什么意思？' },
+                { main: 'これは日本語で何と言いますか？', sub: '这个日语怎么说？' },
+                { main: '医者が必要です。', sub: '需要看医生。' },
+                { main: '地図で教えてください。', sub: '请在地图上指给我看。' }
+              ]
+            }
+          ],
+          tables: [
+            {
+              name: '助词表',
+              headers: ['功能', '助词', '例子', '翻译'],
+              rows: [['主语', 'が', '私が学生です', '我是学生'], ['话题', 'は', '私は学生です', '我(的话)是学生'], ['宾语', 'を', '本を読む', '看书'], ['位置', 'で', '家で食べる', '在家吃'], ['方向', 'へ/に', '日本へ行く', '去日本'], ['的', 'の', '私の本', '我的书']]
+            },
+            {
+              name: '动词变形',
+              headers: ['动词', '基本形', '敬体(ます形)', '否定形(ない形)'],
+              rows: [['行く(去)', '行く', '行きます', '行かない'], ['食べる(吃)', '食べる', '食べます', '食べない'], ['する(做)', 'する', 'します', 'しない'], ['来る(来)', '来る', '来ます', '来ない']]
+            }
+          ]
+        },
+        ttsLang: 'ja-JP'
+      },
       yue: {
         sounds: {
           title: '發音基石 · 粵語拼音', subtitle: '點擊方塊即可聽到發音', categories: [
@@ -3161,7 +3449,7 @@ body.lang-yue .section-title::after{background:var(--tea-accent)} */
     };
 
     // ========== 6. 核心状态与配置 ==========
-    const LANG_PAIRS = { en: { from: 'en', to: 'zh-CN' }, es: { from: 'es', to: 'en' }, kr: { from: 'ko', to: 'zh-CN' }, yue: { from: 'zh', to: 'zh-CN' } };
+    const LANG_PAIRS = { en: { from: 'en', to: 'zh-CN' }, es: { from: 'es', to: 'en' }, kr: { from: 'ko', to: 'zh-CN' }, ja: { from: 'ja', to: 'zh-CN' }, yue: { from: 'zh', to: 'zh-CN' } };
     let currentLang = 'en', currentSection = 'sounds', searchHistory = [];
 
     // ========== 7. 语音合成 (TTS) ==========
